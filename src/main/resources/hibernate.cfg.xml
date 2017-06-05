@@ -25,6 +25,10 @@
  		<mapping class="association.one2many.bidirectional.Department"/>
  		
  		<mapping class="association.one2many.selfjoin.Employer"/>
+ 		
+ 		<mapping class="association.many2many.Teacher"/>
+ 		<mapping class="association.many2many.Meeting"/>
+ 		
  		 
     </session-factory>
 </hibernate-configuration>
