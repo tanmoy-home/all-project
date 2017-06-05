@@ -67,7 +67,6 @@ CREATE TABLE employer (
 )
 
 
-
 /* Hibernate Many To Many */
 
 CREATE TABLE teacher (
