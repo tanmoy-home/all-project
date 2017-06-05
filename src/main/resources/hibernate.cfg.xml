@@ -29,6 +29,7 @@
  		<mapping class="mapping.association.many2many.Teacher"/>
  		<mapping class="mapping.association.many2many.Meeting"/>
  		
+ 		<mapping class="mapping.component.Student"/>
  		 
     </session-factory>
 </hibernate-configuration>
