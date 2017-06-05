@@ -1,9 +1,9 @@
-package association.many2many;
+package mapping.association.many2many;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 
-import association.HibernateUtil;
+import util.HibernateUtil;
 
 public class Main {
 	public static void main(String[] args) {

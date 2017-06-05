@@ -1,4 +1,4 @@
-package association.many2many;
+package mapping.association.many2many;
 
 import java.util.Date;
 import java.util.HashSet;

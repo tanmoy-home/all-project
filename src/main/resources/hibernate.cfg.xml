@@ -18,16 +18,16 @@
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">validate</property>
  
- 		<mapping class="association.one2one.bidirectional.EmployeeDetail"/>
- 		<mapping class="association.one2one.bidirectional.Employee"/>
+ 		<mapping class="mapping.association.one2one.bidirectional.EmployeeDetail"/>
+ 		<mapping class="mapping.association.one2one.bidirectional.Employee"/>
  		
- 		<mapping class="association.one2many.bidirectional.Employees"/>
- 		<mapping class="association.one2many.bidirectional.Department"/>
+ 		<mapping class="mapping.association.one2many.bidirectional.Employees"/>
+ 		<mapping class="mapping.association.one2many.bidirectional.Department"/>
  		
- 		<mapping class="association.one2many.selfjoin.Employer"/>
+ 		<mapping class="mapping.association.one2many.selfjoin.Employer"/>
  		
- 		<mapping class="association.many2many.Teacher"/>
- 		<mapping class="association.many2many.Meeting"/>
+ 		<mapping class="mapping.association.many2many.Teacher"/>
+ 		<mapping class="mapping.association.many2many.Meeting"/>
  		
  		 
     </session-factory>
