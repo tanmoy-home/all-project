@@ -29,7 +29,7 @@ public class Teacher {
 	private String lastname;
 	
 	@ManyToMany(cascade = {CascadeType.ALL})
-	@JoinTable(name="TEACHER_MEETING", 
+	@JoinTable(//name="TEACHER_MEETING", optional as this is default table name considered
 				joinColumns={@JoinColumn(name="TEACHER_ID")}, 
 				inverseJoinColumns={@JoinColumn(name="MEETING_ID")})
 	private Set<Meeting> meetings = new HashSet<Meeting>();
