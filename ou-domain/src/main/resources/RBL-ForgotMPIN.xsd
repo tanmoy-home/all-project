@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+
+
+ <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:upiint="http://rssoftware.com/upiint/schema/"
+	xmlns:fix="http://rssoftware.com/upiint/rbl/forgotmpin/" targetNamespace="http://rssoftware.com/upiint/rbl/forgotmpin/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:upi="http://npci.org/upi/schema/"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+	<element name="RBL" type="fix:RBL" />   
+
+    <complexType name="ServerAPI">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="float" name="version" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	
+	<complexType name="HeaderEnv">
+		<sequence>
+			<element type="string" name="RemoteIP" />
+			<element type="fix:ServerAPI" name="ServerAPI" />
+			<element type="string" name="RBLOperationId" />
+			<element type="string" name="LANGUAGE" />
+		</sequence>
+		<!-- <attribute type="float" name="VERSION" /> -->
+	</complexType>
+        
+        
+       <complexType name="SessionEnv">
+		<sequence>
+			<element type="string" name="SessionId" />
+			<element type="int" name="LoggedinUser" />
+			<element type="string" name="CoreSessionId1" />
+			<element type="string" name="CoreSessionId2" />
+			<element type="string" name="Token" />
+			<element type="string" name="APPID" />
+			<element type="float" name="APPVER" />
+			<element type="string" name="DeviceType" />
+		</sequence>
+	</complexType>
+        
+       <complexType name="RQClientAPI">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="float" name="version" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="RQDeviceFamily">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="string" name="dname" />
+			</extension>
+		</simpleContent>
+	</complexType>	
+	
+		<complexType name="RequestParams">
+		<sequence>
+			<element type="string" name="RQOperationId" />
+			<element type="byte" name="RQTransSeq" />
+			<element type="int" name="RQLoginUserId" />
+			<element type="string" name="RQMPIN"/>
+			<element type="string" name="RQDateTime" />
+			<element type="fix:RQClientAPI" name="RQClientAPI" />
+			<element type="fix:RQDeviceFamily" name="RQDeviceFamily" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="STATUS">
+		<sequence>
+			<element type="string" name="customerid" />
+			<element type="byte" name="CODE" />
+			<element type="string" name="SEVERITY" />
+			<element type="string" name="MESSAGE" />
+		</sequence>
+	</complexType>
+	
+	
+	<complexType name="RBL">
+		<sequence>
+			<element type="fix:HeaderEnv" name="HeaderEnv" />
+			<element type="fix:SessionEnv" name="SessionEnv" />
+			<element type="fix:STATUS" name="STATUS" />
+			<element type="fix:RequestParams" name="RequestParams" />
+			<!-- <element type="fix:Response" name="Response" /> -->
+		</sequence>
+	</complexType>  
+  <complexType name="forgotMpinRequest">
+    <sequence>
+
+      <element type="int" name="RQLoginUserId"/>
+      <element type="string" name="SessionId"/>
+      <element type="float" name="RQClientAPIVer"/>
+      <element type="string" name="RQOperationId"/>
+      <element type="integer" name="RQRefNo"/>
+      <element type="byte" name="RQTransSeq"/>
+      <element type="string" name="RQDeviceFamily"/>
+      <element type="string" name="RQOTP"/>
+      <element type="string" name="RQDeviceFormat"/>
+      <element type="string" name="RQMPIN"/>
+
+
+    </sequence>
+  </complexType>
+</schema>

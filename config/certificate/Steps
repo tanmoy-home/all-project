@@ -1,0 +1,204 @@
+http://haproxy.debian.net/
+
+echo deb http://archive.ubuntu.com/ubuntu trusty-backports main universe | \
+      tee /etc/apt/sources.list.d/backports.list
+
+
+Install haproxy (https://www.vultr.com/docs/installing-and-configuring-haproxy-on-ubuntu-14-04, https://www.digitalocean.com/community/tutorials/how-to-implement-ssl-termination-with-haproxy-on-ubuntu-14-04)
+
+sudo vi /etc/haproxy/haproxy.cfg
+
+global
+        log /dev/log   local0
+        log 10.0.2.15   local1 notice
+        maxconn 4096
+        user haproxy
+        group haproxy
+        stats timeout 2m
+        daemon
+tune.ssl.default-dh-param 2048
+
+defaults
+        log     global
+        mode    http
+   option forwardfor
+   option http-server-close
+        option  httplog
+        option  dontlognull
+        retries 3
+        option redispatch
+        contimeout     5000
+        clitimeout     50000
+        srvtimeout     50000
+        errorfile 400 /etc/haproxy/errors/400.http
+        errorfile 403 /etc/haproxy/errors/403.http
+        errorfile 408 /etc/haproxy/errors/408.http
+        errorfile 500 /etc/haproxy/errors/500.http
+        errorfile 502 /etc/haproxy/errors/502.http
+        errorfile 503 /etc/haproxy/errors/503.http
+        errorfile 504 /etc/haproxy/errors/504.http
+#frontend www-http
+#bind 0.0.0.0:81
+#   default_backend www-backend
+frontend www-https
+   bind 0.0.0.0:443 ssl crt /etc/ssl/private/haproxy.pem
+   reqadd X-Forwarded-Proto:\ https
+   default_backend www-backend
+backend www-backend
+        hash-type consistent
+        stats enable
+        stats uri /haproxy?stats
+        option httpclose
+        option forwardfor
+        option http-server-close
+redirect scheme https if !{ ssl_fc }
+   server webserver01 10.0.2.15:9080 check
+
+
+
+
+
+Restart HAPROXY:
+sudo service haproxy restart
+
+
+GENERATE SSL CERTIFICATE (RSA)
+------------------------------
+
+
+Step 1)
+openssl genrsa -des3 -out haproxy.key 2048
+
+Generating RSA private key, 2048 bit long modulus
+.....................................................................................................................................................................................................+++
+.................................................................+++
+e is 65537 (0x10001)
+Enter pass phrase for haproxy.key:rsdpp
+Verifying - Enter pass phrase for haproxy.key:rsdpp
+
+
+Step 2)
+openssl req -out haproxy.csr -key haproxy.key -new -sha256
+
+Enter pass phrase for haproxy.key:rsdpp
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:IN
+State or Province Name (full name) [Some-State]:WB
+Locality Name (eg, city) []:Kolkata
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:RS Software
+Organizational Unit Name (eg, section) []:Software
+Common Name (e.g. server FQDN or YOUR name) []:10.0.2.15
+Email Address []:abhisheks@rssoftware.co.in
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:rsdpp
+An optional company name []:RS Software
+
+
+Step 3) Check
+openssl req -in haproxy.csr -noout -text
+...
+...
+Signature Algorithm: sha256WithRSAEncryption
+...
+...
+
+
+Step 4)
+openssl x509 -req -days 365 -in haproxy.csr -signkey haproxy.key -out haproxy.crt
+
+Signature ok
+subject=/C=IN/ST=WB/L=Kolkata/O=RS Software/OU=Software/CN=10.0.2.15/emailAddress=abhisheks@rssoftware.co.in
+Getting Private key
+Enter pass phrase for haproxy.key:rsdpp
+
+
+Step 5) Generate pem file for haproxy
+cat haproxy.crt haproxy.key > haproxy.pem
+
+
+Step 6) Copy to haproxy path
+sudo cp haproxy.pem /etc/ssl/private/
+
+GENERATE DOC-SIGNER CERTIFICTATE (RSA)
+
+------------------------------------------------------------------------
+2048 bit:
+
+openssl pkcs12 -export -out signer.p12 -inkey signer.key -in signer.crt -certfile CLASS3TEST24562.cer
+
+openssl pkcs12 -export -out haproxy.p12 -inkey haproxy.key -in haproxy.crt
+
+openssl pkcs12 -export -out pspsigner.p12 -inkey pspsigner.key -in pspsigner.crt
+
+openssl pkcs12 -export -out pspssl.p12 -inkey pspssl.key -in pspssl.crt
+
+
+GENERATE DOC-SIGNER CERTIFICATE (DSA)
+-------------------------------------
+2048 bit:
+
+openssl dsaparam 2048 -out dsaparams
+openssl gendsa -out signer.key -des3 dsaparams
+rm dsaparams
+openssl req -new -key signer.key -out signer.csr
+openssl x509 -req -days 365 -in signer.csr -signkey signer.key -out signer.crt
+cat signer.crt signer.key > signer.pem
+openssl pkcs12 -export -in signer.crt -inkey signer.key -out signer.p12
+
+To find the alias:
+keytool -list -keystore signer.p12 -storepass rsdpp -storetype PKCS12
+
+Keystore type: PKCS12
+Keystore provider: SunJSSE
+
+Your keystore contains 1 entry
+
+1, 1 Oct, 2015, PrivateKeyEntry, 
+Certificate fingerprint (SHA1): D2:6A:04:90:58:38:88:A3:F7:20:B9:4E:57:58:64:88:86:E6:D3:9E
+
+
+Therefore, alias is "1"
+
+
+1024 bit:
+
+openssl dsaparam 1024 -out dsaparams
+openssl gendsa -out signer.key -des3 dsaparams
+rm dsaparams
+openssl req -new -key signer.key -out signer.csr
+openssl x509 -req -days 365 -in signer.csr -signkey signer.key -out signer.crt
+
+openssl pkcs12 -export -in signer.crt -inkey signer.key -out signer.p12
+
+To find the alias:
+keytool -list -keystore signer.p12 -storepass rsdpp -storetype PKCS12
+
+
+PSP Certificate
+---------------
+SSL:
+openssl genrsa -des3 -out pspssl.key 2048
+openssl req -out pspssl.csr -key pspssl.key -new -sha256
+openssl req -in pspssl.csr -noout -text
+openssl x509 -req -days 365 -in pspssl.csr -signkey pspssl.key -out pspssl.crt
+openssl pkcs12 -export -in pspssl.crt -inkey pspssl.key -out pspssl.p12
+
+SIGNER:
+openssl dsaparam 1024 -out dsaparams
+openssl gendsa -out pspsigner.key -des3 dsaparams
+rm dsaparams
+openssl req -new -key pspsigner.key -out pspsigner.csr
+openssl x509 -req -days 365 -in pspsigner.csr -signkey pspsigner.key -out pspsigner.crt
+openssl pkcs12 -export -in pspsigner.crt -inkey pspsigner.key -out pspsigner.p12
+
+
+
+

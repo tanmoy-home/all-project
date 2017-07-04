@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:upiint="http://rssoftware.com/upiint/schema/"
+	xmlns:fix="http://rssoftware.com/upiint/rbl/cif/" targetNamespace="http://rssoftware.com/upiint/rbl/cif/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:upi="http://npci.org/upi/schema/"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<!-- <element xmlns:fix="http://rssoftware.com/upiint/rbl/cif"
+		name="RBL" /> -->
+	<element name="Request">
+		<complexType>
+			<sequence>
+				<element type="string" name="MobNumber" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="Response">
+		<complexType>
+			<sequence>
+				<element type="string" name="CIF" maxOccurs="unbounded"
+					minOccurs="0" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>

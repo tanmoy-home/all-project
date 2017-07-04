@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+<xs:include schemaLocation="PostAddr.xsd"/>
+
+
+<xs:complexType name="BankInfo">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ Postal Address.This aggregate holds the postal address details. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="BankId"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Bank Identifier. Used to uniquely identify the bank at which the account is held. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="6"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="Name"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Bank Name. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="80"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="BranchId"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Branch Identifier.Used to indicate which branch the account is held with. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="6"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="BranchName"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Branch Name. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="30"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="PostAddr"  type="PostAddr"  minOccurs="0" > 
+<xs:annotation>
+                <xs:documentation><![CDATA[ Postal Address.This aggregate holds the postal address details. ]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

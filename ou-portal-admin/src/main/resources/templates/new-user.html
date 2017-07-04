@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+<head data-th-replace="fragments/sb-admin :: hdr"> </head>
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1>User Details</h1>
+         <!-- <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Agent Institutes</a></li>
+            <li class="active">Reconciliation Report</li>
+          </ol>-->
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+             
+              <!-- FORM START -->
+               <form class="form-horizontal" action="#" data-th-action="@{/user/add-user/save-user}" data-th-object="${user}" method="post">
+                          <div class="row">
+                          
+                          <!-- <div class="input-field col-md-4">
+                                  <label for="userRefId">Ref ID<span class="star">*</span></label>                      
+                              <input 
+                                     id="userRefId" 
+                                     type="text"                                      
+                                     placeholder="Ref. ID"
+                                     data-th-value="*{userRefId}" 
+                                     data-th-field="*{userRefId}"/>
+                                
+                            </div> -->
+                            <div class="input-field col-md-4">
+                               <label for="Roles" class="label-select-box">Roles<span class="star">*</span></label>                         
+                            <div class="select-style"> 
+                            <select 
+                                    class="validate rolePrivilege" 
+                                    name="selectRole" 
+                                    th:field="*{roles}" 
+                                   > 
+                                 <option value=''>select Role</option>
+                                  <option 
+                                          th:each="role:${roleList}" 
+                                          th:value="${role.id}" th:text="${role.roleName}">Role</option>
+                                </select>
+                                
+                              </div>
+                            </div>
+                            
+                            <div class="input-field col-md-4 AIList">
+                            <label for="Agent Institute" class="label-select-box">Agent Institute<span class="star">*</span></label>
+             <div class="select-style">
+             	<select id="agentInstGrp" name="agentInstGrp"
+							class="validate" th:field="*{userRefId}">
+							<option value=''>select AI</option>
+							<option th:each="ai : ${agentInstList}" th:value="${ai.agentInstId}"
+								th:text="${ai.agentInstName}"></option>
+						</select>
+						</div>
+             </div>
+                          
+                            <div class="input-field col-md-4">
+                            <label for="username">User Name<span class="star">*</span></label>
+                              <input 
+                                     type="text" 
+                                     hidden="hidden" 
+                                     data-th-value="*{id}" 
+                                     data-th-field="*{id}" />
+                                
+                              <input 
+                                     id="username" 
+                                     type="text" 
+                                     class="validate" 
+                                     placeholder="Enter username"
+                                     data-th-value="*{username}" 
+                                     data-th-field="*{username}"
+                                     maxlength="45"
+                                     title="e.g. User name not more than 45 charecters long. No special charester is used except '. _ -'"
+                                     />
+                                
+                              
+                              <span id="usernameIcon"></span>
+                            </div>
+                              
+                            
+                            
+                              
+                            
+                            <div class="input-field col-md-4">
+                                 <label for="firstname">Full Name<span class="star">*</span></label>                             
+                              <input 
+                                     id="FullName" 
+                                     type="text" 
+                                      title="e.g. Name should be 3-45 charecters long. No number or Special charecter is used except ' . - _'"
+                                     placeholder="Enter Full Name"
+                                     data-th-value="*{firstName}" 
+                                     data-th-field="*{firstName}"/>
+                                
+                            </div> 
+                              
+                              
+                            <div class="input-field col-md-4">
+                                <label for="address">Address<span class="star">*</span></label>                              
+                              <input
+                                     id="address" 
+                                     type="text" 
+                                     title="e.g. Address should not more than 200 charecters long. No Special charecter is used except ' . - _ / @()'"
+                                     placeholder="Enter Address"
+                                     data-th-value="*{address}" 
+                                     data-th-field="*{address}"
+                                     maxlength="400" />
+                                
+                              
+                            </div> 
+                              
+                            <div class="input-field col-md-4">                                                              
+                            <label for="state" class="label-select-box">State<span class="star">*</span></label>
+                          <div class="select-style">           
+                        <select id="state" name="state"
+							th:field="*{state}" class="validate">
+							<option value=''>select State</option>
+							<option th:each="sl : ${stateList}" th:value="${sl.stateId}"
+								th:text="${sl.stateName}"></option>
+						</select>
+                            </div>    
+                              
+                            </div>
+                              
+                              
+                            <div class="input-field col-md-4">
+                              <label for="country">Country<span class="star"></span></label>                                
+                            <input 
+                                     id="country" 
+                                     type="text" 
+                                     
+                                     placeholder="Enter Country"
+                                     data-th-value="*{country}" 
+                                     data-th-field="*{country}"
+                                     readonly="readonly"/>
+                                
+                              
+                            </div>
+                              
+                              
+                            <div class="input-field col-md-4">
+                            
+                              
+                            <label for="pincode" class="label-select-box">Pin Code<span class="star">*</span></label>
+                            <div class="select-style"> 
+                              <select id="pincode" 
+                                     name="pincode" 
+                                     th:field="*{pincode}" 
+                                     class="validate">                                                                     
+                                     <option value=''>select PinCode</option> 
+                                     <option th:each="pin : ${pinList}" th:value="${pin.postalCode}"
+										  th:text="${pin.postalCode}"></option>                                
+                              </select>
+                              </div>  
+                              
+                            </div>
+                              
+                            
+                            <div class="input-field col-md-4">
+                                <label for="email">Email<span class="star">*</span></label>                              
+                            <input 
+                                     id="email" 
+                                     type="text" 
+                                     class="validate" 
+                                     placeholder="Enter Email"
+                                     data-th-value="*{email}" 
+                                     data-th-field="*{email}"
+                                     title="e.g. email should accept alphanumaric and one @. No special charecter except ' . -_'"
+                                     />
+                                
+                              
+                            </div>
+                              
+                            <div class="input-field col-md-4">
+                               <label for="contactNumber">Contact Number<span class="star">*</span></label>                               
+                            <input 
+                                     id="contactNumber" 
+                                     type="text" 
+                                     class="validate" 
+                                     placeholder="Enter Contact Number"
+                                     data-th-value="*{contactNumber}" 
+                                     data-th-field="*{contactNumber}"
+                                     title="e.g. 3 Digit STD code and 8 Digit Contact number"
+                                     />
+                                
+                              
+                            </div>
+                              
+                            
+                            <div class="input-field col-md-4">
+                               <label for="mobile">Mobile<span class="star">*</span></label>                               
+                            <input 
+                                     id="mobile" 
+                                     type="text" 
+                                     
+                                     maxlength="10"
+                                     size="30" 
+                                     placeholder="Enter Mobile"
+                                     pattern="^[789]\d{9}$"
+                                     title="e.g. only numbers starts with 7 or 8 or 9"
+                                     data-th-value="*{mobile}" 
+                                     data-th-field="*{mobile}"
+                                     />
+                                
+                              
+                            </div>
+                            
+                            <div class="input-field col-md-4">
+                             <label for="mobile">User Activity<span class="star"></span></label> 
+                             <div class="clearfix"></div>                                  
+                            <input 
+                                 id="IsActive" 
+                                 type="checkbox" 
+                                 class="validate" 
+                                 th:checked="*{isActive}"
+                                 th:field="*{isActive}"/>
+                                
+                              <label for="IsActive">Is Active?</label>
+                              
+                              
+                              
+                              <!-- <input 
+                                 id="resetPasswordFlag" 
+                                 type="checkbox" 
+                                 class="validate" 
+                                 th:checked="*{resetPasswordFlag}"
+                                     th:field="*{resetPasswordFlag}"/>
+                                
+                              <label for="resetPasswordFlag">Reset Password</label> -->
+                              
+                              <!-- 
+                               <input 
+                                 id="isAccountLocked" 
+                                 type="checkbox" 
+                                 class="validate" 
+                                 th:checked="*{isAccountLocked}" 
+                                     th:field="*{isAccountLocked}"/>
+                                
+                              <label for="isAccountLocked">User Locked?</label> -->
+                            </div>
+                              
+                           
+                               
+                            
+                              
+                         <!-- BUTTON START -->
+                            <div class="col-md-12 form-button-panel">
+                                <button type="submit" class="btn btn-default waves-effect waves-light" id="btnSubmit" name="action">Save</button>
+                                
+                                <button type="reset" class="btn btn-default waves-effect waves-light" name="action">Reset</button>
+                            </div>
+                         <!-- BUTTON END --> 
+                              
+                           
+                          </div>
+                   
+                   
+                   
+                </form>
+              <!-- FORM END -->
+				<div id="editMode" th:if="${edit}"></div>
+            
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>      
+      <script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+      <script type="text/javascript" th:src="@{/js/validation-user-details.js}"></script>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+</body>
+</html>

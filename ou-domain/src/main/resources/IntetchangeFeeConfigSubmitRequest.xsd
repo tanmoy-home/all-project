@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="InterchangeFeeConfigSubmitRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						  <xs:element name="BillerId" type="xs:string" minOccurs="1" maxOccurs="1" />
+					      <xs:element name="mti" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="paymentMode" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="paymentChannel" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="responseCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="fees" type="bbps:FeeList" minOccurs="1" maxOccurs="1" />
+					      <xs:element name="effctvFrom" type="xs:date" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="effctvTo" type="xs:date" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="isDefault" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FeeList">
+    	<xs:sequence>
+		<xs:element name="fee" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

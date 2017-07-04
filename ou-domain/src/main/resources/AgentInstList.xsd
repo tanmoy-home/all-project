@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="AgentInstList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="agentInst" type="bbps:agentInst"
+							minOccurs="0" maxOccurs="unbounded" />
+							
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="agentInst">
+		<xs:sequence>
+			<xs:element type="xs:string" name="agentInstId" />
+			<xs:element type="xs:string" name="agentInstAliasName" />
+			<xs:element type="xs:string" name="agentInstName" />
+			<xs:element type="xs:string" name="agentInstBusnsType" />
+			<xs:element type="xs:string" name="agentInstCommAdrline1" />
+			<xs:element type="xs:string" name="agentInstCommAdrline2" />
+			<xs:element type="xs:string" name="agentInstCommAdrline3" />
+			<xs:element type="xs:string" name="agentInstCommCity" />
+			<xs:element type="xs:string" name="agentInstCommCountry" />
+			<xs:element type="xs:string" name="agentInstCommPinCode" />
+			<xs:element type="xs:string" name="agentInstCommState" />
+			<xs:element type="xs:string" name="agentInstEffctvFrom" />
+			<xs:element type="xs:string" name="agentInstEffctvTo" />
+			<xs:element type="xs:string" name="agentInstRegAdrline1" />
+			<xs:element type="xs:string" name="agentInstRegAdrline2" />
+			<xs:element type="xs:string" name="agentInstRegAdrline3" />
+			<xs:element type="xs:string" name="agentInstRegCity" />
+			<xs:element type="xs:string" name="agentInstRegCountry" />
+			<xs:element type="xs:string" name="agentInstRegPinCode" />
+			<xs:element type="xs:string" name="agentInstRegState" />
+			<xs:element type="xs:string" name="agentInstTanNo" />
+			<xs:element type="xs:string" name="agentInstType" />
+			<xs:element type="xs:string" name="agentInstUaadhaar" />
+			<xs:element type="xs:string" name="agentInstRocUin" />
+			<xs:element type="xs:string" name="entityStatus" />
+			<xs:element type="xs:string" name="busAddrAuthLetter" />
+			<xs:element type="xs:base64Binary" name="busAddrAuthLetterScanCopy"/>
+			<xs:element type="xs:string" name="licenseToBusiness" />
+			<xs:element type="xs:base64Binary" name="licenseToBusinessScanCopy"/>
+			<xs:element type="xs:string" name="residentialAddress" />
+			<xs:element type="xs:base64Binary" name="residentialAddressScanCopy"/>
+			<xs:element type="xs:string" name="aadhaarCard" />
+			<xs:element type="xs:base64Binary" name="aadhaarCardScanCopy"/>
+			<xs:element type="xs:string" name="voterIdCard" />
+			<xs:element type="xs:base64Binary" name="voterIdCardScanCopy"/>
+			<xs:element type="xs:string" name="passport" />
+			<xs:element type="xs:base64Binary" name="passportScanCopy"/>
+			<xs:element type="xs:string" name="agentInstAccountNo" />
+	
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

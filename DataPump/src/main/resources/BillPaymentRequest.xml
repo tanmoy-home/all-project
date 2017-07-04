@@ -1,0 +1,57 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<bbps:BillPaymentRequest xmlns:bbps="http://bbps.org/schema">
+	<Head ver="1.0" ts="2016-03-28T14:52:35+05:30" origInst="OU13"
+		refId="HENSVVR4QOS7X1UGPY7JGUV444PL9T2C3QN" />
+	<Analytics>
+		<Tag name="PAYREQUESTSTART" value="2015-02-16T22:02:34+05:30" />
+		<Tag name="PAYREQUESTEND" value="2015-02-16T22:02:35+05:30" />
+	</Analytics>
+	<Txn txnReferenceId="OU1356789123" ts="2016-03-28T14:52:35+05:30"
+		type="FORWARD TYPE REQUEST" msgId="8ENSVVR4QOS7X1UGPY7JGUV444PL9T2C3QY">
+		<RiskScores>
+			<Score provider="OU01" type="TXNRISK" value="030" />
+			<Score provider="BBPS" type="TXNRISK" value="030" />
+		</RiskScores>
+	</Txn>
+	<Customer mobile="9830098300">
+		<Tag name="EMAIL" value="abc@npci.org.in" />
+		<Tag name="AADHAAR" value="499118665246" />
+		<Tag name="PAN" value="AAAPA1234A" />
+	</Customer>
+	<Agent id="OU12OXYG000001123458">
+		<Device>
+			<Tag name="TERMINAL_ID" value="1234567890" />
+			<Tag name="MOBILE" value="9000000000" />
+			<Tag name="GEOCODE" value="22.3436,88.1943" />
+			<Tag name="POSTAL_CODE" value="700004" />
+			<Tag name="INITIATING_CHANNEL" value="POS" />
+		</Device>
+	</Agent>
+	<BillDetails>
+		<Biller id="VODA00000MUM03" />
+		<CustomerParams>
+			<Tag name="Account" value="123" />
+		</CustomerParams>
+	</BillDetails>
+	<BillerResponse customerName="Soumalya Biswas" amount="620"
+		dueDate="2015-09-24" custConvFee="10" custConvDesc="Customer service fee"
+		billDate="2015-09-24" billNumber="1232332" billPeriod="January">
+		<Tag name="Early Payment Amount" value="600" />
+		<Tag name="Surcharge" value="10" />
+	</BillerResponse>
+	<AdditionalInfo>
+		<Tag name="Info1" value="213" />
+	</AdditionalInfo>
+	<PaymentMethod quickPay="No" splitPay="Yes" paymentMode="Debit Card|Credit Card">
+	</PaymentMethod>
+	<Amount>
+		<Amt amount="630" custConvFee="10" currency="356" />
+		<SplitPayAmount>100</SplitPayAmount>
+		<!-- Tag name="Early Payment Amount" value="600" /-->
+		<Tag name="Surcharge" value="10" />
+	</Amount>
+	<PaymentInformation>
+		<Tag name="CardNum|AuthCode" value="5241826429020387|12345" />
+		<Tag name="CardNum|AuthCode" value="5241826429020387|12345" />
+	</PaymentInformation>
+</bbps:BillPaymentRequest>

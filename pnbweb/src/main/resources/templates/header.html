@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" th:href="@{|/css/portal-home.${session.tenatntId}.min.css|}" />
+</head>
+<body id="portal-header" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<div id="main">
+		<a href="/home" target="_top" id="icon"><img th:src="@{|/images/${session.tenatntId}_logo.png|}"/></a>
+		<div id="contain">
+			<div id="system" th:text="@{BBPS Portal}"></div>
+			<div id="login">
+				<table style="width: 100%">
+					<tr>
+						<td>Last Login : <!-- <font th:if="${userProfile.lastLoginTs!=null}" th:text="${#dates.format(userProfile.lastLoginTs, 'dd-MMM-yyyy hh:mm:ss a')}" ></font> --> || Last Login IP : <!-- <font style="color:#FFF" th:if="${userProfile.lastLoginIP!=null}" th:text="${userProfile.lastLoginIP}" ></font> --></td>
+					</tr>
+					<tr>
+						<td style="font-size: 18px; overflow: hidden;">Welcome Admin<!-- <font th:text="${userProfile.userName}" > </font>--></td>
+					</tr>
+					<tr>
+						<td>
+						<!-- <a th:href="@{|/admin/updateUser/${userProfile.userId}|}" target="content" >Update User Profile </a>
+						|| <a th:href="@{|/admin/changePassword/${userProfile.userId}|}" target="content" >Change Password</a> 
+						||--> <a th:href="@{|${session.tenantId}/logout|}" target="_top">Logout</a>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

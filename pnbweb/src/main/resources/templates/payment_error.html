@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      
+	<head >
+    <link th:substituteby="common/common_header" />
+	
+	<script type="text/javascript" th:src="@{/js/bbpou.js}"></script>
+	<script type="text/javascript" th:src="@{/js/paybill.js}"></script>		
+	
+    <style>
+        .no-border-on-me>thead>tr>th,
+        .no-border-on-me>tbody>tr>th,
+        .no-border-on-me>tfoot>tr>th,
+        .no-border-on-me>thead>tr>td,
+        .no-border-on-me>tbody>tr>td,
+        .no-border-on-me>tfoot>tr>td
+        {
+            border-top-style: none;
+            border-bottom-style: none;
+        }
+    </style>
+        
+   
+
+</head>
+
+	<body class="">
+	
+		<div id="wrapper">
+			
+			<!-- HEADER -->
+			<div lang="en" th:replace="common/header :: header"> </div>
+			<!-- /HEADER -->	
+
+			<!-- SIDEBAR -->
+			<!-- left menu -->
+            <div lang="en" th:replace="common/left_menu:: leftmenu"> </div>
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+  <!-- ERROR CONTENT START -->
+
+                  <div class="error-masg effect2">
+
+                     <div class="erro-img">
+                        <img src="images/notification_error.png">
+                     </div>
+                     <div class="error-text">
+                        <h2>
+                           Error During Transaction
+                        </h2>
+                        <p th:text="${errormsg}"> </p>
+                       
+                       
+                     </div>
+                  </div>
+
+
+            <!-- ERROR CONTENT END -->
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+
+			<!-- FOOTER -->
+			 <div lang="en" th:replace="common/footer:: footer"> </div>
+			<!-- /FOOTER -->
+
+	</body>
+
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+<xs:include schemaLocation="PartTrnRec.xsd"/>
+
+
+<xs:complexType name="XferTrnDetail">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ transfer transaction remarks. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="PartTrnRec"  type="PartTrnRec"   maxOccurs="unbounded"> 
+<xs:annotation>
+                <xs:documentation><![CDATA[ details of the part transaction ]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+<xs:element name="Remarks"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ transfer transaction remarks. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="60"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

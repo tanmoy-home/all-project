@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by 
+		rowMapper -->
+	<bean id="txnReportItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="sql"
+	value="with query1 as (
+  select 1 sl, count(*) failedTxnCount, sum(bill_amount) failedTxnTot 
+  from transaction_data 
+  where txn_type='PAYMENT' 
+  and crtn_ts between sysdate-7 and sysdate 
+  and current_status!='RESPONSE_SUCCESS'
+), 
+query2 as (
+  select 1 sl, count(*) txnCount, sum(bill_amount) txnTot
+  from transaction_data
+  where txn_type='PAYMENT' 
+  and crtn_ts between sysdate-7 and sysdate
+) 
+select query1.failedTxnCount,query1.failedTxnTot, query2.txnCount,query2.txnTot 
+from query1,query2 
+where query1.sl=query2.sl
+
+		" />
+
+		<property name="rowMapper">
+			<bean class="com.rssoftware.ou.batch.common.TxnReportRowMapper" />
+		</property>
+
+	</bean>
+	<!-- <bean id="itemReader2"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="saveState" value="true" />
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="sql" value="select count(*) failedTxnCount, sum(bill_amount) failedTxnTot from transaction_data where txn_type='PAYMENT' and crtn_ts between sysdate-7 and sysdate-1 and current_status!='RESPONSE_SUCCESS'
+		" />
+
+		<property name="rowMapper">
+			<bean class="com.rssoftware.ou.batch.common.TxnReportRowMapper" />
+		</property>
+
+	</bean> -->
+	<!-- <bean id="txnReportItemReader" class="com.rssoftware.ou.batch.reader.CompositeCursorItemReader">
+
+		<property name="unifyingMapper">
+	
+            <bean class="com.rssoftware.ou.batch.common.DefaultUnifyingStringItemsMapper" />
+	
+        </property>
+
+        <property name="cursorItemReaders">
+            <list>
+                <ref bean="itemReader1" />
+                <ref bean="itemReader2" />                
+            </list>
+        </property>
+    </bean> -->
+ 
+	<bean id="txnReportDao"
+		class="com.rssoftware.ou.tenant.dao.impl.TxnReportDaoImpl" />
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.TxnReport</value>
+		</property>
+	</bean>
+
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
+		records -->
+	<bean id="txnReportItemProcessor" class="com.rssoftware.ou.batch.processor.TxnReportItemProcessor"
+		scope="step" >
+		<property name="ouName" value="#{jobParameters['OU_Name']}"></property>
+	</bean>
+	<bean id="fileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+
+		<!-- write to this csv file -->
+		<property name="resource" value="#{jobParameters['output_file']}" />
+
+		<property name="lineAggregator">
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="bbpouName, noOfAgentOutlets, onUsTxnCount, offUsTxnCount, onUsTxnTot, offUsTxnTot, onUsFailedTxnCount, offUsFailedTxnCount, onUsFailedTxnTot, offUsFailedTxnTot, failureReason, cashPaymentCount, DCCCPaymentCount, netBankingPaymentCount, IMPSPaymentCount, PPIsPaymentCount, otherPaymentCount" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dbItemWriter" class="com.rssoftware.ou.batch.writer.TxnReportDBItemWriter"
+		scope="step"/>
+		
+	<bean id="txnReportItemWriter"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<ref bean="dbItemWriter" />
+				<ref bean="fileItemWriter" />
+			</list>
+		</property>
+	</bean>
+
+	<batch:job id="txnReportJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="txnReportItemReader" writer="txnReportItemWriter"
+					processor="txnReportItemProcessor" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+</beans>

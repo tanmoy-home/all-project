@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+	
+	<xs:element name="PaymentRequest">
+		<xs:complexType>
+			<xs:sequence>
+			<!-- Changes for adding Agent Details start -->
+				<xs:element type="bbps:agentChannelDetails" name="AgentChannelDetails" minOccurs="0" maxOccurs="1" />
+			<!-- Changes for adding Agent Details end -->	
+				<xs:element type="xs:string" name="refId" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="txnRefId" minOccurs="1"
+					maxOccurs="1" />
+				<xs:element type="bbps:riskScoresType" name="riskScores"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:customerDtlsType" name="customer"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:agentType" name="agent" minOccurs="1"
+					maxOccurs="1" />
+				<xs:element type="bbps:billDetailsType" name="billDetails"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="bbps:pmtMtdType" name="paymentMethod"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="bbps:payAmountType" name="amount"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="bbps:pymntInfType" name="paymentInformation"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="bbps:finTransactionDetailsType" name="finTxnDetails"
+					minOccurs="0" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="payAmountType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="amount" />
+			<xs:element type="xs:string" name="customerConvinienceFee"/>
+			<xs:element type="xs:string" name="splitPayAmount" />
+			<xs:sequence>
+				<xs:element name="Tag" maxOccurs="unbounded" minOccurs="1">
+					<xs:complexType>
+						<xs:attribute type="xs:string" name="name" use="required" />
+						<xs:attribute type="xs:string" name="value" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<!-- <xs:element type="bbps:additionalInfoType" name="AdditionalInfo" 
+				/> --> <!-- Commented asper V10.1 -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="finTransactionDetailsType">
+		<xs:sequence>
+			<xs:element type="xs:string" name="txnRefId" minOccurs="1"/>
+			<xs:element type="xs:string" name="authCode" minOccurs="1"/>
+			<xs:element type="xs:string" name="paymentDetails" minOccurs="1"/>
+			<xs:element type="xs:string" name="paymentStatus" minOccurs="1"/>
+			<xs:element type="xs:string" name="requestJsonAsString" minOccurs="0"/>
+			<xs:element type="xs:string" name="responseJsonAsString" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+</xs:schema>

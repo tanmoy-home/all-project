@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bbps:BillFetchRequest xmlns:bbps="http://bbps.org/schema">
+	<Head ver="1.0" ts="2015-02-16T22:02:35+05:30" origInst="OU12" refId="HENSVVR4QOS7X1UGPY7JGUV444PL9T2C3QN" />
+	<Analytics>
+		<Tag name="FETCHREQUESTSTART" value="2015-02-16T22:02:30+05:30" />
+		<Tag name="FETCHREQUESTEND" value="2015-02-16T22:02:35+05:30" />
+	</Analytics>
+	<Txn ts="2015-02-16T22:02:35+05:30" msgId="8ENSVVR4QOS7X1UGPY7JGUV444PL9T2C3QX">
+		<RiskScores>
+			<Score provider="OU01" type="TXNRISK" value="030" />
+			<Score provider="BBPS" type="TXNRISK" value="030" />
+		</RiskScores>
+	</Txn>
+	<Customer mobile="9830098300">
+		<Tag name="EMAIL" value="abc@npci.org.in" />
+		<Tag name="AADHAAR" value="499118665246" />
+		<Tag name="PAN" value="BXXCG7754K" />
+	</Customer>
+	<Agent id="OU12OXYG000001123458">
+		<Device>
+			<Tag name="IP" value="124.170.23.22" />
+			<Tag name="INITIATING_CHANNEL" value="INT" />
+			<Tag name="MAC" value="A4-4E-31-8C-63-74" />
+		</Device>
+	</Agent>
+	<BillDetails>
+		<Biller id="VODA00000MUM03" />
+		<CustomerParams>
+			<Tag name="Account" value="123" />
+			<Tag name="Mobile" value="9123456789" />
+			<!-- Tag name="CustomerParam" value="123" /-->
+		</CustomerParams>
+	</BillDetails>
+</bbps:BillFetchRequest>

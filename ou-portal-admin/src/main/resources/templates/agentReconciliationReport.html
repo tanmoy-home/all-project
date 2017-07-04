@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+    
+    <!-- Material Design Bootstrap -->
+    <link href="css/bootstrap-datepicker3.css" rel="stylesheet"/>
+</head>
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1> Agent Reconciliation Report </h1>
+         <!-- <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Agent Institutes</a></li>
+            <li class="active">Reconciliation Report</li>
+          </ol> --> 
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+              <!-- SELECT DATE and BUTTON BOX START -->
+              
+              <div class="row no-margin">
+                  <!-- SELECT DATE BOX START -->
+                  
+                      <div class="input-daterange input-group col-md-4 col-lg-6 input-daterange-for-report" id="datepicker">
+                            <label class="active" for="Agent_Effective_From">Agent Effective From</label>
+                            <input placeholder="From Date" type="text" class="validate" id="datepickerEffctvFrom" name="datepickerEffctvFrom"
+								th:value="*{datepickerEffctvFrom}" />
+                          
+                          
+                          
+                          
+                            <span class="input-group-addon" style="background:transparent;"></span>
+                          
+                          <label class="active" for="Agent_Effective_To">Agent Effective To</label>
+                            <input placeholder="To Date" type="text" class="validate" id="datepickerEffctvTo" name="datepickerEffctvTo" th:value="*{datepickerEffctvTo}" />
+                          
+                       </div>
+                       
+                  <!-- SELECT DATE BOX START -->
+                  <!-- BUTTON BOX START -->
+                  <div class="col-md-6 col-lg-6">
+                    <button class="btn btn-default waves-effect waves-light" type="button" id="btnSearch" onclick="agentRecon();">Get Report</button>
+                  </div>
+                  <!-- BUTTON BOX END -->
+              </div>
+
+              <!-- SELECT DATE and BUTTON BOX END -->
+              <!-- TABLES START -->
+              <div id="divAgentReconSummary" class="datatable-align">
+					<table id="agentReconSummary" class="table table-striped table-bordered table-hover dataTable no-footer">
+							<thead>
+								<tr class="custom-data-table-head">
+									<th>Reconciliation Id</th>	
+									<th>NotInOUCount</th>
+									<th>NotInCUCount</th>
+									<th>Mismatched Count</th>
+									<th>Pending Count</th>
+									<th>Brought Forward Count</th>				
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+				</div>
+              <!-- TABLES END -->
+              <!-- DATAGRID START -->
+              <div id="divAgentRecon">
+                  <div class="datagrid">
+						<table id="agentRecon" class="table table-striped table-bordered table-hover dataTable no-footer">
+							<thead>
+								<tr class="custom-data-table-head">
+									<th>Transaction Id</th>	
+									<th>Agent Id</th>
+									<th>Biller Id</th>
+									<th>Description</th>
+									<th>Reconciliation Status</th>				
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+					</div>
+              </div>
+             <!-- DATAGRID END -->
+
+              
+            
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>
+      <script type="text/javascript" th:src="@{/js/aiRecon.js}"></script>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+</body>
+
+</html>

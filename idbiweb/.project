@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+  <name>idbiweb</name>
+  <comment>Portal for BBPS Application. NO_M2ECLIPSE_SUPPORT: Project files created with the maven-eclipse-plugin are not supported in M2Eclipse.</comment>
+  <projects>
+    <project>ou-core</project>
+    <project>ou-domain</project>
+    <project>ou-service</project>
+    <project>ou-service-impl</project>
+    <project>ou-batch</project>
+    <project>ou-dao-impl</project>
+    <project>ou-security</project>
+    <project>ou-dao</project>
+  </projects>
+  <buildSpec>
+    <buildCommand>
+      <name>org.eclipse.jdt.core.javabuilder</name>
+    </buildCommand>
+  </buildSpec>
+  <natures>
+    <nature>org.eclipse.jdt.core.javanature</nature>
+  </natures>
+</projectDescription>

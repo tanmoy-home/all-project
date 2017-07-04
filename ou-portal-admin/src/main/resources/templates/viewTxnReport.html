@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+   
+</head>
+<style>
+      table{
+        font-size:10px;
+      }
+      table tbody:nth-child(odd){ background-color: #f6f5f5;}
+      table tbody:nth-child(even){ background-color: #ebebeb;}
+      .table-head-second-level{background-color:#b8daaa;}
+      .table-head-third-level{background-color:#acc7a2;}
+      tfoot{background-color:#d9e5d4;}
+      .dataTables_scroll{
+      width:auto;
+      height:auto;
+      	overflow:auto;
+      }
+      
+     /*  @media print {
+  body * {
+    visibility: hidden;
+  }
+  #txnReportData, #txnReportData * {
+    visibility: visible;
+  }
+ #txnReportData {
+    position: absolute;
+    left: 0;
+    top: 0;
+  } 
+}*/
+</style> 
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1>
+           Statement of BBPS Transactions
+          </h1>
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+              <!-- SELECT DATE and BUTTON BOX START -->
+              
+              <div>
+                  <!-- SELECT DATE BOX START -->
+                      <div>
+                            
+                            <input placeholder="Select Date" type="text" class="validate" id="selectedDate" name="selectedDate"
+								th:value="*{selectedDate}" readonly="readonly" />
+                          
+                          <label class="active" for="SelectedDate">Select Date</label>
+                       </div>
+                  <!-- SELECT DATE BOX START -->
+                  <!-- BUTTON BOX START -->
+                  <div>
+                    <button class="btn btn-default waves-effect waves-light" type="button"  id="txnReport" onclick="txnReport();">Get Report</button>
+                  </div>
+                  <!-- BUTTON BOX END -->
+              </div>
+              <!-- SELECT DATE and BUTTON BOX END -->
+              <!-- TABLES START -->
+              <div id="divTxnReport">
+					<table id="txnReportData" class="table table-bordered">
+					<thead>
+								<tr class="success">
+									<th class="col-sm-1">Sr. No</th>	
+									<th class="col-sm-1">Name of the BBPOU</th>
+									<th class="col-sm-1">Total No. of Agent Outlets</th>
+									<th class="col-sm-1" colspan="2">Total Volume of transactions (Number)</th>
+									<th class="col-sm-1" colspan="2">Total value of transactions (in Rs)</th>
+									<th class="col-sm-1" colspan="2">Total number of failed transactions</th>	
+								    <th class="col-sm-1" colspan="2">Total Value of failed transactions (in Rs)</th>				
+									<th class="col-sm-1">Reasons for failed transactions and action taken by the entity</th>				
+									<th class="col-sm-3" colspan="6">Number of transaction through these mode of payments</th>	
+												
+								</tr>
+								<tr class="table-head-second-level">
+									<th class="text-center">1</th>	
+									<th class="text-center">2</th>
+									<th class="text-center">3</th>
+									<th class="text-center" colspan="2">4</th>
+									<th class="text-center" colspan="2">5</th>
+									<th class="text-center" colspan="2">6</th>	
+								    <th class="text-center" colspan="2">7</th>				
+									<th  class="text-center">8</th>				
+									<th class="text-center" colspan="6">9</th>	
+												
+								</tr>
+								<tr class="table-head-third-level">
+									<th></th>	
+									<th></th>
+									<th></th>
+									<th>On-Us</th>
+								    <th>Off-Us</th>
+									<th>On-Us</th>
+								    <th>Off-Us</th>
+								    <th>On-Us</th>
+								    <th>Off-Us</th>
+								    <th>On-Us</th>
+								    <th>Off-Us</th>			
+									<th></th>				
+									<th>Cash</th>	
+									<th>DC/CC</th>	
+									<th>Netbanking</th>	
+									<th>IMPS</th>
+									<th>PPIs</th>	
+									<th>Other(specify)</th>												
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+				</div>      
+				<div align="center">
+										 <button class="btn btn-default waves-effect waves-light" id="exportTable" onclick="exportTxnReport()">Export</button>
+				</div>
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer">
+      
+      </div>
+      
+            <script type="text/javascript" th:src="@{/js/weekReport.js}"></script>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+   
+</body>
+
+</html>

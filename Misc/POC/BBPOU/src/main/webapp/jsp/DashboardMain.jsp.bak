@@ -1,0 +1,1576 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>DashboardMain</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<!-- <script src="https://code.jquery.com/ui/1.8.14/jquery-ui.min.js"></script> -->
+
+
+
+
+
+<link rel="stylesheet" href="resources/css/customed.css" type="text/css" />
+
+<!------------------------------ jqx widget ------------------------------------->
+<link rel="stylesheet" href="resources/css/jqx.base.css" type="text/css" />
+<link rel="stylesheet" href="resources/css/jqx.shinyblack.css"
+	type="text/css" />
+<link rel="stylesheet" href="resources/css/jqx.energyblue.css"
+	type="text/css" />
+<link rel="stylesheet" href="resources/css/jqx.ui-redmond.css"
+	type="text/css" />
+
+
+<script type="text/javascript" src="resources/js/jqxcore.js"></script>
+<script type="text/javascript" src="resources/js/jqxdata.js"></script>
+<script type="text/javascript" src="resources/js/jqxdraw.js"></script>
+<script type="text/javascript" src="resources/js/jqxchart.core.js"></script>
+<script type="text/javascript" src="resources/js/json2.js"></script>
+<script type="text/javascript" src="resources/js/knockout-3.0.0.js"></script>
+<script type="text/javascript" src="resources/js/jqxbuttons.js"></script>
+<script type="text/javascript" src="resources/js/jqxscrollbar.js"></script>
+<script type="text/javascript" src="resources/js/jqxmenu.js"></script>
+<script type="text/javascript" src="resources/js/jqxgrid.js"></script>
+<script type="text/javascript" src="resources/js/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="resources/js/jqxgrid.edit.js"></script>
+<script type="text/javascript" src="resources/js/jqxknockout.js"></script>
+<script type="text/javascript" src="resources/js/jqxcheckbox.js"></script>
+<script type="text/javascript" src="resources/js/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="resources/js/jqxlistbox.js"></script>
+<script type="text/javascript" src="resources/js/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="resources/js/demos.js"></script>
+<script type="text/javascript" src="resources/js/jqxtabs.js"></script>
+<script type="text/javascript" src="resources/js/jqxradiobutton.js"></script>
+
+
+
+<script type="text/javascript">
+
+var chartId = [];
+var chartName = [];
+var chartType = [];
+var chartURI = [];
+var chartDesc = [];
+
+var count =0;
+
+function displayPane(indexNo) {
+	//alert("Test function:" + indexNo);
+	//alert("Selected Info: " + chartId[indexNo] + ',' + chartName[indexNo] + ',' + chartType[indexNo] + ',' + chartURI[indexNo]);
+	
+	$('#'+chartId[indexNo]).toggle();
+	if($('#chk_' + chartId[indexNo]).is(":checked")) {
+		
+		//panel_draw(chartId[indexNo], chartName[indexNo], chartType[indexNo], chartURI[indexNo]);
+		//alert(chartType);
+		
+		if(chartType[indexNo].toUpperCase() == 'LINE')
+		{
+			 panel_draw(chartId[indexNo], chartName[indexNo], chartType[indexNo], chartURI[indexNo]);
+		}
+		else if(chartType[indexNo].toUpperCase() == 'BAR') {
+			profit_draw(chartId[indexNo], chartName[indexNo], chartType[indexNo], chartURI[indexNo]);
+		}
+		
+		
+		
+		
+		
+		
+		
+/*
+		for(p in chartType)
+		{
+			//alert(chartType[p]);
+			
+			if(chartType[p] == 'Line')
+			{
+			 // alert("chartType=" + chartType[0]);
+			 panel_draw(chartId[indexNo], chartName[indexNo], chartType[indexNo], chartURI[indexNo]);
+			}
+		else if(chartType[p] == 'Bar')
+			{
+			//alert("chartType=" + chartType[1]);
+			 draw_profitability_barGraph(chartId[indexNo], chartName[indexNo], chartType[indexNo], chartURI[indexNo]);
+			}
+			
+			
+		}		
+*/
+	}
+	else {
+		//$('#pnl_'+chartId[indexNo]).toggle();
+	}
+	
+}
+
+$(document).ready(function(){
+	$("#btnsave").hide();
+	
+	var reportcount=0;
+	var user_name = '<%=session.getAttribute("UserName")%>';
+	var RoleID = '<%=session.getAttribute("RoleID")%>';
+	var userId = '<%=session.getAttribute("user_id")%>';
+						var ChxData = [];
+						var UserData = [];
+						var ChxRoleData = [];
+						var ChxUserData = [];
+						//var uri = "${pageContext.request.contextPath}"; 
+
+						$("#btnsave")
+								.click(
+										function() {
+											var User = function() {
+												this.user_id = "";
+											};
+											var Report = function() {
+												this.reportId = "";
+											};
+											var usrReport = function() {
+												this.user = new User();
+												this.reports = new Array();
+											};
+
+											var open = new Array();
+											var user = {};
+											var reports = [];
+											user['user_id'] = parseInt(userId);
+											open.push(user);
+											var usrRpt = new usrReport();
+											usrRpt.user = user;
+											//var count =0;
+
+											for (y in ChxRoleData) {
+												if ($('#chk_' + ChxRoleData[y])
+														.is(":checked")) {
+													count++;
+													//alert(ChxRoleData[y]);
+													var rpt = {};
+													rpt["reportId"] = parseInt(ChxRoleData[y]);
+													reports.push(rpt);
+													var report = new Report();
+													report.reportId = parseInt(ChxRoleData[y]);
+													usrRpt.reports.push(report);
+												}
+
+											}
+
+											if (count == 0) {
+												alert("Select atleast 1 Report");
+												// $('#chk_' + ChxRoleData[y]).attr("disabled", true);
+											}
+											//	open.push(reports);
+
+											//	var report_value = open;
+											//alert(ui);
+
+											else {
+
+												$
+														.ajax({
+
+															url : "${pageContext.request.contextPath}/saveReport",
+															type : 'POST',
+															datatype : "json",
+															contentType : "application/json",
+															async : false,
+															cache : false,
+															//data : JSON.stringify({role_id :RoleID}),
+															//data : JSON.stringify(report_value),
+															data : JSON
+																	.stringify(usrRpt),
+
+															success : function(
+																	data) {
+																//var i= data;
+
+																alert(data[0].desc);
+
+															},
+															error : function(
+																	jqXHR,
+																	textStatus,
+																	errorThrown) {
+																(errorThrown);
+
+															}
+
+														});
+
+											}
+
+										});
+
+						//--------------------------------Role based list display-------------------------------------//
+
+						$
+								.ajax({
+
+									//	url  : "http://localhost:8080/Customer360Interface/displayRolePanel",
+									url : "${pageContext.request.contextPath}/displayRolePanel",
+									type : 'POST',
+									datatype : "json",
+									contentType : "application/json",
+									async : false,
+
+									//	data: JSON.stringify({role_id:1}),
+									data : JSON.stringify({
+										role_id : RoleID
+									}),
+
+									cache : false,
+									success : function(data) {
+
+										for (i in data) {
+											reportcount++;
+											ChxData[i] = data[i].reportName;
+											ChxRoleData[i] = data[i].reportId;
+
+											chartId[i] = data[i].reportId;
+											chartName[i] = data[i].reportName;
+											chartType[i] = data[i].chartType;
+											chartURI[i] = data[i].chartURI;
+											chartDesc[i] = data[i].chartDesc;
+
+										}
+
+									},
+									error : function(jqXHR, textStatus,
+											errorThrown) {
+										(errorThrown);
+
+									}
+
+								});
+
+						//----------------------------------------left panel User list display---------------------------------------//
+
+						$
+								.ajax({
+									url : "${pageContext.request.contextPath}/displayUserPanel",
+									type : 'POST',
+									datatype : "json",
+									contentType : "application/json",
+									async : false,
+									data : JSON.stringify({
+										username : user_name
+									}),
+									cache : false,
+									success : function(data) {
+										var count = 0;
+										for (i in data) {
+											count++;
+											ChxUserData[i] = data[i].reportName;
+											UserData[i] = data[i].reportId;
+
+										}
+										//alert(count);
+										if (count == 0) {
+											//alert(count);
+
+											for (j in ChxData) {
+												var checkBtnBox = $('<label class = "lblcheckbox"><input type="checkbox" name="chx" id="chk_'
+														+ chartId[j]
+														+ '" onclick="displayPane('
+														+ j
+														+ ')" />'
+														+ ChxData[j]
+														+ '</label>' + '</br>');
+												checkBtnBox.appendTo('#target');
+
+												//  $("#chbox"+j+"").prop("checked", true);
+
+											}
+											$("input[type='checkbox']").attr(
+													"checked", true);
+										}
+
+										else {
+											var lenRole = ChxRoleData.length;
+											var lenUser = UserData.length;
+											var totalarr = [];
+
+											var lengthtotal;
+
+											if (lenRole < lenUser) {
+												lengthtotal = lenRole;
+											}
+
+											lengthtotal = lenUser;
+											UserData.sort(function(a, b) {
+												return a - b
+											});
+											ChxRoleData.sort(function(a, b) {
+												return a - b
+											});
+											for (k = 0; k <= lengthtotal; k++) {
+
+												if (UserData[k] == ChxRoleData[k]) {
+													totalarr = UserData[k];
+												}
+
+											}
+
+											for (j in ChxData) {
+												var checkBtnBox = $('<label><input type="checkbox" name="chx" id="chk_'
+														+ ChxRoleData[j]
+														+ '" onclick="displayPane('
+														+ j
+														+ ');"/>'
+														+ ChxData[j]
+														+ '</label>' + '</br>');
+												checkBtnBox.appendTo('#target');
+
+											}
+
+											for (w in UserData) {
+												if (ChxRoleData
+														.indexOf(UserData[w]) != -1) {
+													$("#chk_" + UserData[w])
+															.prop("checked",
+																	true);
+												}
+											}
+										}
+										var container = "";
+										for (x = 0; x < reportcount; x++) {
+											container += '<div id='+ChxRoleData[x]+' class="col-sm-4" ><div class="panel panel-info" id="pnl_'+ChxRoleData[x]+'"><div class="panel-heading" >'
+													+ ChxData[x]
+													+ ' &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-zoom-in" ></span>&nbsp;<span class="glyphicon glyphicon-zoom-out"  ></span></div><div class="panel-body"><div id="jqx_'
+													+ ChxRoleData[x]
+													+ '"   style="width: 100%; height: 300px; position: relative; left: 0px; top: 0px;" ></div> </div> </div></div></div>';
+										}
+										$("#showGraph").html(container);
+										for (z = 0; z < reportcount; z++) {
+											$('#' + ChxRoleData[z]).toggle();
+											if ($('#chk_' + chartId[z]).is(
+													":checked")) {
+												displayPane(z);
+											}
+										}
+									}
+
+								});
+
+						/* <--------------------------------zoom in -out-------------------------------------------> */
+
+						/* var currZoom = $('#'+ChxRoleData[x]).css("zoom");
+						 if (currZoom == 'normal') currZoom = 1;
+
+						 $('#zoomin_'+ChxRoleData[x]).click(function(event) 
+						 {			
+						 currZoom = 1;
+						 currZoom *= 1.5;
+						 $('#'+ChxRoleData[x]).css("zoom", currZoom);
+						 $('#'+ChxRoleData[x]).css("-moz-transform", "Scale(" + currZoom + ")");
+						 $('#'+ChxRoleData[x]).css("-moz-transform-origin", "0 0");
+
+						 });
+
+
+						 $('#zoomout_'+ChxRoleData[x]).click(function() 
+						 {
+						
+						 $('#'+ChxRoleData[x]).css("zoom", 1);
+						 $('#'+ChxRoleData[x]).css("-moz-transform", "Scale(" + currZoom + ")");
+						 $('#'+ChxRoleData[x]).css("-moz-transform-origin", "0 0");
+
+						 }); */
+
+						//-----------------------------------------***--------------------------------------------//
+
+						//--------------check box check for 1 report----------------------------//   
+						var l, r, checkboxcount = 0, chkcount = 0;
+
+						$('input[type=checkbox]').each(function() {
+							if (this.checked) {
+								checkboxcount++;
+							}
+							chkcount = checkboxcount;
+						});
+
+						$('input[type="checkbox"]')
+								.click(
+										function(event) {
+											if ($(this).prop("checked") == true
+													|| $(this).prop("checked") == false) {
+												$("#btnsave").show();
+											}
+
+											for (r = reportcount; r >= 0; r--) {
+
+												if ($(
+														'#chk_'
+																+ ChxRoleData[r - 1])
+														.is(":checked") == true) {
+													checkboxcount--;
+
+													if (checkboxcount == 1) {
+														$(
+																'#chk_'
+																		+ ChxRoleData[r - 1])
+																.attr(
+																		"disabled",
+																		true);
+														l = ('#chk_' + ChxRoleData[r - 1]);
+														break;
+													}
+
+												}
+
+												else {
+													$(l)
+															.attr("disabled",
+																	false);
+													checkboxcount = chkcount;
+												}
+
+											}
+										});
+
+					}); //end of document.ready(function)
+
+	//-----------------------------------------------*********--------------------------------------------------//
+
+	//--------------------------------------display merchant info-----------------------------------------------//
+
+	function displayMerchInfo(date, status) {
+
+		var url = "${pageContext.request.contextPath}/displayMerchInfoGrid";
+		var data_val;
+
+		var GridModel = function() {
+			this.items = ko.observableArray();
+			var me = this;
+			$.ajax({
+
+				url : url,
+				type : 'POST',
+				datatype : "json",
+				contentType : "application/json",
+				async : false,
+				data : JSON.stringify({
+					cDate : date,
+					status : status
+				}),
+				cache : false,
+
+			}).done(
+					function(data) {
+
+						$("#tablegrid2").html("");
+						$("#tablegrid2").append(
+								'<div class ="caption" align="center"><label>'
+										+ status + '  Merchants on ' + date
+										+ '</label></div>')
+						$("#tablegrid2").append('<div id="grid1"></div>');
+
+						data_val = data;
+						var jsonData = data;
+						//var jsonData = $.parseJSON(data);
+						me.items(jsonData);
+
+					});
+		};
+
+		var model = new GridModel();
+
+		// prepare the data
+		var source = {
+			datatype : "observablearray",
+			datafields : [ {
+				name : 'appPIN'
+			}, {
+				name : 'merchantName'
+			}
+
+			],
+			id : 'id',
+			localdata : model.items
+		};
+
+		var dataAdapter = new $.jqx.dataAdapter(source);
+
+		$("#grid1").jqxGrid({
+			theme : "energyblue",
+			width : 550,
+			//  height: 210,
+			source : dataAdapter,
+			pageable : true,
+			pagesize : 5,
+			selectionmode : 'singlecell',
+
+			autoheight : true,
+			columns : [ {
+				text : 'Merchant Application Pin',
+				datafield : 'appPIN',
+				cellsalign : 'centre',
+				width : 275
+			}, {
+				text : 'Merchant Name',
+				datafield : 'merchantName',
+				cellsalign : 'right',
+				width : 275
+			},
+
+			]
+		});
+
+		//  ko.applyBindings(model);
+
+		$("#grid1").on(
+				'cellclick',
+				function(event) {
+					var datafield = event.args.datafield;
+					var value = event.args.value;
+
+					var row = event.args.rowindex;
+					var columntext = $("#grid1").jqxGrid('getcolumn',
+							event.args.datafield).text;
+
+					if (columntext == "Merchant Name") {
+
+					}
+
+					else {
+						// displayMerchantdetails();
+						$("#mrchDetails").modal('show');
+
+					}
+
+				});
+	}
+
+	//-----------------------------------------------*********----------------------------------------------------------
+
+	//----- month id generation function---///
+
+	function monthID_generation(label) {
+
+		if (label == "JAN")
+			return 1;
+		else if (label == "FEB")
+			return 2;
+		else if (label == "MAR")
+			return 3;
+		else if (label == "APR")
+			return 4;
+		else if (label == "MAY")
+			return 5;
+		else if (label == "JUN")
+			return 6;
+		else if (label == "JUL")
+			return 7;
+		else if (label == "AUG")
+			return 8;
+		else if (label == "SEP")
+			return 9;
+		else if (label == "OCT")
+			return 10;
+		else if (label == "NOV")
+			return 11;
+		else
+			(label == "DEC")
+		return 12;
+
+	}
+
+	//-------------------------------- status generation----------------------------//
+
+	function generateStatus(stat) {
+		if (stat == "init_Cnt")
+			return "INITIATED";
+		else if (stat == "appr_Cnt")
+			return "APPROVED";
+		else if (stat == "board_Cnt")
+			return "BOARDED";
+		else
+			(stat == "reject_Cnt")
+		return "REJECTED";
+	}
+	//-------------------------------month name generation---------------------------------//
+
+	function month_generation(label) {
+
+		if (label == "JAN")
+			return "JANUARY";
+		else if (label == "FEB")
+			return "FEBRUARY";
+		else if (label == "MAR")
+			return "MARCH";
+		else if (label == "APR")
+			return "APRIL";
+		else if (label == "MAY")
+			return "MAY";
+		else if (label == "JUN")
+			return "JUNE";
+		else if (label == "JUL")
+			return "JULY";
+		else if (label == "AUG")
+			return "AUGUST";
+		else if (label == "SEP")
+			return "SEPTEMBER";
+		else if (label == "OCT")
+			return "OCTOBER";
+		else if (label == "NOV")
+			return "NOVEMBER";
+		else
+			(label == "DEC")
+		return "DECEMBER";
+
+	}
+
+	function month_generation_grid(label) {
+
+		if (label == 1)
+			return "JANUARY";
+		else if (label == 2)
+			return "FEBRUARY";
+		else if (label == 3)
+			return "MARCH";
+		else if (label == 4)
+			return "APRIL";
+		else if (label == 5)
+			return "MAY";
+		else if (label == 6)
+			return "JUNE";
+		else if (label == 7)
+			return "JULY";
+		else if (label == 8)
+			return "AUGUST";
+		else if (label == 9)
+			return "SEPTEMBER";
+		else if (label == 10)
+			return "OCTOBER";
+		else if (label == 11)
+			return "NOVEMBER";
+		else
+			(label == 12)
+		return "DECEMBER";
+
+	}
+
+	//-----------------------------------------display grid-----------------------------------------------------------//
+
+	function showMrchStatusGrid(monthID) {
+
+		// var url = "status.json";
+		var month_val = month_generation_grid(monthID);
+
+		var url = "${pageContext.request.contextPath}/displaygraphGrid";
+		var data_val;
+
+		var GridModel = function() {
+			this.items = ko.observableArray();
+			var me = this;
+			$
+					.ajax(
+							{
+
+								url : url,
+								data : ({
+									month : monthID,
+									status : ""
+								}),
+								type : 'GET',
+								dataType : 'JSON',
+								cache : false,
+								async : false,
+								header : {
+									"Access-Control-Allow-Origin" : "*",
+									'Accept' : 'application/json',
+									"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, OPTIONS"
+								},
+
+							})
+					.done(
+							function(data) {
+								var dt = data[0].date;
+								date = new Date(dt);
+								var year = date.getFullYear();
+
+								$('#myModal').modal('show');
+								$("#modal-body").html("");
+								$("#modal-body").append(
+										'<div class ="caption" align="center"><label>Merchant Status for '
+												+ month_val + ',' + year
+												+ '</label></div>');
+								$("#modal-body")
+										.append(
+												'<div id="tablegrid1"><div id="grid"></div><br/></div><div id = "tablegrid2"><div id="grid1"></div></div>');
+								// $("#modal-body").append('<div><label>List of Merchant Status for '+month_val+','+year+'</label></div><div id="tablegrid1"><div id="grid"></div><br/></div><div id = "tablegrid2"><div id="grid1"></div></div>');
+
+								data_val = data;
+								var jsonData = data;
+								//var jsonData = $.parseJSON(data);
+								me.items(jsonData);
+
+							});
+		};
+
+		var model = new GridModel();
+
+		// prepare the data
+		var source = {
+			datatype : "observablearray",
+			datafields : [ {
+				name : 'date'
+			}, {
+				name : 'init_Cnt',
+				type : 'int'
+			}, {
+				name : 'appr_Cnt',
+				type : 'int'
+			}, {
+				name : 'board_Cnt',
+				type : 'int'
+			}, {
+				name : 'reject_Cnt',
+				type : 'int'
+			}, ],
+			id : 'id',
+			localdata : model.items
+		};
+
+		var dataAdapter = new $.jqx.dataAdapter(source);
+
+		$("#grid").jqxGrid({
+			theme : "energyblue",
+			width : 550,
+			//  height: 210,
+			source : dataAdapter,
+			pageable : true,
+			pagesize : 5,
+			selectionmode : 'singlecell',
+
+			autoheight : true,
+			columns : [ {
+				text : 'Date',
+				datafield : 'date',
+				cellsformat : 'd',
+				width : 150
+			}, {
+				text : 'INITIATED',
+				datafield : 'init_Cnt',
+				cellsalign : 'right',
+				width : 100
+			}, {
+				text : 'APPROVED',
+				datafield : 'appr_Cnt',
+				cellsalign : 'right',
+				width : 100
+			}, {
+				text : 'BOARDED',
+				datafield : 'board_Cnt',
+				cellsalign : 'right',
+				width : 100
+			}, {
+				text : 'REJECTED',
+				datafield : 'reject_Cnt',
+				cellsalign : 'right',
+				width : 100
+			} ]
+		});
+
+		// ko.applyBindings(model);
+
+		$("#grid").on(
+				'cellclick',
+				function(event) {
+					var datafield = event.args.datafield;
+					var value = event.args.value;
+
+					var row = event.args.rowindex;
+					var columntext = $("#grid").jqxGrid('getcolumn',
+							event.args.datafield).text;
+					// alert(columntext );
+					//  alert("date  =" + data_val[row].date);
+
+					var date = data_val[row].date;
+					var status = columntext;
+
+					// $("#log").html("A cell has been clicked:" + event.args.rowindex + ":" + event.args.datafield);
+
+					if (columntext == "Date" || value == 0) {
+						alert("wrong selection");
+
+					} else {
+
+						displayMerchInfo(date, status);
+						//	alert("success");
+					}
+				});
+
+	}
+
+	//----------------------------------------------display MBA-Qtr Graph------------------------------------------------------------//
+
+	function panel_draw(id, name, chartType, URI) {
+		$
+				.ajax({
+
+					//	 url : "http://localhost:8080/Customer360Interface/displayGraph",
+					url : "${pageContext.request.contextPath}/displayGraph",
+
+					data : {
+						URI_val : URI
+					},
+					type : 'GET',
+					dataType : 'JSON',
+					async : false,
+					header : {
+						"Access-Control-Allow-Origin" : "*",
+						'Accept' : 'application/json',
+						"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, OPTIONS"
+					},
+
+					success : function(results) {
+						//alert("alert");
+						var labels = [];
+						var data1 = [], data2 = [], data3 = [], data4 = [];
+						var data5 = [], data6 = [], data7 = [], data8 = [];
+
+						for (i in results) {
+
+							month_val = {};
+							month_val["status"] = results[i].month_value;
+
+							labels.push(month_val);
+
+							//   labels[i]=results[i].month_value;
+
+							/*  data1[i]=results[i].init_Cnt;
+							data2[i]=results[i].appr_Cnt;
+							data3[i]=results[i].board_Cnt;
+							data4[i]=results[i].reject_Cnt; */
+
+							item1 = {};
+
+							item1["value"] = results[i].init_Cnt;
+
+							data1.push(item1);
+
+							item2 = {};
+
+							item2["value"] = results[i].appr_Cnt;
+
+							data2.push(item2);
+							item3 = {};
+
+							item3["value"] = results[i].reject_Cnt;
+
+							data3.push(item3);
+							item4 = {};
+
+							item4["value"] = results[i].board_Cnt;
+
+							data4.push(item4);
+
+							//date[]
+
+							data5[i] = results[i].init_status;
+							data6[i] = results[i].appr_status;
+							data7[i] = results[i].board_status;
+							data8[i] = results[i].reject_status;
+
+						}
+
+						/*   var labels = [
+						               { status:data5[0] },
+						               { status: data6[0] },
+						               { status:data7[0]  },
+						               { status:data8[0]  },
+						              
+						           ]; */
+
+						var settings = {
+							title : "MBA Count - Last Qtr",
+							description : "Status of the current quater",
+							enableAnimations : true,
+							animationDuration : 2000,
+							showLegend : true,
+							showToolTips : true,
+							//  toolTipShowDelay : 500,
+							padding : {
+								left : 5,
+								top : 5,
+								right : 40,
+								bottom : 5
+							},
+							titlePadding : {
+								left : 90,
+								top : 0,
+								right : 0,
+								bottom : 10
+							},
+							source : labels,
+							// source: labels,
+							xAxis : {
+								dataField : 'status',
+								gridLines : {
+									visible : true
+								},
+								title : {
+									text : 'Months'
+								}
+							},
+							colorScheme : 'scheme02',
+							valueAxis : {
+								visible : true,
+								title : {
+									text : 'Merchant Status Count'
+								}
+							},
+							seriesGroups : [ {
+								type : 'stackedline',
+								source : data1,
+								series : [ {
+									dataField : 'value',
+									displayText : 'Initiated'
+								} ]
+							}, {
+								type : 'stackedline',
+								source : data2,
+								series : [ {
+									dataField : 'value',
+									displayText : 'Approved'
+								} ]
+							},
+
+							{
+								type : 'stackedline',
+								source : data3,
+								series : [ {
+									dataField : 'value',
+									displayText : 'Rejected'
+								} ]
+							}, {
+								type : 'stackedline',
+								source : data4,
+								series : [ {
+									dataField : 'value',
+									displayText : 'Boarded'
+								} ]
+							} ]
+						};
+
+						function myEventHandler(event) {
+							var eventData = '<div><b>Last Event: </b>'
+									+ event.type + '<b>, Serie DataField: </b>'
+									+ event.args.serie.dataField
+									+ '<b>, Value: </b>'
+									+ event.args.elementValue + "</div>";
+
+							// alert(event.args.elementIndex);
+							//results[event.args.elementIndex].month_value
+							//  alert();
+							var mnth = results[event.args.elementIndex].month_value;
+
+							var month_value = monthID_generation(mnth);
+							showMrchStatusGrid(month_value);
+						}
+						;
+						// select the chartContainer DIV element and render the chart.
+						$('#jqx_' + id).jqxChart(settings);
+
+						$('#jqx_' + id).on('click', function(event) {
+							if (event.args)
+								myEventHandler(event);
+
+						});
+
+					}
+				});
+
+	}
+
+	//------------------------------------------------profitability graph----------------------------------------------------------//
+
+	function profit_draw(id, name, chartType, URI) {
+		$
+				.ajax({
+
+					//	 url : "http://localhost:8080/Customer360Interface/displayGraph",
+					url : "${pageContext.request.contextPath}/displayBarGraph",
+
+					data : {
+						URI_val : URI
+					},
+					type : 'GET',
+					dataType : 'JSON',
+					async : false,
+					header : {
+						"Access-Control-Allow-Origin" : "*",
+						'Accept' : 'application/json',
+						"Access-Control-Allow-Methods" : "GET, PUT, POST, DELETE, OPTIONS"
+					},
+
+					success : function(results) {
+						//alert("alert");
+						var labels = [];
+						var data1 = [], data2 = [], data3 = [], data4 = [];
+						var data5 = [], data6 = [], data7 = [], data8 = [];
+						var newlabels = [];
+						for (i in results) {
+
+							month_val = {};
+							// month_val["status"]=results[i].month;
+
+							if (results[i].month == "1") {
+								// alert("jan")
+								newlabels[i] = "JAN";
+							} else if (results[i].month == "2") {
+								// alert("jan")
+								newlabels[i] = "FEB";
+							} else if (results[i].month == "3") {
+								//alert("jan")
+								newlabels[i] = "MAR";
+							}
+
+							else if (results[i].month == "4") {
+								//alert("jan")
+								newlabels[i] = "APR";
+							}
+
+							else if (results[i].month == "5") {
+								//alert("jan")
+								newlabels[i] = "MAY";
+							} else if (results[i].month == "6") {
+								//alert("jan")
+								newlabels[i] = "JUN";
+							} else if (results[i].month == "7") {
+								//alert("jan")
+								newlabels[i] = "JUL";
+							} else if (results[i].month == "8") {
+								//alert("jan")
+								newlabels[i] = "AUG";
+							} else if (results[i].month == "9") {
+								//alert("jan")
+								newlabels[i] = "SEP";
+							} else if (results[i].month == "10") {
+								//alert("jan")
+								newlabels[i] = "OCT";
+							} else if (results[i].month == "11") {
+								//alert("jan")
+								newlabels[i] = "NOV";
+							} else if (results[i].month == "12") {
+								//alert("jan")
+								newlabels[i] = "DEC";
+							}
+
+							month_val["status"] = newlabels[i];
+
+							// labels.push(newlabels);
+
+							labels.push(month_val);
+
+							//   labels[i]=results[i].month_value;
+
+							/*  data1[i]=results[i].init_Cnt;
+							data2[i]=results[i].appr_Cnt;
+							data3[i]=results[i].board_Cnt;
+							data4[i]=results[i].reject_Cnt; */
+
+							item1 = {};
+
+							item1["value"] = results[i].profit;
+
+							data1.push(item1);
+
+							item2 = {};
+
+							item2["value"] = -1 * (results[i].loss);
+
+							data2.push(item2);
+
+						}
+
+						/*   var labels = [
+						               { status:data5[0] },
+						               { status: data6[0] },
+						               { status:data7[0]  },
+						               { status:data8[0]  },
+						              
+						           ]; */
+
+						var settings = {
+							title : "Merchant Profitability",
+							description : "Last quater Profit/Loss",
+							enableAnimations : true,
+							animationDuration : 2000,
+							showLegend : true,
+							padding : {
+								left : 5,
+								top : 5,
+								right : 40,
+								bottom : 5
+							},
+							titlePadding : {
+								left : 90,
+								top : 0,
+								right : 0,
+								bottom : 10
+							},
+							source : labels,
+							// source: labels,
+							xAxis : {
+								dataField : 'status',
+								unitInterval : 1,
+								gridLines : {
+									visible : true
+								},
+								title : {
+									text : 'Months'
+								}
+							},
+							colorScheme : 'scheme02',
+							valueAxis : {
+								unitInterval : 1,
+								minValue : -5,
+								maxValue : 5,
+
+								visible : true,
+								title : {
+									text : 'Merchant Profit/Loss Count'
+								}
+							},
+							seriesGroups : [ {
+								type : 'stackedcolumn',
+								source : data1,
+								series : [ {
+									dataField : 'value',
+									displayText : 'PROFIT'
+								} ]
+							}, {
+								type : 'stackedcolumn',
+								source : data2,
+								series : [ {
+									dataField : 'value',
+									displayText : 'LOSS'
+								} ]
+							}
+
+							]
+						};
+						// setup the chart
+						$('#jqx_' + id).jqxChart(settings);
+
+						function myEventHandler(event) {
+							//  var eventData = '<div><b>Last Event: </b>' + event.type + '<b>, Serie DataField: </b>' + event.args.serie.dataField + '<b>, Value: </b>' + event.args.elementValue + "</div>";
+
+							//  alert(event.args.elementIndex); // month number
+							//results[event.args.elementIndex].month_value
+							//  alert();
+							//  var  mnth =results[event.args.elementIndex].month_val;
+							//  var  mnth =results[event.args.elementIndex].month_value;
+
+							//    var month_value=monthID_generation(mnth);
+
+							var mnth = results[event.args.elementIndex].month;
+							var month_value = month_generation_grid(mnth);
+							alert(month_value);
+							//  showMonthlyProfitability(month_value);
+
+						}
+						;
+
+						$('#jqx_' + id).on('click', function(event) {
+
+							if (event.args)
+								myEventHandler(event);
+
+						});
+
+					}
+
+				});
+
+	}
+
+	function toggleChevron(e) {
+		$(e.target).prev('.panel-heading').find("i.indicator").toggleClass(
+				'glyphicon-chevron-down glyphicon-chevron-up');
+
+		$('#accordion').on('hidden.bs.collapse', toggleChevron);
+		$('#accordion').on('shown.bs.collapse', toggleChevron);
+	}
+	//$('#accordion').on('hidden.bs.collapse', toggleChevron);
+	//$('#accordion').on('shown.bs.collapse', toggleChevron);
+
+	$(document).ready(function() {
+		$('#jqxTabs').jqxTabs({
+			theme : "energyblue",
+			width : 1220,
+			position : 'top',
+			collapsible : true
+		});
+		//  $("#jqxTabs").jqxTabs({ theme: "shinyblack" });
+	});
+
+	$(document).ajaxStart($.blockUI({
+		message : '<img src="resources/images/gif-load.gif" />',
+		css : {
+			width : '30%',
+			border : '0px solid #FFFFFF',
+			cursor : 'progress',
+			backgroundColor : '#FFFFFF'
+		},
+		overlayCSS : {
+			backgroundColor : '#FFFFFF',
+			opacity : 0.0,
+			cursor : 'progress'
+		}
+	})).ajaxStop($.unblockUI);
+</script>
+
+
+
+
+</head>
+<body>
+
+	<div class="myhome">
+
+		<div class="row">
+			<div class="col-lg-12">
+
+				<h4 class="page-header bg-primary img-rounded  custom-header">
+					<b>&nbsp;&nbsp; Customer360 Dashboard</b>
+				</h4>
+
+			</div>
+		</div>
+
+
+
+		<div class="row">
+
+			<div class="col-sm-3">
+
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<b>Preferences</b>
+					</div>
+					<div class="panel-body">
+						<div id="target"></div>
+						<!-- <input type="button" class="btn btn-default" value="Edit" id="Edit">-->
+						<input type="submit" class="btn btn-default" id="btnsave"
+							value="Save">
+					</div>
+				</div>
+
+			</div>
+
+			<!--             <div id='jqxChart' style="width: 400px; height: 400px; position: relative; left: 0px; top: 0px;"> -->
+			<!-- </div> -->
+
+
+			<div class="col-sm-8">
+
+				<div class="container" id="showGraph"></div>
+
+				<!-- <modal start> -->
+				<div class="modal fade" id="myModal" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Merchant Status</h4>
+							</div>
+							<div class="modal-body" id="modal-body"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- <modal end> -->
+
+				<!-- < modal start> -->
+
+				<div class="modal fade" id="mrchDetails" role="dialog">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Detailed Merchant Information</h4>
+							</div>
+							<div class="modal-body">
+
+								<!-- -label before accordian start -->
+
+								<div id='jqxWidget'>
+									<div style='float: left;' id='jqxTabs'>
+										<ul style="margin-left: 30px;">
+											<li>General Information</li>
+											<li>Processor Details</li>
+											<li>Validation</li>
+											<li>Identity</li>
+
+										</ul>
+										<br />
+										<div class="container-fluid" id="tab1">
+											<div class='row'>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														&nbsp;&nbsp; <label for="user_title">Application
+															PIN</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_firstname"></label>
+
+													</div>
+												</div>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														<label for="user_title">Merchant Name</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_title"></label>
+
+													</div>
+												</div>
+
+											</div>
+											<div class='row'>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														&nbsp;&nbsp; <label for="user_title">Merchant
+															Group</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_firstname"></label>
+
+													</div>
+												</div>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														<label for="user_title">MCC</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_title"></label>
+
+													</div>
+												</div>
+
+											</div>
+											<div class='row'>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														&nbsp;&nbsp; <label for="user_title">Sales Agent</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_firstname"></label>
+
+													</div>
+												</div>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														<label for="user_title">First Name</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_title"></label>
+
+													</div>
+												</div>
+
+											</div>
+											<div class='row'>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														&nbsp;&nbsp; <label for="user_title">Last Name</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_firstname"></label>
+
+													</div>
+												</div>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														<label for="user_title">Email</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_title"></label>
+
+													</div>
+												</div>
+
+											</div>
+											<div class='row'>
+												<div class='col-sm-2'>
+													<div class='form-group'>
+														&nbsp;&nbsp; <label for="user_title">phone</label>
+
+													</div>
+												</div>
+												<div class='col-sm-3'>
+													<div class='form-group'>
+														<label for="user_firstname"></label>
+
+													</div>
+												</div>
+
+
+											</div>
+
+
+										</div>
+
+										<!-- -2nd tab -->
+
+										<div></div>
+
+										<div></div>
+
+
+										<div></div>
+
+									</div>
+
+								</div>
+								<br /> <br /> <br />
+								<!-- -label before accordian end -->
+
+
+								<!-- -accordian start -->
+								<br /> <br /> <br />
+								<div class="panel-group" id="accordion">
+
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseTwo">
+													Collapsible Group Item #2 </a><i
+													class="indicator glyphicon glyphicon-chevron-up  pull-right"></i>
+											</h4>
+										</div>
+										<div id="collapseTwo" class="panel-collapse collapse">
+											<div class="panel-body"></div>
+										</div>
+									</div>
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseThree">
+													Collapsible Group Item #3 </a><i
+													class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
+											</h4>
+										</div>
+										<div id="collapseThree" class="panel-collapse collapse">
+											<div class="panel-body"></div>
+										</div>
+									</div>
+
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseFour">
+													Collapsible Group Item #4 </a><i
+													class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
+											</h4>
+										</div>
+										<div id="collapseFour" class="panel-collapse collapse">
+											<div class="panel-body"></div>
+										</div>
+									</div>
+
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseFive">
+													Collapsible Group Item #5 </a><i
+													class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
+											</h4>
+										</div>
+										<div id="collapseFive" class="panel-collapse collapse">
+											<div class="panel-body"></div>
+										</div>
+									</div>
+
+									<div class="panel panel-info">
+										<div class="panel-heading">
+											<h4 class="panel-title">
+												<a class="accordion-toggle" data-toggle="collapse"
+													data-parent="#accordion" href="#collapseSix">
+													Collapsible Group Item #6 </a><i
+													class="indicator glyphicon glyphicon-chevron-up pull-right"></i>
+											</h4>
+										</div>
+										<div id="collapseSix" class="panel-collapse collapse">
+											<div class="panel-body"></div>
+										</div>
+									</div>
+
+
+								</div>
+
+
+
+								<!-- -accordian end -->
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- <modal end> -->
+			</div>
+
+
+
+		</div>
+	</div>
+
+
+</body>
+</html>

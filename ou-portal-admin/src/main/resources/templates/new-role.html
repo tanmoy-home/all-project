@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+</head>
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1>Role Details
+          </h1>
+         <ol class="breadcrumb">
+                  <li><i class="fa fa-star mandatory-font"></i>  - Mandatory Input Field</li>
+               </ol>
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+          
+
+          
+          
+          
+          
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+             
+             
+          
+              <!--  TAB START -->
+          <div id="tabs-container">
+          
+          <!-- TAB LINK START -->
+          <div class="tabs-menu row no-margin">	
+          
+             <ul th:if="${role.id != null}">
+			      <li th:if="${role.id != null}" class="current"><a data-toggle="tab" href="#addRole">Add Role</a></li>
+			      <li th:if="${role.id != null}" class="tab-btn"><a data-toggle="tab" href="#roleManage"> Manage Role </a></li>
+			   </ul>
+          
+          
+          	</div>
+          
+          <!-- TAB LINK END -->
+          <!-- TAB BODY START-->
+          <div class="" th:classappend="${role.id != null} ? tab : ''"> 
+          		
+          		<!--TAB CONTENT START-->
+          		<div class="tab-content" id="addRole">
+            <!-- FORM START -->
+            <form class="form-horizontal role-form" action="#" data-th-action="@{/role/add-role/save-role}" data-th-object="${role}" method="post">
+               <!-- ROW START --> 
+               <div class="row">
+                  <div class="input-field col-md-4">
+                  <label for="roleName">Role Name<span class="star">*</span></label>
+                     <input
+                        type="text"
+                        hidden="hidden"
+                        data-th-value="*{id}"
+                        data-th-field="*{id}" />
+                     <input
+                        id="roleName"
+                        type="text"
+                        class="validate"
+                        data-th-value="*{roleName}"
+                        data-th-field="*{roleName}"
+                        />
+                     
+                  </div>
+                  <div class="input-field col-md-4">
+                  <label for="roleDesc">Role Description <span class="star">*</span></label>
+                     <input
+                        id="roleDesc"
+                        type="text"
+                        class="validate"
+                        data-th-value="*{roleDesc}"
+                        data-th-field="*{roleDesc}"
+                        />
+                     
+                  </div>
+                  <div class="input-field col-md-4" style="display:none;">
+                     <label for="Organization">Organization</label>
+                     <select class="form-control" name="organization" th:field="*{organization}">
+                        <option th:each="org:${organizations}" th:value="${org.id}" th:text="${org.organizationName}">Organization</option>
+                     </select>
+                  </div>
+                 
+                  <div class="input-field col-md-4">
+                     <label for="activity"> Activity</label>
+                     <div class="clearfix"></div>
+                     <input
+                        id="IsActive"
+                        type="checkbox"
+                        class="validate"
+                        th:checked="*{isActive}"
+                        th:field="*{isActive}"/>
+                   <label for="IsActive">  Is Active?</label>
+                        <input
+                        id="APIAccess"
+                        type="checkbox"
+                        class="validate"
+                        th:checked="*{isApiAccess}"
+                        th:field="*{isApiAccess}"/>
+                  <label for="APIAccess"> API Access?</label>
+                  </div>
+                  
+                  <div class="input-field col-md-4" style="display:none;">
+                     <label for="MapServices"><input
+                        id="MapServices"
+                        type="checkbox"
+                        class="validate"
+                        th:checked="*{serviceMapFlag}"
+                        th:field="*{serviceMapFlag}"/>
+                     Map Services?</label>
+                  </div>
+                  <!-- BUTTON START -->
+                  <div class="col-md-12">
+                     <button type="submit" class="btn btn-default waves-effect waves-light" id="btnSubmit" name="action">Save</button>
+                     <button type="reset" class="btn btn-default waves-effect waves-light" name="action">Reset</button>
+                  </div>
+                  <!-- BUTTON END -->
+               </div>
+               <!-- ROW END -->
+            </form>
+            <!-- FORM END -->
+         </div>
+          		<!-- TAB CONTENT END -->
+          		
+          		<!-- TAB CONTENT START -->
+          		<div class="tab-content" id="roleManage">
+          
+          
+          
+          
+          
+          
+          
+               <form class="switch-form" action="#" data-th-action="@{/role/save-role-manage}" data-th-object="${role}" method="post">
+                  
+                  <div class="form-group">
+                    
+                     <div>
+                     	<input type="text" hidden="hidden" data-th-value="*{id}" data-th-field="*{id}" ></input>
+                      <!--  <div id="dual-list-box" class="form-group row">
+				            <select multiple="multiple" data-title="Roles" data-source="https://geodan.github.io/duallistbox/sample/sample-100.json"
+				                    data-value="index" data-text="company"></select>
+				        </div> -->
+				        
+				        <div id="dual-list-box" class="form-group row">
+				            <select multiple="multiple" data-title="Roles" data-source="webpage/Menu-list"
+				                    data-value="id" data-text="menuName"></select>
+				        </div>
+				        
+                     </div>
+                  </div>
+            
+                     <div>
+                        <button type="submit" class="btn btn-default waves-effect waves-light"        name="action">Save</button>
+                        <button type="reset" class="btn btn-default waves-effect waves-light" name="reset">Reset</button>
+                     </div>
+                 
+                  <div class="form-group" style="visibility:hidden;">
+                     <ol class="breadcrumb">
+                        <li class="active">
+                           <i class="fa fa-gears fa-fw"></i><b> Services</b>
+                        </li>
+                     </ol>
+                     <div class="col-sm-12">
+                    
+                     
+                     
+                     
+                       
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <div class="col-sm-offset-5 col-sm-7" >
+                        <!-- <p class="text-danger" data-th-if="${#fields.hasErrors('type')}" data-th-errors="*{type}">type error</p>
+                           <p class="text-danger" data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">name error</p>  -->
+                     </div>
+                  </div>
+               </form>
+           
+         </div>
+          		<!-- TAB CONTENT END -->
+          		
+          </div>
+          <!-- TAB BODY END-->
+          </div>
+          <!--  TAB END -->      
+          
+          
+          
+          
+          
+          
+        
+          
+          
+          
+          
+          
+          
+          
+              
+              
+              
+               
+				
+				
+              
+              
+                        
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>
+      <script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+      <script type="text/javascript" th:src="@{/js/dual-list-box.min.js}"></script>
+      <script type="text/javascript">
+        $('#dual-list-box select').DualListBox();
+       
+    </script>
+        <script type="text/javascript">
+		    $(document).ready(function() {
+		    		
+		    
+		    
+		    	
+		                var selectService = $('#services').bootstrapDualListbox({
+		                                  nonSelectedListLabel: 'Available Services',
+		                                  selectedListLabel: 'Accessible Services',
+		                                  preserveSelectionOnMove: 'moved',
+		                                  moveOnSelect: false/* ,
+		                                  nonSelectedFilter: 'ion ([7-9]|[1][0-2])' */
+		                                });
+		                var selectMenu = $('#menus').bootstrapDualListbox({
+		                                  nonSelectedListLabel: 'Available Menu Elements',
+		                                  selectedListLabel: 'Accessible Menu Elements',
+		                                  preserveSelectionOnMove: 'moved',
+		                                  moveOnSelect: false/* ,
+		                                  nonSelectedFilter: 'ion ([7-9]|[1][0-2])' */
+		                                });
+		                
+		              /*  $('.tab-pane').hide();
+		                $('.tab-pane .active').css('display','block');
+		                
+		                
+		                $('a').on('click',function(){
+		                	//alert($(this).attr('href'));
+		                	$('.tab-pane').hide();
+		                	$('.tab-pane').removeClass('active');
+		                	var selectedTabID =$(this).attr('href');
+		                	$(selectedTabID).addClass('active');
+		                	$(selectedTabID).css('display','block');
+		                	// $('.tab-pane .active').show();
+		                })*/
+		                
+		                
+		            //    $(document).ready(function() {
+		                    $(".tabs-menu a").click(function(event) {
+		                        event.preventDefault();
+		                        $(this).parent().addClass("current");
+		                        $(this).parent().siblings().removeClass("current");
+		                        var tab = $(this).attr("href");
+		                        $(".tab-content").not(tab).css("display", "none");
+		                        $(tab).fadeIn();
+		                    });
+		             //   });
+		                
+		                $('.role-form').validate({
+		                	rules:{
+		                		roleName:{
+		                			required:true,
+		                			maxlength:20
+		                		},
+		                		roleDesc:{
+		                			required:true,
+		                			maxlength:50
+		                		}
+		                	},
+		                	messages:{
+		                		roleName:{
+		                			required:'Role Name is mandatory',
+			                		maxlength:'Role Name should not more than 20 charectors long.'
+		                		},
+		                		roleDesc:{
+		                			required:'Role Name is mandatory',
+			                		maxlength:'Role Desp. should not more than 50 charectors long.'
+		                		}
+		                	}
+		                });
+		    
+		           $('.switch-form').validate({
+		        	   rules:{
+		        		   menus_helper2 :{
+		        			   required:true
+		        		   }
+		        	   },
+		        	   messages:{
+		        		   menus_helper2 :{
+		        			   required:'Please select at least one option.'
+		        		   }
+		        	   }
+		           });     
+		    
+		    });
+         </script>
+         
+         
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+</body>
+
+</html>

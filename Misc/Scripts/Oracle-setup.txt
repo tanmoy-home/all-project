@@ -1,0 +1,19 @@
+sudo service oracle-xe start
+
+sqlplus sys/rsdpp as sysdba
+
+
+CREATE USER platform_config IDENTIFIED BY platform_config;
+
+/*
+Replace USERNAME and PASSWORD with the username and password of your choice. Please remember this username and password. If you had error executing the above with a message about resetlogs, then execute the following SQL command and try again:
+
+alter database open resetlogs;
+*/
+
+
+GRANT connect, resource TO platform_config;
+
+CREATE USER tenant_ou13 IDENTIFIED BY tenant_ou13;
+
+GRANT connect, resource TO tenant_ou13;

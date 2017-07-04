@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+
+<link th:substituteby="common/common_header" />
+<link type="text/css" rel="stylesheet"
+	th:href="@{/css/bootstrap-datepicker3.css}" />
+<script type="text/javascript" src="/js/bbpou.js"></script>
+<script type="text/javascript" src="/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/js/raisecomplaint.js"></script>
+</head>
+
+<body class="">
+	<div id="wrapper">
+
+		<!-- HEADER -->
+		<div lang="en" th:replace="common/header :: header"></div>
+		<!-- /HEADER -->
+
+		<!-- SIDEBAR -->
+		<!-- left menu -->
+		<div lang="en" th:replace="common/left_menu:: leftmenu"></div>
+		<!-- / left menu -->
+		<!-- /SIDEBAR -->
+
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+			<div class="mandatory-test">* - Mandatory Input Field</div>
+				<div class="row" id="txnsearchheader">
+					<div class="col-sm-12">
+						<h2 class="page-header">Register Complaint</h2>
+					</div>
+
+					<!-- /.col-sm-12 -->
+				</div>
+				<div class="box">
+					<div class="box-body">
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Type of Complaint</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<select class="form-control"
+									onchange="selectComplaintType(this)">
+									<option value="">Please Select Complaint Type</option>
+									<option value="transaction">Transaction Type</option>
+									<option value="service">Service Type</option>
+								</select>
+							</div>
+
+
+						</div>
+
+
+						<br>
+						<div class="row" id="serviceType" style="display: none">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Service Type Complaint</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<select class="form-control" id="service_com_type"
+									onchange="selectServiceCompType(this)">
+									<option value="">Please Select Participation Type</option>
+									<option value="agent">Agent</option>
+									<option value="biller">Biller</option>
+									<option value="system">System</option>
+								</select>
+							</div>
+
+
+						</div>
+
+					</div>
+				</div>
+
+				<div class="box" id="transactionType" style="display: none">
+					<div class="box-body">
+						<div class="row">
+							<div class="col-sm-12">
+								<h3>Transaction Type Complaint</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label> Mobile No. <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span></label> <input type='text'
+											class='form-control' id='txnmobile' name='mobileNum'
+											maxlength="10">
+									</div>
+								</div>
+							</div>
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label>From Date <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span></label> <input type='text'
+											placeholder="DD-MM-YYYY" class='form-control' id='fromdt'
+											name='fromdt' onchange="setMinDate(this);">
+									</div>
+								</div>
+							</div>
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label>To Date <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span></label> <input type='text' class='form-control'
+											placeholder="DD-MM-YYYY" id='todt' name='todt'>
+									</div>
+								</div>
+							</div>
+
+							<div class='col-sm-3'
+								style="padding-left: 0px; padding-right: 0px;">
+								<div class='form-group' style="padding-top: 30px;">OR</div>
+							</div>
+
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label>Transaction Ref Id <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span></label> <input type='text' maxlength="12"
+											class='form-control' id='txnrefid' name='txnrefid'>
+									</div>
+								</div>
+							</div>
+
+
+							<div style="margin-top: 17px;" class="col-sm-3">
+								<div class='form-group'>
+									<button type="button" class="btn btn-primary"
+										onclick="transactionList()">Search Transaction</button>
+									<!-- 									<button type="button" class="btn btn-primary" id="srchtxn" -->
+									<!-- 										onclick="return validateSearchTransaction();">Search -->
+									<!-- 										Transaction</button> -->
+									&nbsp;
+								</div>
+								<div id="loader" class="loader" style="display: none"></div>
+							</div>
+
+
+						</div>
+
+
+					</div>
+
+				</div>
+
+
+				<div id="errormsg" style="display: none">
+					<font color="red" style="font-size: 18px; font-family: roboto;"
+						id="errormsgcont"> </font>
+				</div>
+				<!-- <div class="box-body" id="timeoutmsg" style="display:none">
+				 	
+					</div> -->
+				<div class="box" id="timeoutmsgdiv" style="display: none">
+					<div class="box-body">
+						<div class="row" id="timeoutmsg"></div>
+					</div>
+				</div>
+				<div class="box-body" id="txnlist" style="display: none;">
+					<div>
+						<table class="table table-bordered  table-color">
+							<thead class="thead tr th">
+								<tr>
+									<th style="padding-left: 6px; width: 2%;">#</th>
+									<th style="padding-left: 6px; width: 11.5%;">Transaction
+										ID</th>
+									<th style="padding-left: 6px; width: 13.5%;">Biller ID</th>
+									<!-- 															<th style="padding-left:6px;width:12%;">Biller Name</th> -->
+									<th style="padding-left: 6px; width: 12.5%;">Amount(INR)</th>
+									<th style="padding-left: 6px; width: 11.5%;">Status</th>
+									<th style="padding-left: 6px; width: 25%;">Date</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="table-responsive "
+						style="overflow: auto; max-height: 281px;">
+						<table class="table table-bordered  table-color" id="txnDataTable">
+							<!-- 													<thead class="thead tr th"> -->
+							<!-- 														<tr> -->
+							<!-- 															<th style="padding-left:6px">#</th> -->
+							<!-- 															<th style="padding-left:6px">Transaction ID</th> -->
+							<!-- 															<th style="padding-left:6px">Biller ID</th> -->
+							<!-- 															<th style="padding-left:6px">Biller Name</th> -->
+							<!-- 															<th style="padding-left:6px">Amount(INR)</th> -->
+							<!-- 															<th style="padding-left:6px">Status</th> -->
+							<!-- 															<th style="padding-left:6px">Date</th> -->
+							<!-- 														</tr> -->
+							<!-- 													</thead> -->
+
+							<tbody id="searchresult">
+
+							</tbody>
+						</table>
+					</div>
+					<div class="pull-right ">
+						<button type="button" id="viewTranDtl" class="btn btn-primary"
+							data-toggle="modal" data-target=".bs-example-modal-md"
+							onclick="viewTransactionDetails()" disabled="disabled"
+							style="margin: 10px">View</button>
+						<button type="button" class="btn btn-primary"
+							onclick="raiseTransactionComplaint()" style="margin: 10px">
+							Raise Complaint</button>
+						&nbsp;
+
+					</div>
+
+
+				</div>
+				<div class="box" id="msg" style="display: none">
+					<div class="box-body">
+						<div class="row" id="successmsg"></div>
+					</div>
+				</div>
+				<div class="box" id="registertxncomplaint" style="display: none">
+					<div class="box-body" style="margin-top: 40px;">
+						<div class="row">
+							<div class="col-sm-12 header">
+								<h3>Register Transaction Complaint</h3>
+							</div>
+						</div>
+						<!-- /.row -->
+
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Type of Complaint</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="text" class="form-control" id="complainttype"
+										readonly>
+								</div>
+							</div>
+
+
+						</div>
+
+
+						<div class="row" id="comp_mob">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Mobile Number</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="text" class="form-control" readonly="readonly" id="complaintmobile" maxlength="10" onchange="validateMobileNumber('complaintmobile')">
+                                    <input type="hidden" id="srch_by">
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Transaction ID</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="hidden" class="form-control " id="complainttxnid"
+										>
+										<input type="text" class="form-control " id="complainttxnid_view" readonly="readonly"
+										>
+								</div>
+							</div>
+
+
+						</div>
+						<div class="row">
+							<div class="col-sm-4 left-width">
+								<div class="form-group required">
+									<label class="control-label">Disposition <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<select class="form-control" id="complaintdisp"
+										required="required">
+
+									</select>
+
+								</div>
+							</div>
+
+
+						</div>
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Complaint Description <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<!-- <textarea class="form-control" maxlength="200" id="complaintdesc"
+													 required="required"> -->
+									<input type="text" class="form-control" id="complaintdesc"
+										maxlength=200 style="height: height: 50px ! important;">
+									</textarea>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row" id="otpBox">
+
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label id="tran_otp_label">Enter OTP</label> <input
+											type='text' class='form-control' id="otp" placeholder="OTP" maxlength="6">
+									</div>
+								</div>
+							</div>
+							<div style="margin-top: 17px;" class="col-sm-3">
+								<div class='form-group'>
+
+									<button type="button" class="btn btn-primary" id="tran_gen_otp"
+										onclick="generateOTP('tran',this);">Generate OTP</button>
+
+									<button type="button" class="btn btn-primary"
+										disabled="disabled" id="tran_resend_otp"
+										onclick="resendOTPReq('tran');">Resend OTP</button>
+								</div>
+								<div id="loader" class="loader" style="display: none"></div>
+							</div>
+
+				<div id="tranOtp_errormsg" style="display: none; margin-top: 25px;" class="col-sm-3">
+					<font color="red" style="font-size: 18px; font-family: roboto;"
+						id="tranOtp_errormsgcont"> </font>
+				</div>
+						</div>
+						<div class="pull-right ">
+							<br> <br>
+							<button type="button" id="txncomplaintbtn"
+								class="btn btn-primary" disabled="disabled" id="tran_comp_sub"
+								onclick="submitTransactionComplaint()">SUBMIT</button>
+						</div>
+					</div>
+				</div>
+				<div class="box" id="registerservicecomplaint" style="display: none">
+					<div class="box-body">
+						<div class="row" id="successmsg" style="display: none"></div>
+						<div class="row">
+							<div class="col-sm-12 header">
+								<h3>Register Service Complaint</h3>
+							</div>
+						</div>
+						<!-- /.row -->
+
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Type of Complaint</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="text" class="form-control" id="complaintServtype"
+										readonly>
+								</div>
+							</div>
+
+
+						</div>
+
+
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Participation Type</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="text" class="form-control" id="participatetype"
+										readonly>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row" id="divagentid" style="display: none">
+							<div class="col-sm-4 left-width">
+								<div class="form-group required">
+									<label class="control-label">Agent ID <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+<!-- 									<select class="form-control" id="complaintagentid" -->
+<!-- 										required="required"> -->
+
+<!-- 									</select> -->
+                            <input type="text" class="form-control" id="complaintagentid"
+										maxlength=20 style="height: height: 50px ! important;">
+
+								</div>
+							</div>
+
+
+						</div>
+						<div class="row" id="divbillerid" style="display: none">
+							<div class="col-sm-4 left-width">
+								<div class="form-group required">
+									<label class="control-label">Biller ID <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<select class="form-control" id="complaintbillerid"
+										required="required">
+
+									</select>
+
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4 left-width">
+								<div class="form-group required">
+									<label class="control-label">Service Reason <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<select class="form-control" id="servicereason"
+										required="required">
+
+									</select>
+
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Complaint Description <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<!-- <textarea style="width: 100%;"  maxlength="200" id="complaintServdesc"
+													 required="required">
+													</textarea> -->
+									<input type="text" class="form-control" id="complaintServdesc"
+										maxlength=200 style="height: height: 50px ! important;">
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-sm-4 left-width ">
+								<div class="form-group required">
+									<label class="control-label">Enter Mobile No. <span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="col-sm-4 ">
+								<div class="form-group required">
+									<input type="text" class="form-control" maxlength="6" id="otp_svc_mobile" onblur="enableSvcGenOTPBtn();"
+										maxlength=10 >
+								</div>
+							</div>
+
+
+						</div>
+						<div class="row" id="otpBox">
+
+							<div class='col-sm-3'>
+								<div class='form-group'>
+									<div class='required'>
+										<label id="tran_otp_label">Enter OTP<span
+										style="font-size: 21px; color: red; margin-left: 3px;">*</span></label> <input
+											type='text' class='form-control' id="svc_otp" placeholder="OTP" maxlength="6">
+									</div>
+								</div>
+							</div>
+							<div style="margin-top: 17px;" class="col-sm-3">
+								<div class='form-group'>
+
+									<button type="button" class="btn btn-primary" disabled="disabled"
+										onclick="generateOTP('svc',this);" id="svc_gen_otp">Generate OTP</button>
+
+									<button type="button" class="btn btn-primary"
+										disabled="disabled" id="svc_resend_otp"
+										onclick="resendOTPReq('svc');">Resend OTP</button>
+								</div>
+								<div id="loader" class="loader" style="display: none"></div>
+							</div>
+
+				<div id="svcOtp_errormsg" style="display: none; margin-top: 25px;" class="col-sm-3">
+					<font color="red" style="font-size: 18px; font-family: roboto;"
+						id="svcOtp_errormsgcont"> </font>
+				</div>
+						</div>
+						<div class="pull-right ">
+							<br> <br>
+							<button type="button" id="servicecomplaintbtn"
+								disabled="disabled" class="btn btn-primary"
+								onclick="submitServiceComplaint()">SUBMIT</button>
+						</div>
+
+
+					</div>
+
+				</div>
+				<!-- <div class="row" id="successmsg" style="display:none">
+				 	                
+					                </div> -->
+
+				<!-- extra bottom space -->
+				<div class="btm-pad-lg">&nbsp;</div>
+			</div>
+		</div>
+
+		<!-- MODAL BOX START -->
+		<div class="modal fade bs-example-modal-md" tabindex="-1"
+			role="dialog" aria-labelledby="mySmallModalLabel">
+			<div class="modal-dialog modal-md" role="document">
+				<div id="modalContent" class="modal-content">
+					<div class="recept-box-modal">
+						<!-- RECEPT LOGO BOX START-->
+						<div style="padding-left: 10px; padding-right: 10px;">
+							<img src="/images/bbpou-recept-logo.png"
+								class="recept-logo pull-left"> <img
+								src="/images/BBPS-recept-logo.png"
+								class="recept-logo pull-right">
+						</div>
+						<!-- RECEPT LOGO BOX START-->
+
+						<!-- RECEPT TABLE START -->
+						<div>
+							<table class="table table-bordered paymentRecept">
+								<tr>
+									<th colspan="2" style="text-align: center ! important;">Transaction
+										Details</th>
+								</tr>
+
+								<tr>
+									<th>Transaction Date & Time</th>
+									<td id="txndt"></td>
+								</tr>
+
+								<tr>
+									<th>Transaction ID</th>
+									<td id="txnId"></td>
+								</tr>
+								<tr id="mob_row">
+									<th>Customer Mobile Number</th>
+									<td id="mbNo"></td>
+								</tr>
+								<tr>
+									<th>Biller Name</th>
+									<td id="blrId"></td>
+								</tr>
+								<tr>
+									<th>Transaction Amount(INR)</th>
+									<td id="amnt"></td>
+								</tr>
+
+								<tr>
+									<th>Status</th>
+									<td id="stats"></td>
+								</tr>
+
+							</table>
+						</div>
+						<!-- RECEPT TABLE END -->
+						<!-- BUTTON BOX START -->
+						<div class="text-center"
+							style="padding-top: 10px; padding-bottom: 10px;" id="modalFooter">
+							<!--                           <button class="btn btn-primary" onclick=printDiv('modalContent');>Print</button> -->
+							&nbsp;
+							<button class="btn btn-primary" data-dismiss="modal"
+								aria-label="Close">Close</button>
+							&nbsp;
+						</div>
+						<!-- BUTTON BOX END -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- MODAL BOX END -->
+
+		<!-- OTP MODAL BOX Start -->
+
+		<!--              <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-md">Click ME</button> -->
+
+		<!--     <div  id="OTPBOX" class="modal fade bs-OTP-modal-md" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"> -->
+		<!--       <div class="modal-dialog modal-md" role="document"> -->
+		<!--         <div class="modal-content" style="padding:20px;width:410px; margin:auto;"> -->
+
+		<!--          <div> -->
+		<!--          <div >Enter the OTP Number delivered against XXXXXX<span id="mobdigit"></span></div> -->
+		<!--          <br> -->
+		<!--             <form class="form-inline"> -->
+		<!--               <div class="form-group"> -->
+		<!--                 <label class="sr-only" for="enterOTP">Enter OTP</label> -->
+		<!--                 <div class="input-group"> -->
+		<!--                   <div class="input-group-addon">Enter OTP</div> -->
+		<!--                   <input type="text"  class="form-control" style="width:190px;" id="otp" placeholder="OTP"> -->
+
+		<!--                 </div> -->
+		<!--               </div> -->
+		<!--               <button type="button" class="btn btn-danger" onclick="validateAndFetch();">Submit</button> -->
+		<!--             </form> -->
+		<!--             <div style="padding-top:20px;"><a href='javascript: void(0)' class="btn btn-default" onclick="resendOTPReq();">Resend OTP</a></div> -->
+		<!--           </div> -->
+
+		<!--         </div> -->
+		<!--       </div> -->
+		<!--     </div> -->
+
+
+		<!-- OTP MODAL BOX END -->
+
+
+		<!-- /#page-wrapper -->
+		<!-- FOOTER -->
+		<div lang="en" th:replace="common/footer:: footer"></div>
+		<!-- /FOOTER -->
+		<input type='hidden' id='tenantId' name='tenantId'
+			th:value="${userDetails.tenantId}" />

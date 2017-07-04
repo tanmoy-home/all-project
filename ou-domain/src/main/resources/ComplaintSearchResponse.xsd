@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="ComplaintSearchResponse" type="bbps:ComplaintSearchResponseType">
+		<xs:annotation>
+			<xs:documentation>OU API Response</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:complexType name="ComplaintSearchResponseType">
+	<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+			              <xs:element name="complaintDetails" type="bbps:ComplaintDetailType" minOccurs="0" maxOccurs="unbounded" />
+		            </xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+	</xs:complexType>	
+	
+	 <xs:complexType name="ComplaintDetailType">
+		<xs:attribute type="xs:string" name="complaintId" use="required"/>
+		<xs:attribute type="xs:string" name="complaintType" use="required"/>
+		<xs:attribute type="xs:string" name="mobile" use="optional"/>
+		<xs:attribute type="xs:string" name="txnReferenceId" use="optional"/>
+		<xs:attribute type="xs:string" name="servReason" use="optional"/>
+		<xs:attribute type="xs:string" name="agentId" use="optional"/>
+		<xs:attribute type="xs:string" name="billerId" use="optional"/>
+		<xs:attribute type="xs:string" name="disposition" use="optional"/>
+		<xs:attribute type="xs:string" name="description" use="optional"/>
+	</xs:complexType>
+	
+</xs:schema>

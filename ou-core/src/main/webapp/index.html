@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>rs</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" href="css/jquery-ui.css"/>
+ <script src="js/jquery-1.10.2.js"></script>
+  <script src="js/jquery-ui.js"></script>
+
+   <link rel="stylesheet" href="css/tab.css"/>
+  <script>
+  $(function() {
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  });
+  </script>
+  
+  <script language="Javascript" src="http://localhost:8080/DPPDIweb/js/sdk.js"></script>
+  
+  <script language="Javascript">
+  
+  function initializePay(){
+	  v['apikey'] = '5s7AR7odZx6gfxX7zsTAfo3sGBQa';
+	  v['merchantName'] = 'The Merchant';
+	  v['merctxnid'] = '11527873932320';
+	  v['amount'] = '28370';
+	  v['currency'] = 'INR';
+	  v['emailId'] = 'customer@xyz.com';
+	  v['mobileNo'] = '9898999900';
+	  v['billingAddress1'] = 'billing addr1';
+	  v['billingAddress2'] = 'billing addr2';
+	  v['city'] = 'Kolkata';
+	  v['stateProvince'] = 'WB';
+	  v['postalCode'] = '700056';
+	  v['countryName'] ='India'
+	}
+  
+  function getTransactionStatusCallBack(retToMerchant,retError){
+		
+		//alert('got the transaction updated now closing the frame and redirect to merchant page');
+		
+		var callbackUrl = document.forms['basePage'].callBackUrl.value;
+		if(retError=='true'){
+			callbackUrl = document.forms['basePage'].callBackErrorUrl.value;
+		}
+		
+		document.forms['basePage'].action=callbackUrl;
+		document.forms['basePage'].method='POST';
+		document.forms['basePage'].submit();
+		
+	}
+   
+  </script>
+  
+</head>
+
+<body>
+<div>
+	<div id="wrapper">
+   	  <div id="top_holder">
+        	<div id="logo"><img src="images/cart.png" width="100" height="50" alt="" /></div>
+        <div class="epay fr">The Merchant</div>
+        <br clear="all" />
+        
+      </div>
+      <div id="main_holder">
+      <div class="form_holder">
+      	<div class="form_holder_one">
+        	<div class="title">Email Id:</div>
+            <div class="result">
+            	<div class="pic"><img src="images/email.png" width="12" height="8" alt="" / style="margin-top:4px;"></div>
+              <div class="txt">Jackcd@rssoftware.com</div>
+                <br clear="all" />
+            
+            </div>
+            <br clear="all" />
+        
+        </div>
+        <div class="form_holder_one">
+        	<div class="title">Delivery Address:</div>
+            <div class="result">
+            	<div class="pic"><img src="images/car.png" width="16" height="15" alt="" /></div>
+              <div class="txt">Jack Donse 9836395882<br />
+                RS Tower, Block DN-9<br />
+                Saltlec Sector - V, Salt Lake City<br />
+              Kolkata 700091,</div>
+                <br clear="all" />
+            
+            </div>
+            <br clear="all" />
+        
+        </div>
+        <div class="form_holder_one">
+        	<div class="title">Order Summary:</div>
+            <div class="result">
+            	<div class="pic"><img src="images/note.png" width="13" height="14" alt="" /></div>
+              <div class="txt">1 Items  Total Rs 28,370</div>
+                <br clear="all" />
+            
+            </div>
+            <br clear="all" />
+        
+        </div>
+      
+      
+      </div>
+      <div class="method_holder">
+      	<div class="heading">Payment Method</div>
+
+<div class="holder">      
+<div id="tabs">
+
+<div class="mn">
+<ul>
+     <li><a href="#tabs-1">Credit Card</a></li>
+    <li><a href="#tabs-2">Net Banking</a></li>
+    <li><a href="#tabs-3">EMI</a></li>
+    <li><a href="#tabs-4">Virtual Payment Address</a></li>
+     <li><a href="#tabs-5">Debit Card</a></li>
+      <li><a href="#tabs-6">COD</a></li>
+  </ul>
+  
+  </div>
+ <div id="tabs-1">
+    <h2>Pay through Credit Card</h2>
+    <p><img src="images/capcha.png"  alt="" /><input type='text' name='captcha' size='10'>
+    <div class="order_but"><img src="images/order_button.png"  alt="" onclick="prepareFrame('credit');"/></div>
+    </p>
+  </div>
+  <div id="tabs-2">
+    <h2>Net Banking</h2>
+    <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor.</p>
+  </div>
+  <div id="tabs-3">
+    <h2>Pay through EMI</h2>
+  </div>
+  <div id="tabs-4">
+    <h2>Pay through Virtual Payment Address</h2>
+    <p><img src="images/capcha.png"  alt="" /><input type='text' name='captcha' size='10'>
+    <div class="order_but"><img src="images/order_button.png"  alt="" onclick="prepareFrame('vpa');"/></div>
+    </p>
+  </div>
+  <div id="tabs-5">
+    <h2>Pay through Dedit Card</h2>
+    <p><img src="images/capcha.png"  alt="" /><input type='text' name='captcha' size='10'>
+    <div class="order_but"><img src="images/order_button.png"  alt="" onclick="prepareFrame('debit');"/></div>
+    </p>
+  </div>
+  <div id="tabs-6">
+    <h2>COD</h2>
+    <p>Mauris eleifend est et turpis. Duis id erat. Suspendisse potenti. Aliquam vulputate, pede vel vehicula accumsan, mi neque rutrum erat, eu congue orci lorem eget lorem. Vestibulum non ante. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.</p>
+  </div>
+  <br clear="all" />
+  
+  <form name='basePage' action="">
+		<input type="hidden" name="billingAddress" value="1234 cooper st kolkata 700000">
+		<input type="hidden" name="emailId" value="suman.sircar@gmail.com">
+		<input type="hidden" name="mobileNo" value="9830582701">
+		<input type="hidden" name="callBackUrl" value="http://localhost:8080/UPIWeb/hellomerchantconfirm.html">
+		<input type="hidden" name="callBackErrorUrl" value="http://localhost:8080/UPIWeb/merchantpmtnotconfirm.html">
+		<input type='hidden' name='merctxnid' value='m1'>
+		<input type='hidden' name='amt' value='28370'>
+		<input type='hidden' name='curr' value='INR'>
+		<input type='hidden' name='status'>
+		<input type='hidden' name='merchanteName' value='The Merchant'>
+		</form>
+</div>
+</div>
+      </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/newstyle.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<title>Complaint Details</title>
+<head> 
+  <script type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
+  <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+  <script> 
+   $(function(){
+    	 $("#header").load("header"); 
+    }); 
+  </script> 
+</head>
+<body>
+<div id="page-content-wrapper">
+	<div id="header"></div>
+	
+	<form th:action="@{ou04/complaint/saveComplaint}" id="complaintForm" th:object="${complaint}" method="post" onsubmit="return confirm('Do you want to submit the Complaint?')">
+	
+	<table border="0" width="70%" align="center">
+		<tr>
+		<td align="right">
+		<a th:href="@{ou04/complaint/raiseComplaint}">[ Complaint Home ]</a>
+		</td>
+		</tr>
+	</table>	
+	<table border="1" width="70%" align="center">
+		<tr>
+			<td colspan="2" align="center">
+			<h4 class="headercolor">Register Complaints</h4>
+			<div id="message"></div></td>
+		</tr>
+		<tr>
+			<td colspan="2"><strong>Transaction Information</strong></td>
+		</tr>
+		<tr>
+			<td>Transaction ID</td>
+			<td th:text="${complaint.transactionId}"/>
+			<input type="hidden" id="transactionId" th:field="*{transactionId}"/>
+			<input type="hidden" id="transactionType" th:field="*{transactionType}"/>
+			<input type="hidden" id="complaintSrc" th:field="*{complaintSrc}"/>
+			<input type="hidden" id="onUSFlg" th:field="*{onUSFlg}"/>
+			<input type="hidden" id="txnRefSrcOU" th:field="*{txnRefSrcOU}"/>
+		</tr>
+		
+		
+		<tr>
+			<td>Transaction Date</td>
+			<td id="lbltransactionDate" th:text="${complaint.transactionDate}"/>
+			<input type="hidden" id="transactionDate" th:field="*{transactionDate}"/>
+		</tr>
+		
+		<tr>
+			<td>Payment Mode</td>
+			<td id="lbltransactionDate" th:text="${complaint.transactionPaymentMode}"/>
+			<input type="hidden" id="transactionPaymentMode" th:field="*{transactionPaymentMode}"/>
+		</tr>
+		
+		<tr>
+			<td>Biller Name</td>
+			<td id="lblBillername" th:text="${complaint.billerName}"/>
+			<input type="hidden" id="billerName" th:field="*{billerName}"/>
+			<input type="hidden" id="billerBuzId" th:field="*{billerBuzId}"/>
+			<input type="hidden" id="custOUInst" th:field="*{custOUInst}"/>
+			<input type="hidden" id="billOUInst" th:field="*{billOUInst}"/>
+			<input type="hidden" id="msgId" th:field="*{msgId}"/>
+		</tr>
+		
+		<tr>
+			<td>Biller's Reference</td>
+			<td id="lblBillername" th:text="${complaint.billerRef}"/>
+			<input type="hidden" id="billerRef" th:field="*{billerRef}"/>
+		</tr>
+		
+		<tr>
+			<td>Transaction Amount (Rs)</td>
+			<td id="lblTransactionAmount" th:text="${complaint.transactionAmount}"/>
+			<input type="hidden" th:field="*{transactionAmount}"/>
+		</tr>
+		
+		<tr>
+			<td>Transaction Status</td>
+			<td id="lblTransactionStatus" th:text="${complaint.transactionStatus}"/>
+			<input type="hidden" th:field="*{transactionStatus}"/>
+		</tr>
+		
+				
+		<tr>
+			<td colspan="2"><strong>Agent Information</strong></td>
+		</tr>
+		
+		<tr>
+			<td>Agent Name</td>
+			<td id="lblAgent" th:text="${complaint.agentName}"/>
+			<input type="hidden" th:field="*{agentName}"/>
+			<input type="hidden" th:field="*{agentAddress}"/>
+			<input type="hidden" th:field="*{agentBuzId}"/>
+		</tr>
+		
+		
+		<tr>
+			<td>Agent Mobile Number</td>
+			<td id="lblAgentMobile" th:text="${complaint.agentMobile}"/>
+			<input type="hidden" th:field="*{agentMobile}"/>
+		</tr>
+		
+		<tr>
+			<td>Agent Address</td>
+			<td id="lblAgentAddress" th:text="${complaint.agentAddress}"/>
+			<input type="hidden" th:field="*{agentAddress}"/>
+		</tr>
+		
+		<tr>
+			<td colspan="2"><strong>Customer Information</strong></td>
+		</tr>
+		
+		<tr>
+			<td>Customer Name</td>
+			<td id="lblCustomerName" th:text="${complaint.customerName}"/>
+			<input type="hidden" th:field="*{customerName}"/>
+		</tr>
+		
+		
+		<tr>
+			<td>Customer Mobile Number</td>
+			<td id="lblCustomerMobile"  th:text="${complaint.customerMobile}"/>
+			<input type="hidden" th:field="*{customerMobile}"/>
+		</tr>
+		
+		<tr>
+			<td>Customer Email ID</td>
+			<td id="lblCustomerEmail" th:text="${complaint.customerEmail}"/>
+			<input type="hidden" th:field="*{customerEmail}"/>
+		</tr>
+		
+		
+		<tr>
+			<td colspan="2"><strong>Type of Complaint</strong></td>
+		</tr>
+		
+		<tr>
+			<td>Category <span style="color:red;">*</span></td>
+			<td id="lblBillerCategory" th:text="${complaint.category}"/>
+			<input type="hidden" th:field="*{category}"/>
+		</tr>
+
+		<tr>
+			<td>Disposition <span style="color:red;">*</span></td>
+			<td><select class="form-control" id="disposition" name="disposition" required="required" onChange="populateTat(this)">
+				<option value="">--- Select Disposition ---</option>
+				<option th:each="disp : ${dispList}" th:value="${disp.dispositionName}" th:text="${disp.dispositionName}"></option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td class="tblclas">Description: <span style="color:red;">*</span>
+		    </td>
+		    <td class="tblclas">
+		    <textarea maxlength="200" id="complaintDescription" th:field="*{complaintDescription}" class="txtAreaComplaint" pattern=".*[^ ].*" required="required">
+		    </textarea><input id="loopcount" type="hidden"/>
+		    <br></br>
+		    <div style="color:red;" id="complaintDescriptionMsg"></div>
+		    </td>
+		</tr>
+
+
+		<tr>
+			<td align="center" colspan="2">
+			<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
+			<input type="submit" id="submitButton" value="Submit" class="button" onclick="return ckeckCompDesc()"/>
+			<input type="reset" id="resetButton" value="Reset" class="button" />
+			</td>
+		</tr>
+		
+		
+	</table>
+	</form>
+	
+	
+</div>
+<script type="text/javascript">
+var loopSetUp;
+var loopcount =0;
+var loopstopm;
+
+$(document).ready(function() {
+		var transactionDate = $.trim($("#transactionDate").val());
+		$("#loopcountX").val(0);
+		if(transactionDate.length == 0)
+		{
+			$("#submitButton").prop("disabled", true);	
+			var agentName = $.trim($("#agentName").val());
+			if (agentName == "")
+			{
+				$("#message").html("Please wait Transaction is processing...")
+			}
+		 	loopSetUp = $(setInterval(loadAgainData,25000));
+		}
+	});
+function loopstop() {
+
+	 clearInterval(loopSetUp); 
+	 return false;
+}
+	
+function loadAgainData(){
+	
+	var msgid = $("#msgId").serialize();
+	var loopcountX = $.trim($("#loopcountX").val());
+
+	if(loopcountX != "01111"){
+		$("#loopcountX").val(loopcountX + 1);	
+		
+		$.ajax({
+			url : "getOnUsComplaint",
+			type : "post",
+			data : msgid,
+			success : function(htm) {
+				
+				
+				
+				htm = JSON.stringify(htm);
+				
+				var complaint = JSON.parse(htm);
+				
+				
+				$("#lbltransactionDate").html(complaint.transactionDate);
+				$("#transactionDate").val(complaint.transactionDate);
+				
+				$("#lblBillername").html(complaint.billerName);
+				$("#lblTransactionAmount").html(complaint.transactionAmount);
+				
+				$("#transactionAmount").val(complaint.transactionAmount);
+				$("#lblTransactionStatus").html(complaint.transactionStatus);					
+				$("#transactionStatus").val(complaint.transactionStatus);
+				
+				$("#lblAgent").html(complaint.agentName);
+				$("#agentName").val(complaint.agentName);
+				$("#agentAddress").val(complaint.agentAddress);
+				$("#agentBuzId").val(complaint.agentBuzId);
+				
+				$("#lblAgentMobile").html(complaint.agentMobile);
+				$("#agentMobile").val(complaint.agentMobile);
+				$("#lblAgentAddress").html(complaint.agentAddress);
+				$("#agentAddress").val(complaint.agentAddress);
+				
+				$("#lblCustomerName").html(complaint.customerName);
+				$("#customerName").val(complaint.customerName);
+				$("#lblCustomerMobile").html(complaint.customerMobile);
+				$("#customerMobile").val(complaint.customerMobile);
+				$("#lblCustomerEmail").html(complaint.customerEmail);
+				$("#customerEmail").val(complaint.customerEmail);
+				
+				$("#billerName").val(complaint.billerName);
+				$("#billerBuzId").val(complaint.billerBuzId);
+				$("#custOUInst").val(complaint.custOUInst);
+				$("#billOUInst").val(complaint.billOUInst);
+				
+				
+				
+				$("#complaintSrc").val(complaint.complaintSrc);
+				$("#complaintTypeCd").val(complaint.complaintTypeCd);
+				$("#transactionType").val(complaint.transactionType);
+				$("#transactionStatus").val(complaint.transactionStatus);
+				
+				var txnAmt = $.trim($("#transactionAmount").val());
+				var txnDtInterval = $.trim(complaint.txnDateIntFlg);
+				var txnInterval = $.trim(complaint.txnInterval);
+				var msgComp = "Complaint should be raised only after T +"+txnInterval +" day(s)";
+				
+				if(txnDtInterval=="Y")
+				{
+					if (txnAmt != "")
+					{
+						$("#submitButton").prop("disabled", false);
+						$("#message").hide();
+					}
+				}
+				if(txnDtInterval=="N")
+				{
+					$("#submitButton").prop("disabled", true);
+					$("#message").html('<span style="color:red;">'+msgComp+'</span>');
+				}
+				
+			},
+			/* error : function(html){
+				alert("error - "+ html);
+			} */
+		});
+	}else {
+		loopstop(); 
+		 $("#message").html('<span style="color:red;">Transaction Time out/ Transaction not found</span>');
+	}
+	
+}	
+
+function ckeckCompDesc(){
+	var compDesc = $.trim($("#complaintDescription").val());
+	if(compDesc != "")
+	{
+		$("#complaintDescriptionMsg").html("");
+		return true;
+	}
+	else 
+	{
+		$("#complaintDescriptionMsg").html("Please provide valid details")
+		return false;
+	}
+}
+
+function populateTat(v){
+	var dispIndex =  document.getElementById("disposition").selectedIndex;
+	//document.getElementById("dispositionTat").options[dispIndex].selected = true;
+	document.getElementById("dispositionTatSel").options[dispIndex].selected = true;
+	var dispTat = document.getElementById("dispositionTatSel").value;
+	document.getElementById("dispositionTat").value=dispTat;
+}
+
+
+</script>
+</body>
+</html>

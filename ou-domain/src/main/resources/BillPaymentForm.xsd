@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+
+	<xs:element name="BillPaymentForm">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="customParams" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string" maxOccurs="1" />
+							<xs:element name="type" type="xs:string" maxOccurs="1" />
+							<xs:element name="isMandatory" type="xs:boolean"
+								maxOccurs="1" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+
+				<xs:sequence>
+					<xs:element name="option" maxOccurs="unbounded"
+						minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Breakup" maxOccurs="unbounded"
+									minOccurs="0">
+									<xs:complexType>
+										<xs:simpleContent>
+											<xs:extension base="xs:string">
+												<xs:attribute type="xs:string" name="name" use="optional" />
+												<xs:attribute type="xs:string" name="amount"
+													use="optional" />
+											</xs:extension>
+										</xs:simpleContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+
+
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

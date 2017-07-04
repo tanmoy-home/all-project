@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Welcome to BBPOU</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="/css/bbps-bootstrap.css" rel="stylesheet">
+
+		<!-- MetisMenu CSS -->
+		<link href="/css/metisMenu.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="/resource/css/OU13/BBPOUCSS.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="/css/font-awesome.min.css">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via  -->
+		<!--[if lt IE 9]>
+		<script src="/js/html5shiv.js"></script>
+		<script src="/js/respond.min.js"></script>
+		<![endif]-->
+
+		<!-- jQuery -->
+		<script src="/js/jquery-1.12.3.min.js"></script>
+
+		<!-- Bootstrap Core JavaScript -->
+		<script src="/js/bootstrap.min.js"></script>
+
+		<!-- Metis Menu Plugin JavaScript -->
+		<script src="/js/metisMenu.min.js"></script>
+
+		<!-- Custom Theme JavaScript -->
+		<script src="/js/bbpou.js"></script>
+
+		<!-- Page Specific JS -->
+		<script src="/js/billpay.js"></script>
+
+
+
+	</head>
+	
+	<body class="">
+		<div id="wrapper">
+			
+ 			<!-- HEADER -->
+				<div id="header"></div>
+			<!-- /HEADER -->	
+ 			
+			<!-- SIDEBAR -->
+			<!-- left menu -->
+			<div class="left-side">
+				<a class="sidebar_switch on_switch" href="javascript:void(0)">Sidebar switch</a>
+				<div class="navbar-default sidebar" role="navigation">
+					<div class="sidebar-nav navbar-collapse">
+						<ul class="nav" id="side-menu">
+							<li>
+								<a href="javascript:void(0);">Dashboard</a>
+							</li>
+							<li>
+								<a href="bill-payment-screen.html">Pay Bill</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">Transaction History</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">Menu Item 1<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="javascript:void(0);">Sub-Menu Item 1</a>
+											
+									</li>
+									<li>
+										<a href="javascript:void(0);">Sub-Menu Item 2</a>
+											
+									</li>
+										
+								</ul>
+								<!-- /.nav-second-level -->
+							</li>
+								
+						</ul>
+					</div>
+					<!-- /.sidebar-collapse -->
+				</div>
+				<!-- /.navbar-static-side -->
+			</div>
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<h2 class="page-header">Pay Bill</h2>
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>	
+					<!-- /.row -->
+					
+					<div class="row">	
+						<div class="col-sm-12">
+								<div class="box">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Biller Category</label>
+											       <div id="catagoryId">
+											       </div>	
+
+											    </div>
+									    	</div>
+											<div id="biller" class="col-sm-3">
+											    <div class="form-group">
+											        <label>Biller</label>
+											          <div id="billerlst">
+											       </div>
+											    </div>
+									    	</div>
+											<div id="subbiller" class="col-sm-3">
+											    <div class="form-group">
+											        <label>Sub-Biller</label>
+											          <div id="subbillerlst">
+											       </div>
+											    </div>
+									    	</div>
+										</div> <!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+									
+								<form id='billFetchForm' method='post' name='billFetchForm'>
+																
+								<div class="box" id="customerInfoArea" style="display:none">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Customer Information</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">
+											<div id="customerInfo">
+											
+											<div class='col-sm-3'>
+											<div class='form-group'>
+											<div class='required'><label>Mobile *</label>
+											<input type='text' class='form-control' id='inputMobile'  name='mobileNum'>
+											</div></div></div>
+		
+											<div class='col-sm-3'>
+										    <div class='form-group'>
+											<label>Aadhaar Number</label>
+											<input type='text' class='form-control' id='inputAadhaarNum' name='aadhaarNum'>
+											</div>
+											</div>
+				
+											<div class='col-sm-3'>
+											<div class='form-group'>
+											<label>PAN</label>
+										    <input type='text' class='form-control' id='inputPAN' name='pan'>
+											</div>
+										    </div>
+		
+											<div class='col-sm-3'>
+											<div class='form-group'>
+											<label>Email</label>
+											<input type='text' class='form-control' id='inputEmail' name='emailId'>
+											</div>
+										    </div>
+										
+										</div>
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								<div class="clearfix"></div>
+								
+								
+								<div class="box" id="billFetchInfoArea" style="display:none">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill information to fetch bill</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">
+											<div id="billFetchInfoForm"></div>
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+
+								</form>
+								
+								<div class="clearfix"></div>
+																
+								
+								
+								<div class="box" id="billInfoArea" style="display:none">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill Information</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">
+											<div id="billInfoForm"></div>	
+									    	
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								
+								<div class="box" id="payArea" style="display:none">
+									<div class="box-body">
+
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Split Pay</label>
+											        <select class="form-control" id="inputSplitPay">
+											        	<option value=""></option>
+											        	<option value="">Option 01</option>
+											        	<option value="">Option 02</option>
+											        	<option value="">Option 03</option>
+											        </select>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Mode of Payment</label>
+											        <select class="form-control" id="inputModeOfPayment">
+											        	<option value=""></option>
+											        	<option value="">Option 01</option>
+											        	<option value="">Option 02</option>
+											        	<option value="">Option 03</option>
+											        </select>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Pay Amount</label>
+											        <input type="text" class="form-control" id="inputPayAmount">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Late Payment Fee</label>
+											        <input type="text" class="form-control" id="inputLatePayFee">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Convenience Fees</label>
+											        <input type="text" class="form-control" id="inputConvFees">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Approval Code</label>
+											        <input type="text" class="form-control" id="inputApprovalCode">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>IFSC Code | A/C Number</label>
+											        <input type="text" class="form-control" id="inputIFSCCode">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Card Number</label>
+											        <input type="text" class="form-control" id="inputCardNum">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Mobile | MMID</label>
+											        <input type="text" class="form-control" id="inputMobile">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Aadhaar | IIN</label>
+											        <input type="text" class="form-control" id="inputAadhar">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-6">
+											    <div class="form-group">
+											        <label>Additional Information</label>
+											        <textarea class="form-control" id="inputAdditionalInfo"></textarea>
+											    </div>
+									    	</div>
+									    	
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								<div class="pull-right" id="btnPayArea" style="display:none">
+									<button type="submit" class="btn btn-primary">Pay Now</button>&nbsp;
+		          					<button type="button" class="btn btn-default">Reset</button>&nbsp;
+								</div>
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>	
+					<!-- /.row -->				
+							
+					<!-- extra bottom space -->
+	            	<div class="btm-pad-lg">&nbsp;</div>					
+					
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+			
+			
+			<!-- FOOTER -->
+			<footer class="bbpou-footer">
+				Copyright &copy; 2016, R S Software. All rights reserved.
+			</footer>
+		    <!-- /FOOTER -->        	
+			<input type='hidden' id='tenantId' name='tenantId' value='[J${com.rssoftware.framework.hibernate.dao.common.TransactionContext.getTenantId}J]'/>
+	</body>
+	
+
+</html>
+
+<null>

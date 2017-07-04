@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+	<head>
+	
+        <link th:substituteby="common/common_header" />
+		<script type="text/javascript" src="/js/raisecomplaint.js"></script>
+			<script type="text/javascript" src="/js/bbpou.js"></script>
+	</head>
+	
+	<body class="">
+		<div id="wrapper">
+			<!-- HEADER -->
+			<div lang="en" th:replace="common/header :: header"> </div>
+			<!-- /HEADER -->	
+
+			<!-- SIDEBAR -->
+			<!-- left menu -->
+			 <div lang="en" th:replace="common/left_menu:: leftmenu"> </div>
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			
+		<div id="page-wrapper">
+		
+				<div class="container-fluid">
+				<div class="mandatory-test">* - Mandatory Input Field</div>
+					<div class="row" id="txnsearchheader">
+						<div class="col-sm-12">
+							<h2 class="page-header">Check Complaint Status</h2>
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>	
+									
+				 	
+							<div class="box">
+								<div class="box-body">
+									<!-- /.row -->
+                                   
+									<div class="row">
+													<div class="col-sm-4 left-width ">
+														<div class="form-group required" >
+													<label class="control-label" >Type of Complaint
+													<span style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+													</label>
+													</div>
+													</div>
+
+												<div class="col-sm-4 ">
+													<div class="form-group required">
+														<select class="form-control" id="complainttype_status" required="required">
+														    <option value="">Select Complaint Type</option>
+													        <option value="TRANSACTION">Transaction Type</option>
+													        <option value="SERVICE">Service Type</option>
+													    </select>
+													 
+													</div>
+												</div>
+
+
+									</div>
+
+
+									<div class="row">
+													<div class="col-sm-4 left-width ">
+														<div class="form-group required" >
+													<label class="control-label" >Complaint ID
+													<span style="font-size: 21px; color: red; margin-left: 3px;">*</span>
+													</label>
+													</div>
+													</div>
+
+												<div class="col-sm-4 ">
+													<div class="form-group required">
+														<input type="text" class="form-control" id="complaintid_status" required="required" maxlength="15">
+													</div>
+												</div>
+
+
+									</div>
+									<div class="pull-right ">
+									<br><br>
+									<button type="button" class="btn btn-primary" onclick="statusCheckRequest()">Check Status</button>
+									</div>		
+						</div>
+						</div>
+						</div>
+						<br><br><br><br>
+						<div class="box" id="msg" style="display:none">
+						     <div class="box-body">
+							      <div class="row" id="successmsg">
+							</div>				
+						    </div>
+					    </div>
+					    <div class="box" id="errormsg" style="display:none">
+					          <div class="box-body">
+				 	          <font color="red" style="font-size: 18px;font-family: roboto;"><center>Complaint Not found.</center></font>
+				 	          </div>
+					    </div>
+					    <div class="box" id="timeoutmsgdiv" style="display:none">
+						     <div class="box-body">
+							      <div class="row" id="timeoutmsg"></div>				
+						     </div>
+					</div>	
+						<!-- <div class="row" id="successmsg" style="display:none">
+				 	                
+					                </div> -->
+						
+					<!-- extra bottom space -->
+	            	<div class="btm-pad-lg">&nbsp;</div>					
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+			<!-- FOOTER -->
+			<footer class="bbpou-footer">
+				Copyright &copy; 2016, R S Software. All rights reserved.
+			</footer>
+		    <!-- /FOOTER -->        	
+			<input type='hidden' id='tenantId' name='tenantId' th:value="${userDetails.tenantId}"/>
+		
+

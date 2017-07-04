@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.org/schema" targetNamespace="http://bbps.org/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:simpleType name="custIdentityConstant">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EMAIL" />
+			<xs:enumeration value="PAN" />
+			<xs:enumeration value="AADHAAR" />
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- change   for   version 8 -->
+	<xs:simpleType name="transactionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FORWARD TYPE REQUEST" />
+			<xs:enumeration value="REVERSAL TYPE REQUEST" />
+			<xs:enumeration value="FORWARD TYPE RESPONSE" />
+			<xs:enumeration value="REVERSAL TYPE RESPONSE" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="deviceTagNameType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="MOBILE" />
+			<xs:enumeration value="GEOCODE" />
+			<xs:enumeration value="POSTAL_CODE" />
+			<xs:enumeration value="IP" />
+			<xs:enumeration value="INITIATING_CHANNEL" />
+			<xs:enumeration value="TERMINAL_ID" />
+			<xs:enumeration value="IMEI" />
+			<xs:enumeration value="IFSC" />
+			<xs:enumeration value="MAC" />
+			<xs:enumeration value="OS" />
+			<xs:enumeration value="APP" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="initiatingChannelType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="INT" />
+			<xs:enumeration value="MOB" />
+			<xs:enumeration value="POS" />
+			<xs:enumeration value="KIOSK" />
+			<xs:enumeration value="MPOS" />
+			<xs:enumeration value="ATM" />
+			<xs:enumeration value="BNKBRNCH" />
+		</xs:restriction>
+	</xs:simpleType>
+	
+	<xs:simpleType name="qckPayType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Yes" />
+			<xs:enumeration value="No" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="spltPayType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Yes" />
+			<xs:enumeration value="No" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="analyticsFetchTypeInstance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="FETCHREQUESTSTART" />
+			<xs:enumeration value="FETCHREQUESTEND" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="analyticsPaymentTypeInstance">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PAYREQUESTSTART" />
+			<xs:enumeration value="PAYREQUESTEND" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="headType">
+		<xs:attribute type="xs:string" name="ver" use="required" />
+		<xs:attribute type="xs:string" name="ts" use="required" />
+		<xs:attribute type="xs:string" name="origInst" use="required" />
+		<xs:attribute type="xs:string" name="refId" use="required" />
+	</xs:complexType>
+	
+	<xs:complexType name="analyticsType">
+		<xs:sequence>
+			<xs:element name="Tag" maxOccurs="2" minOccurs="2">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="name"
+						use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="riskScoresType">
+		<xs:sequence>
+			<xs:element name="Score" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="provider" use="required" />
+					<xs:attribute type="xs:string" name="type" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="txnType">
+		<xs:sequence>
+			<xs:element type="bbps:riskScoresType" name="RiskScores" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="ts" use="required"/>
+		<!-- type mandatory and used only for payment -->
+		<xs:attribute type="xs:string" name="type" use="optional"/>
+		<!-- msgId mandatory for fetch and payment -->
+		<xs:attribute type="xs:string" name="msgId" use="optional"/>	
+		<!-- txnReferenceId mandatory and used only for payment -->
+		<xs:attribute type="xs:string" name="txnReferenceId" use="optional"/>
+		<!-- xchangeId mandatory and used only for CMS -->
+		<xs:attribute type="xs:string" name="xchangeId" use="optional"/>
+	</xs:complexType>
+
+	<xs:complexType name="customerDtlsType">	
+		<xs:sequence>
+				<xs:element name="Tag" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute type="xs:string" name="name" use="required" />
+						<xs:attribute type="xs:string" name="value" use="required" />
+					</xs:complexType>
+				</xs:element>
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="mobile" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="deviceType">
+		<xs:sequence>
+			<xs:element name="Tag" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:attribute type="bbps:deviceTagNameType" name="name" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="agentType">
+		<xs:sequence>
+			<xs:element type="bbps:deviceType" name="Device" />
+		</xs:sequence>
+		<xs:attribute type="xs:string" name="id" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="billerType">
+		<xs:attribute type="xs:string" name="id" use="required" />
+	</xs:complexType>
+			
+	<xs:complexType name="customerParamsType">
+		<xs:sequence>  
+			<xs:element name="Tag" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="name" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence> 
+	</xs:complexType>
+
+	<xs:complexType name="billDetailsType">
+		<xs:sequence>
+			<xs:element type="bbps:billerType" name="Biller" minOccurs="1" maxOccurs="1" />
+			<xs:element type="bbps:customerParamsType" name="CustomerParams" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="billerResponseType">
+		<xs:sequence>
+			<xs:element name="Tag" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="name" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>	
+		<xs:attribute type="xs:string" name="customerName" use="required" />
+		<xs:attribute type="xs:string" name="amount" use="required" />
+		<xs:attribute type="xs:string" name="dueDate" use="required" />
+		<xs:attribute type="xs:string" name="custConvFee" use="optional" />
+		<xs:attribute type="xs:string" name="custConvDesc" use="optional" />
+		<xs:attribute type="xs:string" name="billDate" use="required" />
+		<xs:attribute type="xs:string" name="billNumber" use="required" />
+		<xs:attribute type="xs:string" name="billPeriod" use="required" />
+	</xs:complexType>
+
+	<xs:complexType name="reasonType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute type="xs:string" name="approvalRefNum" use="required" />
+				<xs:attribute type="xs:string" name="responseCode" use="required" />
+				<xs:attribute type="xs:string" name="responseReason" use="required" />
+				<xs:attribute type="xs:string" name="complianceRespCd" use="optional" />
+				<xs:attribute type="xs:string" name="complianceReason" use="optional" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<xs:complexType name="additionalInfoType">
+		<xs:sequence>
+			<xs:element name="Tag" maxOccurs="unbounded" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="name" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- For Paymemnt -->
+	<xs:complexType name="pmtMtdType">
+		<xs:attribute type="bbps:qckPayType" name="quickPay" />
+		<xs:attribute type="bbps:spltPayType" name="splitPay" />
+		<xs:attribute type="xs:string" name="paymentMode" />
+	</xs:complexType>
+	
+	<xs:complexType name="amtType">
+		<xs:attribute type="xs:string" name="amount" />
+		<xs:attribute type="xs:string" name="custConvFee" />		
+		<xs:attribute type="xs:string" name="currency" />
+	</xs:complexType>
+	
+	<xs:complexType name="amountType">
+		<xs:sequence>
+			<xs:element type="bbps:amtType" name="Amt" />
+			<xs:element type="xs:string" name="SplitPayAmount" />
+			<xs:sequence>
+				<xs:element name="Tag" maxOccurs="unbounded" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute type="xs:string" name="name" use="required" />
+						<xs:attribute type="xs:string" name="value" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+
+	
+	<xs:complexType name="pymntInfType">
+		<xs:sequence>
+			<xs:element name="Tag" maxOccurs="unbounded" minOccurs="1">
+				<xs:complexType>
+					<xs:attribute type="xs:string" name="name" use="required" />
+					<xs:attribute type="xs:string" name="value" use="required" />
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="errorMessage">
+		<xs:sequence>
+			<xs:element type="xs:string" name="errorCd" />
+			<xs:element type="xs:string" name="errorDtl" />
+		</xs:sequence>
+	</xs:complexType>
+	<!-- Added END for BBPS Specific -->
+</xs:schema>

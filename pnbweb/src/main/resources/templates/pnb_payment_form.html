@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Payment Gateway Intermediate Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       //setTimeout($("#pg_intermediate_page").submit(),1000);
+       $("#pg_intermediate_page").submit();
+    });   
+</script>
+</head>
+<body>
+	<p th:text="${payment_page_heading} + '!'" />
+
+	<form id="pg_intermediate_page" method="post" th:action="${submit_url}">
+		<input type="hidden" name="encdata" id="encdata" th:value="${encdata}"/>
+<!-- 		<input type="submit" value="Pay Now!"> -->
+	</form>
+
+</body>
+</html>
+
+----------------
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Payment Gateway Intermediate Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       //setTimeout($("#pg_intermediate_page").submit(),1000);
+       $("#pg_intermediate_page").submit();
+    });   
+</script>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: arial;
+            font-size: 12px;
+        }
+        #vh {
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+        .box {
+            border-radius: 15px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+            padding: 25px;
+            width: 350px;
+            height: 100px;
+            background: white;
+        }
+        .one-edge-shadow-2 {
+            -webkit-box-shadow: 0 8px 6px -6px black;
+            -moz-box-shadow: 0 8px 6px -6px black;
+            box-shadow: 0 8px 6px -6px black;
+        }
+        #progressbar {
+            width: 100%;
+            height: 15px;
+            background-color: #eee;
+            padding: 2px;
+            margin: .6em 0;
+            border: 1px #000 double;
+            clear: both;
+        }
+        #progress {
+            background: #A1C969;
+            /*-- Color of the bar --*/
+            
+            height: 15px;
+            width: 0%;
+            max-width: 100%;
+            float: left;
+            -webkit-animation: progress 2s 1 forwards;
+            -moz-animation: progress 2s 1 forwards;
+            -ms-animation: progress 2s 1 forwards;
+            animation: progress 2s 1 forwards;
+        }
+        #pbaranim {
+            height: 15px;
+            width: 100%;
+            overflow: hidden;
+            background: url('http://www.cssdeck.com/uploads/media/items/7/7uo1osj.gif') repeat-x;
+            -moz-opacity: 0.25;
+            -khtml-opacity: 0.25;
+            opacity: 0.25;
+            -ms-filter: progid: DXImageTransform.Microsoft.Alpha(Opacity=25);
+            filter: progid: DXImageTransform.Microsoft.Alpha(opacity=25);
+            filter: alpha(opacity=25);
+        }
+        @-webkit-keyframes progress {
+            from {} to {
+                width: 80%
+            }
+        }
+       @-moz-keyframes progress {
+            from {} to {
+                width: 80%
+            }
+        }
+        @-ms-keyframes progress {
+            from {} to {
+                width: 80%
+            }
+        }
+        @keyframes progress {
+            from {} to {
+                width: 80%
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+	<form id="pg_intermediate_page" method="post" th:action="${submit_url}">
+		<input type="hidden" name="encdata" id="encdata" th:value="${encdata}"/>
+<!-- 		<input type="submit" value="Pay Now!"> -->
+	</form>
+    <div id="vh" class="box one-edge-shadow-2 ">
+        <div>Content Area</div>
+        <!--Progress Bar Start -->
+        <div id="progressbar">
+            <div id="progress">
+                <div id="pbaranim"></div>
+            </div>
+        </div>
+        <!--Progress Bar End -->
+    </div>
+
+</body>
+
+</html>

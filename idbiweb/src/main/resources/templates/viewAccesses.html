@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<title>View Accesses</title>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<link rel="stylesheet" th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script>
+<script>
+	$(function() {
+		$('.multiselect').multiselect();
+	});
+
+	$("#manage-access").click(function() {
+		alert('hello');
+		var myBookId = $(this).data('data-id');
+		alert(myBookId);
+		$(".modal-body #bookId").val( myBookId );
+        $("#myModal").modal('show');
+    });
+	
+</script>
+</head>
+<body>
+<h3>Granted Access Points</h3><hr/>
+				<div class="datagrid">
+					<table width="100%">
+						<thead>
+							<tr>
+								<th width="10%">SL No</th>
+								<th width="20%">Access Code</th>
+								<th width="20%">Access Desc</th>
+								<th width="20%">Status</th>
+								<th width="30%">Admin Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						<tr th:each="accessPoint  : ${accessPointList}">
+							<td th:text="${accessPoint.id}"></td>
+							<td th:text="${accessPoint.accessCode}"></td>
+							<td th:text="${accessPoint.desc}"></td>
+							<td th:text="${accessPoint.statusStr}"></td>
+							<td align="center">
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${accessPoint.status} == 1">Deactivate</button>
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${accessPoint.status} == 2">Activate</button>
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${accessPoint.status} == 3">Enable</button>
+								<span>&nbsp;&nbsp;</span>
+								<a th:href="@{|/admin/updateUser/${userDetail.userId}|}">Detail</a>
+								<button type="submit" class="btn btn-primary" name="action" value="insert" >Detail</button>
+								<!-- <a id="addBook" data-toggle="modal" data-id="111222" title="Add this item" class="open-AddBookDialog btn btn-primary" data-target="#addBookDialog" href="#">test</a> -->
+								<a id="manage-access" data-toggle="modal" data-id="111222" data-target="#myModal" href="#">Manage Access</a>
+							</td>
+							
+						</tr>
+						<tr th:each="privilege  : ${accessPoint.allowedProvileges}">
+							<td th:text="${privilege.id}"></td>
+							<td th:text="${privileget.privilegeCode}"></td>
+							<td th:text="${privilege.privilegeDesc}"></td>
+							<td th:text="${privilege.statusStr}"></td>
+							<td align="center">
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${privilege.status} == 1">Deactivate</button>
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${privilege.status} == 2">Activate</button>
+								<button type="submit" class="btn btn-primary" name="action" value="insert" th:if="${privilege.status} == 3">Enable</button>
+								<span>&nbsp;&nbsp;</span>
+								<button type="submit" class="btn btn-primary" name="action" value="insert">Detail</button>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal hide addBookDialog" id="addBookDialog">
+			 		<div class="modal-header">
+					    <button class="close" data-dismiss="modal">×</button>
+					    <h3>Modal header</h3>
+				  	</div>
+				    <div class="modal-body">
+				        <p>some content</p>
+				        <input type="text" name="bookId" id="bookId" value=""/>
+				    </div>
+				</div>
+				<!-- Modal -->
+				<div class="modal fade myModal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				      </div>
+				      <div class="modal-body">
+				       	<input type="text" name="bookId" id="bookId" value=""/>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				      </div>
+				    </div>
+				  </div>
+				  </div>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+
+<!-- Material Design Bootstrap -->
+<link href="css/bootstrap-datepicker3.css" rel="stylesheet" />
+
+</head>
+
+<body>
+	<!-- TOP NAV BAR START -->
+	<div data-th-replace="fragments/sb-admin :: top-nav"></div>
+	<!-- TOP NAV BAR END -->
+	<!--BODY WRAPPER START -->
+	<div class="wrapper">
+		<!--SIDE NAV START -->
+		<div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+		<!--SIDE NAV END -->
+		<!-- BODY OR CONTENT BOX START -->
+		<main class="content-wrapper"> <!-- PAGE TITLE BOX START -->
+		<section class="content-header">
+			<h1>Agent On Board</h1>
+			<!-- <ol class="breadcrumb">
+                  <li><i class="fa fa-star mandatory-font"></i>  - Mandatory Input Field</li>
+               </ol> -->
+		</section>
+		<!-- PAGE TITLE BOX END --> <!-- CONTENT AREA START -->
+
+		<div class="content-area">
+			<!-- MESSAGE SHOW BOX START -->
+			<!-- <div class="alert alert-success" th:text="${message}"></div> -->
+			<!-- MESSAGE SHOW BOX END -->
+
+			<!-- FORM START -->
+			<form th:action="@{/agentInstitute/saveAgent}" th:object="${agent}"
+				method="post">
+				<div class="row">
+
+					<!-- HIDDEN TEXT BOX START -->
+					<input th:if=" *{isEdit} == 'Y'" type="hidden" id="isEdit"
+						name="isEdit" readonly="readonly" /> <input
+						th:if=" *{isView} == 'Y'" type="hidden" id="isView" name="isView"
+						readonly="readonly" /> <input id="viewid" th:field="*{isView}"
+						type="hidden" />
+					<!-- HIDDEN TEXT BOX END -->
+
+
+					<div class="input-field col-md-6 col-lg-4"
+						th:if="*{isEdit} == 'Y' or *{isView} == 'Y'">
+						<label for="AgentID"><span class="star">*</span> Agent ID</label>
+						<input id="agentId" type="text" class="validate"
+							th:field="*{agentId}" readonly="readonly" />
+
+					</div>
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="AgentName">Agent Name<span class="star">*</span></label>
+						<input id="agentName" name="agentName" type="text"
+							class="validate" th:if="*{isView} == 'Y'" th:field="*{agentName}"
+							readonly="readonly" /> <input id="agentName" name="agentName"
+							type="text" class="validate" th:if="*{isEdit} == 'Y'"
+							th:field="*{agentName}" placeholder="Enter Agent Name" />
+
+						<input id="agentName" name="agentName" type="text"
+							class="validate" th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentName}"
+							title="e.g. Agent Name should be 3-45 charecters long. No number or Special charecter is used except ' . - _'"
+							placeholder="Enter Agent Name" />
+
+
+					</div>
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="AgentAliasName">Agent Alias Name<span
+							class="star">*</span></label> <input id="agentAliasName"
+							name="agentAliasName" type="text" class="validate"
+							th:if="*{isView} == 'Y'" th:field="*{agentAliasName}"
+							readonly="readonly" /> <input id="agentAliasName"
+							name="agentAliasName" type="text" class="validate"
+							th:if="*{isEdit} == 'Y'" th:field="*{agentAliasName}"
+							placeholder="Enter Agent Alias Name" maxlength="45" />
+
+						<input id="agentAliasName" name="agentAliasName" type="text"
+							class="validate" th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentAliasName}"
+							title="e.g. Alphanumeric but start with Alphabet only. Not more than 45 charecters and no special charecter used except ' - _ . '"
+							placeholder="Enter Agent Alias Name" maxlength="45" />
+
+
+					</div>
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="LinkedAgentInstitutio">Linked Agent
+							Institution<span class="star"></span>
+						</label> <input id="agentIns" name="agentIns" type="text"
+							th:field="*{agentInst}" placeholder="Linked Agent Institution"
+							readonly="readonly" />
+
+
+					</div>
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="mobilenumber">Mobile Number<span class="star">*</span></label>
+						<input id="agentMobileNo" name="agentMobileNo" type="text"
+							th:if="*{isView} == 'Y'" th:field="*{agentMobileNo}"
+							readonly="readonly" /> <input id="agentMobileNo"
+							name="agentMobileNo" type="text" class="validate"
+							th:if="*{isEdit} == 'Y'" th:field="*{agentMobileNo}"
+							title="e.g. only numbers starts with 7 or 8 or 9"
+							placeholder="Enter Mobile Number" />
+
+						<input id="agentMobileNo" name="agentMobileNo" type="text"
+							class="validate" th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentMobileNo}"
+							title="e.g. only numbers starts with 7 or 8 or 9"
+							placeholder="Enter Mobile Number" />
+
+
+					</div>
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="AgentShopName">Agent Shop Name<span
+							class="star">*</span></label> <input id="agentShopName"
+							name="agentShopName" type="text" class="validate"
+							th:if="*{isView} == 'Y'" th:field="*{agentShopName}"
+							readonly="readonly" /> <input id="agentShopName"
+							name="agentShopName" type="text" class="validate"
+							th:if="*{isEdit} == 'Y'" th:field="*{agentShopName}"
+							title="e.g. Alphanumeric .  _' @ with Maximum 45 characters and start with alphabet"
+							pattern="^[a-zA-Z][a-zA-Z0-9'._@ ]*$"
+							placeholder="Enter Agent Shop Name" maxlength="45" />
+
+						<input id="agentShopName" name="agentShopName" type="text"
+							class="validate" th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentShopName}"
+							title="e.g. Alphanumeric .  _' @ with Maximum 45 characters and start with alphabet"
+							pattern="^[a-zA-Z][a-zA-Z0-9'._@ ]*$"
+							placeholder="Enter Agent Shop Name" maxlength="45" />
+
+
+					</div>
+
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="TypeOfBusiness">Type of Business<span
+							class="star"></span></label> <input id="businessType" name="businessType"
+							type="text" th:field="*{businessType}"
+							placeholder="Enter of business" readonly="readonly" />
+
+
+
+					</div>
+
+
+
+					<div class="input-field col-md-6 col-lg-4 row-margin-top">
+						<label for="RegisteredAddress">Registered Address<span
+							class="star">*</span></label> <input id="agentRegisteredAdrline"
+							name="agentRegisteredAdrline" type="text" class="validate"
+							th:if="*{isView} == 'Y'" th:field="*{agentRegisteredAdrline}"
+							readonly="readonly" /> <input type="text"
+							id="agentRegisteredAdrline" name="agentRegisteredAdrline"
+							class="validate" th:if="*{isEdit} == 'Y'"
+							th:field="*{agentRegisteredAdrline}" placeholder="Enter Address" />
+
+						<input type="text" id="agentRegisteredAdrline"
+							name="agentRegisteredAdrline" class="validate"
+							th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentRegisteredAdrline}"
+							title="e.g. Address should not more than 200 charecters long. No Special charecter is used except ' . - _ / @()'"
+							placeholder="Enter Address" />
+
+
+					</div>
+
+
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="State" class="label-select-box">State<span
+							class="star">*</span></label>
+						<div class="select-style">
+							<select id="agentState" name="agentState"
+								th:if="*{isView} == 'Y'" th:field="*{agentRegisteredState}"
+								disabled="disabled" class="validate">
+
+								<option th:if="${sl.stateId == {agentRegisteredState}}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" selected='selected' />
+								<option th:if="${sl.stateId != {agentRegisteredState}}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" />
+
+							</select> <select id="agentState" name="agentState"
+								th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+								th:field="*{agentRegisteredState}" class="validate">
+
+								<option value=''>select State</option>
+								<option th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}"></option>
+
+							</select> <select id="agentState" name="agentState"
+								th:if="*{isEdit} == 'Y'" th:field="*{agentRegisteredState}"
+								class="validate">
+
+								<option th:if="${sl.stateId == {agentRegisteredState}}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" selected='selected' />
+								<option th:if="${sl.stateId != {agentRegisteredState}}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" />
+
+							</select>
+						</div>
+
+					</div>
+
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="City" class="label-select-box">City<span
+							class="star">*</span></label>
+						<div class="select-style">
+							<select id="city" name="city" th:if="*{isView} == 'Y'"
+								th:field="*{agentRegisteredCity}" disabled="disabled"
+								class="validate">
+
+								<option value=''>Select City</option>
+								<option th:if="${cl.cityId == {agentRegisteredCity}}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" selected='selected' />
+								<option th:if="${cl.cityId != {agentRegisteredCity}}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" />
+
+							</select> <select id="city" name="city" th:if="*{isEdit} == 'Y'"
+								th:field="*{agentRegisteredCity}" class="validate">
+
+								<option value=''>Select City</option>
+								<option th:if="${cl.cityId == {agentRegisteredCity}}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" selected='selected' />
+								<option th:if="${cl.cityId != {agentRegisteredCity}}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" />
+
+							</select> <select id="city" name="city"
+								th:if="*{isView} != 'Y' and *{isEdit} != 'Y' "
+								th:field="*{agentRegisteredCity}" class="validate">
+
+								<option value=''>select City</option>
+							</select>
+
+						</div>
+					</div>
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="Country">Country<span class="star"></span></label> <input
+							id="country" name="country" type="text" class="validate"
+							th:field="*{agentRegisteredCountry}" readonly="readonly" />
+
+
+
+					</div>
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="PinCode" class="label-select-box">Pin Code<span
+							class="star"></span></label>
+						<div class="select-style">
+							<select id="pincode" name="pincode" th:if="*{isView} == 'Y'"
+								th:field="*{agentRegisteredPinCode}" disabled="disabled"
+								class="validate">
+								<option value=''>Select PinCode</option>
+								<option th:if="${pin.postalCode == {agentRegisteredPinCode}}"
+									th:each="pin : ${pinList}" th:value="${pin.postalCode}"
+									th:text="${pin.postalCode}" selected='selected' />
+								<option th:if="${pin.postalCode != {agentRegisteredPinCode}}"
+									th:each="pin : ${pinList}" th:value="${pin.postalCode}"
+									th:text="${pin.postalCode}" />
+
+							</select> <select id="pincode" name="pincode" th:if="*{isEdit} == 'Y'"
+								th:field="*{agentRegisteredPinCode}" readonly="readonly"
+								class="validate">
+
+								<option value=''>Select PinCode</option>
+								<option th:if="${pin.postalCode == {agentRegisteredPinCode}}"
+									th:each="pin : ${pinList}" th:value="${pin.postalCode}"
+									th:text="${pin.postalCode}" selected='selected' />
+								<option th:if="${pin.postalCode != {agentRegisteredPinCode}}"
+									th:each="pin : ${pinList}" th:value="${pin.postalCode}"
+									th:text="${pin.postalCode}" />
+							</select> <select id="pincode" name="pincode"
+								th:if="*{isView} != 'Y' and *{isEdit} != 'Y' "
+								th:field="*{agentRegisteredPinCode}" class="validate">
+
+
+							</select>
+
+
+						</div>
+
+					</div>
+
+
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="pmMode" class="label-select-box">Payment Mode<span
+							class="star">*</span></label> <input id="pmMode" type="text"
+							class="validate"
+							th:field="*{agentPaymentMode}" readonly="readonly" />
+						<div class="">
+
+
+
+							<!-- <select id="pmMode" th:if="*{isEdit} == 'Y'"
+								th:field="*{agentPaymentModes}" class="validate multiselect"
+								multiple="multiple">
+
+								<option th:each="sl : ${paymentModeViewList}"
+									th:value="${sl.configParam}" th:text="${sl.configParam}" selected="selected"></option>
+							</select> 
+							<select id="pmMode"
+								th:if="*{isView} != 'Y' and *{isEdit} != 'Y' "
+								th:field="*{agentPaymentModes}" class="validate multiselect"
+								multiple="multiple">
+								<option th:each="sl : ${paymentModeViewList}"
+									th:value="${sl.configParam}" th:text="${sl.configParam}" selected="selected"></option>
+
+							</select> -->
+
+							
+						</div>
+
+					</div>
+
+					<div class="input-field col-md-6 col-lg-4">
+						<label for="Agent Type">Agent Type<span class="star"></span></label>
+						<input id="agentType" name="agentType" type="text"
+							class="validate" th:field="*{agentType}" readonly="readonly" />
+
+
+
+					</div>
+
+					<!-- <div class="input-field col-md-6 row-margin-top-2">
+                               
+                              <input 
+                                     id="pmChannel" 
+                                     
+                                     type="text" 
+                                     class="validate"
+                                     th:if="*{isView} == 'Y'"
+                                     th:value="${agentPChannels}"
+                                     readonly="readonly"/>
+                              <select 
+                                     id="pmChannel" 
+                                     
+                                     th:if="*{isEdit} == 'Y'"
+                                     th:field="*{agentPaymentChannels}"
+                                     
+                                     class="form-control">
+                                      <option th:if="${pch.paramElement == agentPChannels}"
+										  th:each="pch : ${pchList}" 
+                                          th:value="${pch.paramElement}"
+										  th:text="${pch.paramElement}" 
+                                          selected='selected' />
+								  <option th:if="${pch.paramElement != agentPChannels}"
+										  th:each="pch : ${pchList}" 
+                                          th:value="${pch.paramElement}"
+										  th:text="${pch.paramElement}"/>
+                              </select>
+                                  
+                              <select 
+                                     id="pmChannel" 
+                                    
+                                     th:if="*{isView} != 'Y' and *{isEdit} != 'Y' "
+                                     th:field="*{agentPaymentChannels}" 
+                                     class="form-control">
+                                     <option value=''>select Payment Channel</option>                                                                     
+                                                                    
+                              </select>
+                                <label for="PaymentChannel"><span class="star">*</span> Payment Channel</label>
+                             
+                            </div> -->
+
+
+
+					<div class="input-field col-md-6  col-lg-4">
+						<label for="GeoCode">Geo Code<span class="star">*</span></label> <input
+							id="agentGeoCode" name="agentGeoCode" type="text"
+							class="validate" th:if="*{isView} == 'Y'"
+							th:field="*{agentGeoCode}" readonly="readonly" /> <input
+							id="agentGeoCode" name="agentGeoCode" type="text"
+							class="validate" th:if="*{isEdit} == 'Y'"
+							th:field="*{agentGeoCode}" placeholder="Enter Geo Code" />
+
+						<input id="agentGeoCode" name="agentGeoCode" type="text"
+							class="validate" th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							th:field="*{agentGeoCode}" title="Geocode should be numbers"
+							placeholder="Enter Geo Code" />
+
+
+					</div>
+
+					<!-- SELECT DATE BOX START -->
+					<div class="input-field col-md-6  col-lg-4">
+						<!-- SELECT DATE BOX START -->
+						<div class="input-daterange input-group" id="datepicker">
+							<label class="active" for="Agent_Effective_From">Agent
+								Effective From<span class="star"></span>
+							</label> <input type="text" placeholder="Click To select Date"
+								id="datepickerEffctvFrom" class="validate"
+								name="datepickerEffctvFrom" th:field="*{agentEffctvFrom}"
+								readonly="readonly" /> <span class="input-group-addon"
+								style="background: transparent;"></span> <label class="active"
+								for="Agent_Effective_To">Agent Effective To<span
+								class="star"></span></label> <input type="text" class="validate "
+								placeholder="Click To select Date" id="datepickerEffctvTo"
+								name="datepickerEffctvTo" th:field="*{agentEffctvTo}"
+								readonly="readonly" />
+
+
+
+						</div>
+						<!-- SELECT DATE BOX START -->
+
+					</div>
+					<!-- SELECT DATE BOX END -->
+
+
+
+					<div class="input-field col-md-6  col-lg-4"
+						th:if="*{isEdit} == 'Y' or *{isView} == 'Y'">
+						<label for="Status"> Status</label> <input id="entityStatus"
+							name="entityStatus" type="text" class="validate"
+							th:field="*{entityStatus}" placeholder="Status :" maxlength="8"
+							readonly="readonly" />
+
+
+
+					</div>
+
+					<div class="input-field col-md-6  col-lg-4"
+						th:if="*{entityStatus.name()} eq 'REJECTED'">
+						<label for="rejectComment">Rejection Comment:</label> <input
+							id="rejectComment" name="rejectComment" type="text"
+							class="validate" title="Rejection Reason"
+							th:field="*{rejectComment}" readonly="readonly" />
+					</div>
+
+
+					<div class="input-field col-md-6  col-lg-4">
+						<label for="BankAccountNo">Bank Account No<span
+							class="star">*</span></label> <input id="bankAccountNo"
+							name="bankAccountNo" type="text" class="validate"
+							th:if="*{isEdit} == 'Y'" th:field="*{agentBankAccount}"
+							placeholder="Enter Bank Account No"
+							title="Bank Account# should be 12 digit numbers" />
+
+						<input id="bankAccountNo" name="bankAccountNo" type="text"
+							placeholder="Enter Bank Account No" th:if="*{isView} == 'Y'"
+							th:field="*{agentBankAccount}"
+							title="Bank Account# should be 12 digit numbers"
+							readonly="readonly" /> <input id="bankAccountNo"
+							name="bankAccountNo" type="text" class="validate"
+							th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+							title="Bank Account# should be 12 digit numbers"
+							th:field="*{agentBankAccount}"
+							placeholder="Enter Bank Account No" />
+
+
+
+					</div>
+
+
+					<div class="input-field col-md-6 col-lg-4">
+
+   <div class="scheme row no-margin">
+      
+         
+         <div class="col-sm-8">     
+         <label for="Scheme">Scheme<span class="star"></span></label>
+         <div class="select-style"
+                                                style="margin-left: -5px; margin-top: -5px;">
+                                                <select id="scheme" name="scheme" th:if="*{isView} == 'Y'"
+                                                       th:field="*{agentSchemeId}" disabled="disabled" class="validate">
+
+                                                       <option th:if="${sl.schemeId == {agentSchemeId}}"
+                                                              th:each="sl : ${schemeList}" th:value="${sl.schemeId}"
+                                                              th:text="${sl.schemeName}" selected='selected' />
+                                                       <option th:if="${sl.schemeId != {agentSchemeId}}"
+                                                              th:each="sl : ${schemeList}" th:value="${sl.schemeId}"
+                                                              th:text="${sl.schemeName}" />
+                                                </select> <select id="scheme" name="scheme"
+                                                       th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"
+                                                       th:field="*{agentSchemeId}" class="validate">
+                                                       <option value='0'>select Scheme</option>
+                                                       <option th:each="sc : ${schemeList}" th:value="${sc.schemeId}"
+                                                              th:text="${sc.schemeName}"></option>
+                                                </select> <select id="scheme" name="scheme" th:if="*{isEdit} == 'Y'"
+                                                       th:field="*{agentSchemeId}">
+
+                                                       <option th:if="${sl.schemeId == {agentSchemeId}}"
+                                                              th:each="sl : ${schemeList}" th:value="${sl.schemeId}"
+                                                              th:text="${sl.schemeName}" selected='selected' />
+                                                       <option th:if="${sl.schemeId != {agentSchemeId}}"
+                                                              th:each="sl : ${schemeList}" th:value="${sl.schemeId}"
+                                                              th:text="${sl.schemeName}" />
+                                                </select>
+                                         </div>
+      </div>
+         
+      <div class="col-sm-3">            
+         <button class="btn btn-default scheme-view-button-align"
+                                                type="button" onclick="ViewScheme();">
+                                                <i class="fa fa-eye " title="View Scheme"></i> View
+                                         </button>
+      </div>
+         
+         
+   </div>
+   
+</div>
+					
+
+
+
+
+
+
+
+					<!-- DATA GRID START -->
+					<div class="datagrid col-md-12" id="datagrid">
+
+						<table id="agentSchemeLists"
+							class='table table-striped table-bordered table-hover dataTable no-footer'>
+							<thead>
+								<tr class="custom-data-table-head">
+									<th>Scheme Name</th>
+									<th>Description</th>
+									<th>Effective From</th>
+									<th>Effective To</th>
+									<th>Agent Percent Fee</th>
+									<th>Agent Flat Fee</th>
+									<th>AI Percent Fee</th>
+									<th>Transaction Amount Range</th>
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+						<button type="button" class="btn btn-default"
+							id="data-table-close">Close</button>
+					</div>
+					<!-- DATA GRID END -->
+					<div class="col-md-12">
+						<div class="alert"></div>
+					</div>
+
+					<!-- BUTTON START -->
+					<div class="col-md-12" th:if="*{isView} != 'Y'">
+						<button type="submit"
+							class="btn btn-default waves-effect waves-light form-button-panel"
+							id="btnSaveAsDraft" name="action">Submit</button>
+					</div>
+					<div class="col-md-12"
+						th:if="*{entityStatus.name()} eq 'DRAFT' and ${loggedinuserrole} eq '[AI_CHECKER]'">
+						<div>
+							<label for="rejectComment">Rejection Comment:<span
+								class="star"></span></label> <input id="rejectComment"
+								name="rejectComment" type="text" class="validate" placeholder="Enter Rejection Reason"
+								title="Rejection Reason" th:field="*{rejectComment}"
+								required="required" /> <label
+								class="cmtMsg text-danger"></label>
+						</div>
+						<div>
+							<button class="btn btn-default waves-effect waves-light"
+								type="button" id="btnApprove" onclick="agentApprove('AI');">Approve</button>
+							<button class="btn btn-default waves-effect waves-light"
+								type="button" id="btnReject" onclick="agentReject('AI');">Reject</button>
+						</div>
+					</div>
+
+					<!-- BUTTON END -->
+
+				</div>
+			</form>
+			<!-- FORM END -->
+
+
+
+		</div>
+		<!-- CONTENT AREA END --> </main>
+		<!-- BODY OR CONTENT BOX START -->
+		<!-- FOOTER BOX START -->
+		<div data-th-replace="fragments/sb-admin :: footer"></div>
+
+
+
+		<script type="text/javascript" th:src="@{/js/agent.js}"></script>
+
+		<script type="text/javascript" th:src="@{/js/jquery.validate.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/js/validation-agent-on-board.js}"></script>
+
+		<!-- FOOTER BOX END -->
+	</div>
+	<!--BODY WRAPPER START -->
+</body>
+
+</html>

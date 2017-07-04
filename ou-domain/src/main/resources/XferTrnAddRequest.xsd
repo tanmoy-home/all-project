@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?> 
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+<xs:include schemaLocation="XferTrnAddRq.xsd"/>
+<xs:include schemaLocation="XferTrnAddCustom.xsd"/>
+
+<xs:element name="XferTrnAddRequest">
+	<xs:complexType>	
+		<xs:sequence>
+			<xs:element name="XferTrnAddRq" type="XferTrnAddRq"/>
+			<xs:element name="XferTrnAdd_CustomData" type="XferTrnAdd_Req_CustomData_Type" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>

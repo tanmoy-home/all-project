@@ -1,0 +1,251 @@
+                              <div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill information to fetch bill</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <div class='required'><label>Mobile <span style="color:red">*</span></label>
+											        <input type="text" class="form-control billinfobox" id="inputMobile" onblur="validateMobileNumber();"  maxlength="10">
+											    </div>
+											    </div>
+
+ 											 </div>	
+ 											 <div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Email</label>
+											        <input type="text" class="form-control billinfobox" id="inputEmail" onblur="validateEmail();">
+											    </div>
+											    </div>
+								    	
+ 											 </div>
+									    	<div class="row">
+											<div class="col-sm-12">	
+												<h3>Customer information </h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row" id="customerinfobox">
+									       <form id="quickpayform" method="POST" action="/pay">	
+<!-- 									    ---------------Custom Params---------------------  -->
+
+                                   <div th:each="param : ${billerView.billerCustomerParams}" class="col-sm-3 custparam">
+                                   <div class="form-group">
+                                    <label > <span th:text="${param.paramName}" th:remove="tag"></span> <span th:if="${!param.optional}" style="color:red">*</span></label>
+                                    <input type="text" class="form-control custinfo" onchange="enableFetchbtn();"  th:attr="data-dataType=${param.dataType} , data-name=${param.paramName} ,  data-req=${!param.optional}" />
+                                    </div> </div>
+
+<!--  								---------------Custom Params---------------------  -->
+									       					    	
+									    	<div class="col-sm-3 quickpayboxes" id="quickPayChannel" th:if="${billerView.fetchRequirement!='MANDATORY'}" >
+									    	
+									    	
+											    <div class="form-group" >
+											        <label>Payment Channel</label>
+													<input type="hidden" 
+													id="quickPaymentChannel" name="quickPaymentChannel" value="INT">
+													<input type="text" class="form-control" readonly="readonly" 
+													 value="Internet">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}">
+											    <div class="form-group">
+											        <label> Payment Mode</label>
+													<select class="form-control" id="quickPaymentmethod" name="quickPaymentmethod">
+														<option value="">-- Select Payment Mode--</option>
+														<option value="Internet Banking" selected>Internet Banking</option>
+													</select>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}">
+											    <div class="form-group">
+											        <label>Quick Pay Amount</label>
+											        <input type="text" class="form-control" id="quickPayAmount" name="quickPayAmount" onblur="validateAmount(this); calculateCCFQuickPay();"/>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3 quickpayboxes"  th:if="${billerView.fetchRequirement!='MANDATORY'}">
+											    <div class="form-group">
+											        <label>CCF + Tax(es)</label>
+											        <input class="form-control" type="text" readonly="readonly" class="form-control " id="quickPayCCF" name="quickPayCCF" >
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}">
+											    <div class="form-group">
+											        <label>Total Amount to be paid</label>
+											        <input type="text" id="quickPayTotal" name="quickPayTotal" class="form-control" readonly="readonly">
+											    </div>
+									    	</div>
+									    	
+									    	</form>		
+									    </div>	<!-- /.row -->
+									 <!-- /box-body -->
+								 <!-- /box -->
+								
+								<div class="clearfix"></div>
+								<div class="pull-right" style="padding-top: 30px;">
+									<button type="button" class="btn btn-primary" id="btn_quick_pay" onclick=" return quickPay()" disabled="disabled" th:if="${billerView.fetchRequirement!='MANDATORY'}">Quick Pay</button>&nbsp;
+		          					<button type="button" class="btn btn-primary" id="btnFetchBill"  onclick="fetchBill(this)" th:if="${billerView.fetchRequirement!='NOT_SUPPORTED'}" >Fetch Bill</button>&nbsp;
+								</div>
+								</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 					<div class="box-header with-border"> -->
+<!-- 						<h3 class="box-title no-margin">Bill information to fetch -->
+<!-- 							bill</h3> -->
+
+<!-- 					</div> -->
+<!-- 					<div class="box-body"> -->
+<!-- 						ROW START -->
+<!-- 						<div class="row"> -->
+<!-- 							<div class=" col-sm-3"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 								<label>Mobile No <span class="mandatory-font">*</span> -->
+<!-- 									</label> -->
+<!-- 									<input type="text" required="required" maxlength="10" -->
+<!-- 										id="inputMobile" placeholder="Mobile No">  -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+					
+
+<!-- 							<div class=" col-sm-3"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 								<label>Email</label> -->
+<!-- 									<input type="email" required="required"  onblur="validateEmail()" -->
+<!-- 										id="inputEmail" placeholder="Enter Your Email">  -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							</div> -->
+							
+<!-- 							<div class="row no-margin"> -->
+<!-- 							ROW END -->
+<!-- 							<div class="box-header-inside with-border"> -->
+<!-- 								<h3 class="box-title-inside no-margin no-padding">Customer -->
+<!-- 									information</h3> -->
+<!-- 							</div> -->
+<!-- 							ROW START -->
+<!-- 							<div class="row" id="customerinfobox"> -->
+<!-- 								<form id="quickpayform" method="POST" action="/pay"> -->
+ <!-- 								---------------Custom Params--------------------- --> 
+
+<!--                                    <div th:each="param : ${billerView.billerCustomerParams}" class="col-sm-3 custparam"><div class="form-group"> -->
+<!--                                     <label > <span th:text="${param.paramName}" th:remove="tag"></span> <span th:if="${!param.optional}" class="mandatory-font">*</span></label> -->
+<!--                                     <input type="text" onchange="enableFetchbtn();" class=" custinfo" th:attr="data-dataType=${param.dataType} , data-name=${param.paramName} ,  data-req=${!param.optional}" /> -->
+<!--                                     </div> </div> -->
+
+ <!-- 								---------------Custom Params--------------------- --> 
+								
+								
+<!-- 									<div class="col-sm-3 quickpayboxes" id="quickPayChannel" th:if="${billerView.fetchRequirement!='MANDATORY'}"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 										<label>Payment Channel</label>  -->
+<!-- 											<input type="text" -->
+<!-- 												readonly="readonly" -->
+<!-- 												id="quickPaymentChannel" name="quickPaymentChannel" -->
+<!-- 												value="INT"> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+
+<!-- 									<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 										<label> Payment Methods</label>  -->
+<!-- 											<select class="form-control" -->
+<!-- 												id="quickPaymentmethod" name="quickPaymentmethod"> -->
+<!-- 												<option value="">-- Select Payment Mode--</option> -->
+<!-- 												<option value="Internet Banking" selected>Internet -->
+<!-- 													Banking</option> -->
+<!-- 											</select> -->
+											
+<!-- 										</div> -->
+<!-- 									</div> -->
+
+<!-- 									<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 										<label>Quick Pay Amount</label> -->
+<!-- 											 <input type="text" -->
+<!-- 												id="quickPayAmount" -->
+<!-- 												name="quickPayAmount" -->
+<!-- 												onblur="validateAmount(this); calculateCCFQuickPay();" /> -->
+												
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="clearfix"></div> -->
+<!-- 									<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 										<label>CCF + Tax(es)</label> -->
+<!-- 											 <input type="text" readonly="readonly" -->
+<!-- 												id="quickPayCCF" name="quickPayCCF"> -->
+												
+<!-- 										</div> -->
+<!-- 									</div> -->
+
+<!-- 									<div class="col-sm-3 quickpayboxes" th:if="${billerView.fetchRequirement!='MANDATORY'}"> -->
+<!-- 										<div class="form-group"> -->
+<!-- 										<label>Total Amount to be paid</label> -->
+<!-- 											 <input type="text" -->
+<!-- 												id="quickPayTotal" name="quickPayTotal"	readonly="readonly"> -->
+												
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</form> -->
+<!-- 							</div> -->
+<!-- 							/.row -->
+<!-- 							/box-body -->
+<!-- 							/box -->
+
+
+<!-- 						</div> -->
+<!-- 						ROW END -->
+<!-- 					</div> -->
+<!-- 					/.box-body -->
+<!-- 					BOX FOOTER START -->
+<!-- 					<div class="box-footer row no-margin"> -->
+<!-- 						<button th:if="${billerView.fetchRequirement!='NOT_SUPPORTED'}" -->
+<!-- 							class="btn btn-primary waves-effect waves-light pull-right" -->
+<!-- 							onclick="fetchBill(this)" id="btnFetchBill">Fetch Bill</button> -->
+							
+<!-- 						<button th:if="${billerView.fetchRequirement!='MANDATORY'}" -->
+<!-- 							class="btn btn-primary waves-effect waves-light pull-right" -->
+<!-- 							id="btn_quick_pay" onclick=" return quickPay()" -->
+<!-- 							disabled="disabled">Quick Pay</button> -->
+<!-- 					</div> -->

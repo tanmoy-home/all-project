@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<link th:substituteby="common/common_header" />
+<script type="text/javascript" th:src="@{/js/downloadPdf.js}"></script>
+<link type="text/css" rel="stylesheet" th:href="@{/css/bbpou-print.css}" />
+
+</head>
+
+<body class="">
+
+	<div id="wrapper">
+
+		<!-- HEADER -->
+		<div lang="en" th:replace="common/header :: header"></div>
+		<!-- /HEADER -->
+
+		<!-- left menu -->
+		<!-- <div lang="en" th:replace="common/left_menu:: leftmenu"></div> -->
+		<!-- / left menu -->
+
+		<div id="page-wrapper">
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="error-masg">
+						<div class="top-col"></div>
+						<div class="erro-img">
+							<img src="../images/errorimg.png">
+						</div>
+						<div class="error-text">
+							<h2>Error During Transaction</h2>
+							<p th:if="${errMsg != null and errMsg.errorCode == null and errMsg.errorDetails != null}" th:text="${'Error: ' + errMsg.errorDetails}"></p>
+							<p th:if="${errMsg != null and errMsg.errorCode != null and errMsg.errorDetails != null}" th:text="${'(' + errMsg.errorCode + ') ' + errMsg.errorDetails}"></p>
+							<span>Please Go Home</span>							
+							<a href="/AgentService/invokeBillFetchPage" class="btn btn-error">Pay Bill</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+	<!-- /#page-wrapper -->
+
+	<!-- FOOTER -->
+	<div lang="en" th:replace="common/footer:: footer"></div>
+	<!-- /FOOTER -->
+
+</body>
+
+</html>

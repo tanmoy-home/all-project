@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/simple-sidebar.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+<meta charset="ISO-8859-1" />
+<title>Customer Registration</title>
+</head>
+<body>
+	<form id="addUpdateCustomer" th:action="@{/customerRegistration/savecust}" th:object="${customerregistrationview}" method="post">
+		<table style="width: 1000px" id="customerView">
+			<tr><td><span style="color: red;">(*) Required fields.</span></td></tr>
+			<tr><td><span style="color: red;font-weight: bold;">&nbsp;</span></td></tr>
+			<tr>
+				<td>Customer ID<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custID}" required="required" type="text" maxlength="10" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>BBPOU ID<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{bbpouID}" required="required" type="text" maxlength="4" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Customer Name<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custName}" required="required" type="text" maxlength="30" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Gender</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custGender}" type="text" maxlength="1" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Date of Birth <span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custDob}" required="required" type="text" maxlength="10" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Mobile Number <span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custMobile}" required="required" type="text" maxlength="10" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Email ID</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custEmail}" type="text" maxlength="50" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Address Line 1 <span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custAddrLine1}" type="text" maxlength="50" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Address Line 2</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custAddrLine2}" type="text" maxlength="50" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Address Line 3</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custAddrLine3}" type="text" maxlength="50" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>City<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custCity}" required="required" type="text" maxlength="15" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>State<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custState}" required="required" type="text" maxlength="15" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>PIN<span class="required">*</span></td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custPin}" required="required" type="text" maxlength="6" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Aadhaar Number</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custAadhaar}" type="text" maxlength="12" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>PAN</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custPan}" type="text" maxlength="10" size="25" /> </td>
+			</tr>
+			<tr>
+				<td>Passport Number</td>
+				<td>:</td>
+				<td><input id="custid" th:field="*{custPassport}" type="text" maxlength="8" size="25" /> </td>
+			</tr>
+		</table>
+		<!-- <input type="submit" name="action" value="submit" /> -->
+		<button id="btnSave" type="submit" name="action" value="submit" th:text="Submit" title="Submit and Saved"></button>
+		
+	</form>		
+</body>
+</html>

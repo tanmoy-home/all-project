@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:fix="http://www.w3.org/2001/XMLSchema_ChangePassResp" 
+	targetNamespace="http://www.w3.org/2001/XMLSchema_ChangePassResp"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<element name="RBL" type="fix:RBL" />
+	<element name="otpValRequest" type="fix:OtpValRequest" />
+	<element name="otpValResponse" type="fix:OtpValResponse" />
+	
+	<complexType name="ServerAPI">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="float" name="version" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="HeaderEnv">
+		<sequence>
+			<element type="string" name="RemoteIP" />
+			<element type="string" name="ServerId" />
+			<element type="fix:ServerAPI" name="ServerAPI" />
+			<element type="string" name="RBLOperationId" />
+			<element type="string" name="LANGUAGE" />
+		</sequence>
+		<attribute type="float" name="VERSION" />
+	</complexType>
+	<complexType name="SessionEnv">
+		<sequence>
+			<element type="string" name="SessionId" />
+			<element type="string" name="LoggedinUser" />
+			<element type="string" name="CoreSessionId1" />
+			<element type="string" name="CoreSessionId2" />
+			<element type="string" name="Token" />
+			<element type="string" name="APPID" />
+			<element type="float" name="APPVER" />
+			<element type="string" name="DeviceType" />
+		</sequence>
+	</complexType>
+	<complexType name="STATUS">
+		<sequence>
+			<element type="int" name="CODE" />
+			<element type="string" name="SEVERITY" />
+			<element type="string" name="MESSAGE" />
+		</sequence>
+	</complexType>
+	<complexType name="RQClientAPI">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="float" name="version" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="RQDeviceFamily">
+		<simpleContent>
+			<extension base="string">
+				<attribute type="string" name="dname" />
+				<attribute type="string" name="format" />
+			</extension>
+		</simpleContent>
+	</complexType>
+	<complexType name="RequestParams">
+		<sequence>
+			<element type="string" name="RQOperationId" />
+			<element type="int" name="RQTransSeq" />
+			<element type="string" name="RQLoginUserId" />
+			<element type="string" name="RQDateTime" />
+			<element type="fix:RQClientAPI" name="RQClientAPI" />
+			<element type="fix:RQDeviceFamily" name="RQDeviceFamily" />
+		</sequence>
+	</complexType>
+	<complexType name="Response">
+		<sequence>
+			<element type="int" name="savingacctcount" />
+			<element type="int" name="currentacctcount" />
+			<element type="fix:acctdetails" name="acctdetails" minOccurs="0" />
+			<element type="fix:CustDetails" name="CustDetails" minOccurs="0" />
+		</sequence>
+	</complexType>
+	<complexType name="acctdetails">
+		<sequence>
+			<element type="string" name="acctType" />
+			<element type="double" name="acctbalance" />
+			<element type="double" name="clearbal" />
+			<element type="int" name="acctindex" />
+			<element type="string" name="currency" />
+			<element type="string" name="acctno" />
+			<element type="string" name="currencyname" />
+			<element type="string" name="branchname" />
+			<element type="string" name="branchcity" />
+		</sequence>
+	</complexType>
+	<complexType name="CustDetails">
+		<sequence>
+			<element type="int" name="acctindex" />
+			<element type="string" name="jointAcct" />
+			<element type="string" name="custName" />
+			<element type="string" name="custRelationationation" />
+			<element type="string" name="acctno" />
+		</sequence>
+	</complexType>
+	<complexType name="RBL">
+		<sequence>
+			<element type="fix:HeaderEnv" name="HeaderEnv" />
+			<element type="fix:SessionEnv" name="SessionEnv" />
+			<element type="fix:STATUS" name="STATUS" />
+			<element type="fix:RequestParams" name="RequestParams" />
+			<element type="fix:Response" name="Response" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="OtpValRequest">
+		<sequence>
+			<element type="string" name="channelId" />
+			<element type="string" name="requestId" />
+			<element type="string" name="otp" />
+		</sequence>
+	</complexType>
+
+	<complexType name="OtpValResponse">
+		<sequence>
+			<element type="string" name="status" />
+		</sequence>
+	</complexType>
+	<complexType name="otpGenRequest">
+		<sequence>
+			<element type="string" name="SessionId" />
+			<element type="string" name="RQLoginUserId" />
+			<element type="string" name="RQDeviceFormat" />
+			<element type="string" name="RQOperationId" />
+			<element type="string" name="RQDeviceFamily" />
+			<element type="string" name="RQTransSeq" />
+			<element type="string" name="RQClientAPIVer" />
+		</sequence>
+	</complexType>
+
+</schema>

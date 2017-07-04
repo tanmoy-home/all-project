@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                elementFormDefault="unqualified" attributeFormDefault="unqualified">
+        <xs:element name="VerifyOutput">
+        <xs:complexType>
+                <xs:sequence>
+                        <xs:element name="ClientAccount" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="MerchRefNbr" type="xs:string"  minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="OrgDatTimeTxn" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="BankRefNo" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="TxnAmt" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        <xs:element name="Status" type="StatusType" minOccurs="1"/>
+                </xs:sequence>
+        </xs:complexType>
+        </xs:element>
+
+
+        <xs:complexType name="StatusType">
+                <xs:sequence>
+                        <xs:element type="xs:string" name="ReturnCode" />
+                        <xs:element type="xs:string" name="VerifyStatus" />
+                </xs:sequence>
+        </xs:complexType>
+
+
+
+
+</xs:schema>
+

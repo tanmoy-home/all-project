@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<title>Profile Registration</title>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<link rel="stylesheet" th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script>
+</head>
+<body>
+<div class="response" th:if="${processResponse} != null">
+		<div th:if="${processResponse.status.name() == 'FAILURE'}" th:each="message : ${processResponse.message}" th:text="${message}" class="message error"></div>
+		<div th:if="${processResponse.status.name() == 'SUCCESS'}" th:each="message : ${processResponse.message}" th:text="${message}" class="message success"></div>
+	</div>
+<h3 th:if="${isAdmin}">Update Profile</h3>
+<h3 th:if="${isSuperAdmin}">Add/Update Profile</h3>
+				<hr/>
+		<form autocomplete="off" id="addUpdateProfileDetail" th:action="@{/admin/saveProfile}" th:object="${profile}"
+			method="post">			
+				<table  style="width: 400px">
+					<tr>
+						<td>
+							<small>(<span class="required">*</span>) Required fields.</small>
+						</td>
+					</tr>
+					<tr>
+						<td>Profile Code:<span class="required">*</span></td>
+						<td><input id="profileCode" class="form-control upper-case" type="text" title="Only Upper Case Character, Number and Underscore Support. Atlest 3 Characters Needed. Starts with Character."
+							th:field="*{profileCode}" required="required" maxlength="30" pattern="^[A-Z][A-Z_0-9]{3,}$" th:readonly="*{updatProfileFlag == 'Y'}"/>
+							<input type="hidden" th:field="*{id}"/>							
+						</td>
+					</tr>
+					<!-- <tr>
+						<td>Profile Description:<span class="required">*</span></td>
+						<td><input id="profileDesc" class="form-control" type="text"
+							th:field="*{desc}" required="required" maxlength="25"/>
+							<input id="updatProfileFlag" class="form-control" type="hidden"
+							th:field="*{updatProfileFlag}"/>
+						</td>
+					</tr> -->
+
+					<tr>
+						<td>Profile Status:<span class="required">*</span></td>
+						<td>
+							<select th:field="*{status}" class="form-control">
+							<option th:each="stat : ${statusMap}" th:if="${isSuperAdmin or (isAdmin and stat.key != 3)}"  th:value="${stat.key}" th:text="${stat.value}"></option>
+							</select>
+						</td>						
+					</tr>
+				</table>
+				<div class="modal-footer">
+					<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					<table>
+						<tr>
+							<td  th:if="${profile.updatProfileFlag == 'N' and isSuperAdmin}" >
+								<button type="submit" class="btn btn-primary" name="action" value="insert">Submit</button>
+							</td>
+							<td  th:if="${profile.updatProfileFlag == 'Y' and (isSuperAdmin or (isAdmin and profile.status != 3))} ">
+								<button type="submit" class="btn btn-primary" name="action" value="update">Update</button>
+							</td>							
+						</tr>
+					</table>	
+				</div>
+		</form>
+</body>
+</html>

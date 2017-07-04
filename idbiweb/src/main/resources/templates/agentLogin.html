@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Welcome to BBPOU</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+		<!-- MetisMenu CSS -->
+		<link rel="stylesheet" th:href="@{/css/metisMenu.min.css}" />
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" th:href="@{/css/bbpou.css}" />
+		
+
+		<!-- Custom Fonts -->
+		<link rel="stylesheet"  th:href="@{/css/font-awesome.min.css}" />
+
+	
+	</head>
+
+	<body class="bbpou-login-page">
+		<div id="wrapper">
+
+			<div class="bbpou-login-box">
+				<!--<div class="bbpou-logo">
+					<a class="navbar-brand" href="index.html">
+						<img src="images/bbpou-logo.png">
+					</a>
+				</div>-->
+
+				<div class="bbpou-login-logo">
+					<b>Operating Unit</b> Login
+				</div>
+
+				<div class="bbpou-login-box-body">
+					<form method="post" action="#" data-th-action="@{/AgentService/agentTransactionList}">
+						<div class="form-group">
+							<input class="form-control" type="text" placeholder="Username" required>
+						</div>
+						<div class="form-group has-feedback">
+							<input class="form-control" type="password" placeholder="Password" required>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-sm-4 pull-right">
+								<button class="btn btn-primary btn-block btn-flat" type="submit" required>Sign In</button>
+							</div>
+						</div>
+					</form>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-4 anchor-hover">
+								<p>
+									<a href="/agentRecovery" th:href="@{agentRecovery}" class=""style="color:#000;">Forgot UserName ?</a>
+								</p>
+							</div>
+							<div class="col-md-6 col-sm-4 anchor-hover">
+								<p>
+									<a href="/agentRecovery" th:href="@{agentRecovery}" class=""style="color:#000;">Forgot Password ?</a>
+								</p>
+							</div>
+
+				</div>
+
+			</div>
+
+			<footer class="bbpou-login-page-footer">
+				Copyright &copy; 2016, R S Software. All rights reserved.
+			</footer>
+
+		</div>
+		<!-- /#wrapper -->
+
+
+
+	</body>
+	
+	<script type="text/javascript" th:href="@{/static/js/jquery-1.12.3.min.js}"></script>
+        
+    <script type="text/javascript" th:href="@{/static/js/bootstrap.min.js}"></script>
+    
+    <script type="text/javascript" th:href="@{/static/js/metisMenu.min.js}"></script>
+
+	<script type="text/javascript" th:href="@{/static/js/bbpou.js}"></script>
+	
+
+</html>

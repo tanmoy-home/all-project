@@ -1,0 +1,32 @@
+@media screen {
+        #printSection {
+           display: none;
+        }
+   }
+
+   @media print {
+        body > *:not(#printSection) {
+           display: none;
+        }
+        
+       
+        #printSection, #printSection * {
+            visibility: visible;
+/*              margin: 10mm 15mm 10mm 15mm ! important ; margin you want for the content */
+        }
+        #printSection {
+            position:absolute;
+            left:25%;
+            top:15mm;
+
+        }
+        #document-title {
+            visibility: hidden;
+             display: none;
+             color: white;
+        }
+        
+   }
+   
+   @page{size:auto; margin:0mm;} 
+   

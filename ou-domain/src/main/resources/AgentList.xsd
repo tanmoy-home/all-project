@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="AgentList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="agentList" type="bbps:agent"
+							minOccurs="0" maxOccurs="unbounded" />
+						<xs:element type="xs:string" name="agentId" />	
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="agent">
+		<xs:sequence>
+			<xs:element type="xs:string" name="agentId" />
+			<xs:element type="xs:string" name="agentAliasName" />
+			<xs:element type="xs:string" name="agentBusnsType" />
+			<xs:element type="xs:string" name="agentGeoCode" />
+			<xs:element type="xs:string" name="agentShopName" />
+			<xs:element type="xs:string" name="agentEffctvFrom" />
+			<xs:element type="xs:string" name="agentEffctvTo" />
+			<xs:element type="xs:string" name="agentRegisteredAdrline" />
+			<xs:element type="xs:string" name="agentRegisteredCity" />
+			<xs:element type="xs:string" name="agentRegisteredCountry" />
+			<xs:element type="xs:string" name="agentRegisteredPinCode" />
+			<xs:element type="xs:string" name="agentRegisteredState" />
+			<xs:element type="xs:string" name="agentPaymentModes" maxOccurs="unbounded"/>
+			<xs:element type="xs:string" name="agentPaymentChannels" maxOccurs="unbounded"/>
+			<xs:element type="xs:string" name="agentName" />
+			<xs:element type="xs:string" name="agentMobileNo" />
+			<xs:element type="xs:string" name="agentLinkedAgentInst" />
+      		<xs:element name="agentBankAccount" type="xs:string" minOccurs="0" maxOccurs="1" />
+      		<xs:element name="agentSchemeId" type="xs:string" minOccurs="0" maxOccurs="1" />
+      		<xs:element name="agentType" type="xs:string" minOccurs="0" maxOccurs="1" />
+      		<xs:element name="isUpload" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+			<xs:element type="bbps:EntityStatus" name="entityStatus" />
+			<xs:element type="xs:boolean" name="dummyAgent" />
+      		<xs:element name="rejectComment" type="xs:string" minOccurs="0" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:simpleType name="EntityStatus">
+   	<xs:restriction base="xs:string">
+   		<xs:enumeration value="ACTIVE"></xs:enumeration>
+   		<xs:enumeration value="PENDING_ACTIVATION"></xs:enumeration>
+   		<xs:enumeration value="DELETED"></xs:enumeration>
+	  	<xs:enumeration value="DRAFT"></xs:enumeration>
+		<xs:enumeration value="PENDING_DELETE"></xs:enumeration>
+		<xs:enumeration value="PENDING_DEACTIVATION"></xs:enumeration>
+		<xs:enumeration value="REJECTED"></xs:enumeration>
+		<xs:enumeration value="PENDING_REACTIVATION"></xs:enumeration>
+		<xs:enumeration value="PENDING_APPROVAL"></xs:enumeration>
+		<xs:enumeration value="APPROVED"></xs:enumeration>
+		<xs:enumeration value="UPLOADED_TO_CU"></xs:enumeration>
+		<xs:enumeration value="CU_REJECTED"></xs:enumeration>
+		<xs:enumeration value="CU_APPROVED"></xs:enumeration>
+		<xs:enumeration value="CU_DEACTIVATED"></xs:enumeration>
+		<xs:enumeration value="CU_PENDING"></xs:enumeration>
+		<xs:enumeration value="AI_REJECTED"></xs:enumeration>
+		<xs:enumeration value="CU_SENT"></xs:enumeration>
+   	</xs:restriction>
+   </xs:simpleType>
+</xs:schema>

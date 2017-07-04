@@ -1,0 +1,158 @@
+<
+style type ="text /css">p.tdisplayPaneest1 {
+	white-space: nowrap;
+	height: 20px;
+	border: 1px solid #000000;
+	background-color: #337AB7;
+	font-size: 85%;
+}
+
+.box-centerside {
+	/* background:url("../images/agent_logo.png");
+      float:left; */
+	min-height: 90px;
+	width: 260px;
+}
+
+.bodyStyle {
+	padding-top: 65px;
+	/* padding-bottom: 120px; */
+}
+
+/* .navbar-default {
+	background-color: #BFE5E5;
+} */
+html, body {
+	height: 100%;
+}
+
+body {
+	display: table;
+	width: 100%;
+}
+
+/* .page-row {
+	display: table-row;
+	background-color: #BFE5E5;
+	width: 100%;
+	padding: 0;
+} */
+.page-row-expanded {
+	height: 100%;
+}
+
+.custom-bullet li {
+	display: block;
+}
+
+body {
+	font-family: Sans-Serif;
+}
+
+#fork {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: 0;
+}
+
+.legend {
+	width: 10em;
+}
+
+.legend .title {
+	display: block;
+	margin-bottom: 0.5em;
+	line-height: 1.2em;
+	padding: 0 0.3em;
+}
+
+.legend .color-sample {
+	display: inline-block;
+	float: left;
+	width: 1em;
+	height: 1em;
+	border: 2px solid;
+	/* Comment out if you don't want to show the fillColor */
+	/*  border-radius: 0.5em; /* Comment out if you prefer squarish samples */
+	margin-right: 0.5em;
+}
+
+.chart-legend li span {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin-right: 5px;
+}
+
+.myhome {
+	max-width: 1200px;
+	margin: auto;
+	font-family: sans-serif;
+}
+
+.custom-header {
+	font-size: 16px;
+	padding: 8px 0px 8px 8px;
+}
+
+.lblcheckbox {
+	font-weight: lighter;
+}
+
+.panel-default {
+	overflow: auto;
+}
+
+.panel-info {
+	overflow: auto;
+}
+
+.container {
+	width: 800;
+}
+
+#mrchDetails .modal-dialog {
+	width: 1250px;
+}
+
+#jqxWidget {
+	width: 800px;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+
+.caption{
+  font-weight : bold;
+  color: #ffffff ;
+  background-color: #538cc6 ;
+  border-radius: 5px;
+  width : 97%;
+  align: : center ;
+ /*  padding: 8px 0px 8px 8px; */
+  }
+  
+  
+  
+  
+/*   .col-sm-4
+{
+    
+    z-index: 2;
+    -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.5);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.5);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.5);
+    transition: all 200ms ease-in;
+    transform: scale(2,1.5);
+}  */
+
+
+/* ------------------ header------------------------------ */
+
+ #custom-header{ background-color: #666666;}

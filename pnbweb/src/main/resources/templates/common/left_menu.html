@@ -1,0 +1,36 @@
+			<div th:fragment="leftmenu" class="left-side">
+				<a class="sidebar_switch on_switch" href="javascript:void(0)">Sidebar switch</a>
+				<div class="navbar-default sidebar" role="navigation">
+					<div class="sidebar-nav navbar-collapse">
+						<ul class="nav" id="side-menu">
+<!-- 							<li> -->
+<!-- 								<a href="javascript:void(0);">Dashboard</a> -->
+<!-- 							</li> -->
+							<li>
+							    
+								<a  th:href="@{/AgentService/invokeBillFetchPage}" > <div class="img-box"><i class="fa fa-inr" aria-hidden="true"></i></div>Pay Bill</a>
+							</li>
+							<li>
+								<a  th:href="@{/ComplaintService/raiseComplaintreq}" ><div class="img-box"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>Register Complaint</a>
+							</li>
+							<li>
+								<a  th:href="@{/ComplaintService/checkComplaintStatus}" > <div class="img-box"><i class="fa fa-bug" aria-hidden="true"></i></div>Complaint Status</a>
+							</li>
+<!-- 							<li> -->
+<!-- 								<a href="/AgentService/invokeTxnSearchByMobile" th:href="@{/AgentService/invokeTxnSearchByMobile}" class=""style="color:#000;">Transaction History By MobileNo</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="/AgentService/invokeAgentTransactionsByDate" th:href="@{/AgentService/invokeAgentTransactionsByDate}" class=""style="color:#000;">Transaction History By Date</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="/AgentService/invokeAgentTransactions" th:href="@{/AgentService/invokeAgentTransactions}" class=""style="color:#000;">Transaction History By AgentID</a> -->
+<!-- 							</li> -->
+<!-- 							<li> -->
+<!-- 								<a href="/AgentService/invokeTxnSearchByRefId" th:href="@{/AgentService/invokeTxnSearchByRefId}" class=""style="color:#000;">Transaction History By ReferenceID</a> -->
+<!-- 							</li> -->
+						</ul>
+					</div>
+					<!-- /.sidebar-collapse -->
+				</div>
+				<!-- /.navbar-static-side -->
+			</div>

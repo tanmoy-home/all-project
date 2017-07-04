@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"  xmlns:bbps="http://bbps.org/schema"  targetNamespace="http://bbps.org/schema" 
+ elementFormDefault="unqualified" attributeFormDefault="unqualified">
+ 	<xs:include schemaLocation="BBPS-Common.xsd" />
+
+	<xs:element name="TxnStatusComplainResponse" type="bbps:TxnStatusComplainResponse">
+		<xs:annotation>
+			<xs:documentation>BBPS API response</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:complexType name="TxnStatusComplainResponse">
+		<xs:sequence>
+			<xs:element type="bbps:headType" name="Head" minOccurs="1" maxOccurs="1" />
+			<xs:element type="bbps:txnType" name="Txn" minOccurs="1" maxOccurs="1" />
+			<xs:element type="bbps:TxnStatusComplainResp" name="TxnStatusComplainResp" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>	
+  
+    <xs:complexType name="TxnStatusComplainResp">
+          <xs:sequence>
+          <xs:element name="TxnList" minOccurs="1" maxOccurs="1" type="bbps:TxnList" />
+          <xs:element name="CustomerDetails" minOccurs="0" maxOccurs="1" type="bbps:CustomerDetails" />
+          </xs:sequence>
+          <xs:attribute type="xs:string" name="msgId" use="required"/>
+          <xs:attribute type="xs:string" name="complaintId" use="optional"/>
+          <xs:attribute type="xs:string" name="openComplaint" use="optional"/>
+          <xs:attribute type="xs:string" name="complaintStatus" use="optional"/>
+          <xs:attribute type="xs:string" name="assigned" use="optional"/>
+          <xs:attribute type="xs:string" name="responseCode" use="optional"/>
+          <xs:attribute type="xs:string" name="responseReason" use="optional"/>
+    </xs:complexType>
+    
+    <xs:complexType name="TxnDetail">
+		<xs:attribute type="xs:string" name="txnReferenceId" use="required"/>
+		<xs:attribute type="xs:string" name="amount" use="required"/>
+		<xs:attribute type="xs:string" name="txnDate" use="required"/>
+		<xs:attribute type="xs:string" name="agentId" use="required"/>
+		<xs:attribute type="xs:string" name="billerId" use="required"/>
+		<xs:attribute type="xs:string" name="txnStatus" use="required"/>
+	</xs:complexType>
+	
+    <xs:complexType name="CustomerDetails">
+		<xs:attribute type="xs:string" name="name" use="required"/>
+		<xs:attribute type="xs:string" name="email" use="required"/>
+		<xs:attribute type="xs:string" name="mobile" use="required"/>
+	</xs:complexType>
+	
+	<xs:complexType name="TxnList">
+    	<xs:sequence>
+		<xs:element name="TxnDetail" type="bbps:TxnDetail" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

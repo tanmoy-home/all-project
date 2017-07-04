@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		elementFormDefault="unqualified" attributeFormDefault="unqualified">
+  <xs:element name="bbpsbillpayres">
+    <xs:complexType>
+      <xs:sequence>	
+		<xs:element name="status" type="STATUS" />
+        <xs:element name="bbpsrefid" type="STR100"/>
+        <xs:element name="rblreferenceno" type="STR30" />        
+      </xs:sequence >
+    </xs:complexType >
+  </xs:element >
+  
+  <xs:element name="errorres">
+    <xs:complexType>
+      <xs:sequence>	
+		<xs:element name="status" type="STATUS" />
+        <xs:element name="desscription" type="STR100"/>      
+      </xs:sequence >
+    </xs:complexType >
+  </xs:element >
+  
+  <xs:element name="bbpsrefundres">
+    <xs:complexType>
+      <xs:sequence>	
+		<xs:element name="status" type="STATUS" />
+        <xs:element name="bbpsrefid" type="STR100"/>   
+      </xs:sequence >
+    </xs:complexType >
+  </xs:element>
+  
+  <xs:simpleType name="STR30">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30"/>
+      <xs:pattern value="[a-zA-Z0-9 /!@#$%^*()_+]{1,30}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="STR100">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="100"/>
+      <xs:pattern value="[a-zA-Z0-9]{1,100}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="STATUS">
+    <xs:restriction base="xs:int">
+      <xs:minInclusive value="0" />
+      <xs:maxInclusive value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+</xs:schema>

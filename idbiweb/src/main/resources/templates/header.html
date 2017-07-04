@@ -1,0 +1,37 @@
+
+<nav th:fragment="header" class="navbar navbar-default navbar-fixed-top"
+	role="navigation">
+	<div class="navbar-header">
+
+		<!-- OU code snippet start -->
+		<div class="bbpou-header-container">
+			<!--<iframe src="header.html" frameborder="0" allowfullscreen></iframe>-->
+			<div class="ou-logo">
+				<a class="" href="index.html"> <img
+					th:src="@{/images/bbpou-logo.png}">
+				</a>
+			</div>
+
+			<!-- 						<div class="ou-name"> -->
+			<!-- 							<h1>Operating Unit Name</h1> -->
+			<!-- 						</div> -->
+
+			<div class="ou-name" style="float: right;">
+				<img src="/images/BBPS-LOGO-header.png">
+			</div>
+
+		</div>
+		<!-- OU code snippet end -->
+
+	</div>
+	<!-- /.navbar-header -->
+
+	<!-- welcome user message -->
+	<div class="bbpou-welcome-user-msg">
+		Welcome, John Smith. Last login: 15:36:47 27-Apr-2016 <a
+			href="index.html" class="left-pad-sm"><i
+			class="fa fa-power-off fa-fw"></i> Logout</a>
+	</div>
+	<!-- welcome user message end -->
+
+</nav>

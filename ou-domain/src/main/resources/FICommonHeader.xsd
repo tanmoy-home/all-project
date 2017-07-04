@@ -1,0 +1,340 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+<!--START OF COMMON ELEMENTS DEFINITION-->
+
+<xs:complexType name="ErrorDetailType">
+    <xs:all>
+	<xs:element name="ErrorCode" minOccurs="1" maxOccurs="1">
+		<xs:simpleType>
+		<xs:restriction base="xs:string">
+		<xs:minLength value="0"/>
+		<xs:maxLength value="10"/>
+		</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ErrorDesc" minOccurs="1" maxOccurs="1">
+		<xs:simpleType>
+		<xs:restriction base="xs:string">
+		<xs:minLength value="0"/>
+		<xs:maxLength value="200"/>
+		</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ErrorSource" minOccurs="0" maxOccurs="1">
+		<xs:simpleType>
+		<xs:restriction base="xs:string">
+		<xs:minLength value="0"/>
+		<xs:maxLength value="512"/>
+		</xs:restriction>
+		</xs:simpleType>
+	</xs:element>	
+	<xs:element name="ErrorType">
+		<xs:simpleType>
+		   <xs:restriction base="xs:string">
+ 			<xs:enumeration value="BE"/>
+			<xs:enumeration value="BX"/>
+			<xs:enumeration value="SE"/>
+		    </xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+     </xs:all>
+</xs:complexType>	
+
+<xs:complexType name="FISystemExceptionType">
+	<xs:sequence>
+	<xs:element name="ErrorDetail"  type="ErrorDetailType" minOccurs="1" maxOccurs="unbounded" />
+	</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="FIBusinessExceptionType">
+<xs:sequence>
+	<xs:element name="ErrorDetail"  type="ErrorDetailType" minOccurs="1" maxOccurs="unbounded" />
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ErrorType">
+	<xs:choice>
+		<xs:element name="FISystemException"   type="FISystemExceptionType"    minOccurs="1"  maxOccurs="1"/>
+		<xs:element name="FIBusinessException" type="FIBusinessExceptionType"  minOccurs="1"  maxOccurs="1"/>
+	</xs:choice>
+</xs:complexType>
+
+<xs:complexType name="PasswordTokenType">
+	<xs:all>
+		<xs:element name="UserId" minOccurs="1" maxOccurs="1">
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="32"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>			
+		<xs:element name="Password" minOccurs="1" maxOccurs="1">
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="32"/>
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>							
+	</xs:all>
+</xs:complexType>
+
+<xs:complexType name="TokenType">
+		<xs:choice>		
+			<xs:element name="Certificate" minOccurs="0" maxOccurs="unbounded">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="4096"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+			<xs:element name="PasswordToken"  type="PasswordTokenType" minOccurs="0" maxOccurs="1"/>
+		</xs:choice>
+</xs:complexType>
+
+<xs:complexType name="SecurityType">
+		<xs:all>
+			<xs:element name="Token"  type="TokenType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="FICertToken" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="64"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+			<xs:element name="RealUserLoginSessionId" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="36"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RealUser" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="36"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="RealUserPwd" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="36"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="SSOTransferToken" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="64"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
+</xs:complexType>
+
+<xs:complexType name="MessageKeyType">
+		<xs:all>
+			<xs:element name="RequestUUID" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="36"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ServiceRequestId" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="64"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ServiceRequestVersion" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="8"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ChannelId" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="10"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LanguageId" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="10"/>
+                </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+		</xs:all>
+</xs:complexType>
+
+
+<xs:complexType name="ResponseMessageKeyType">
+		<xs:all>
+			<xs:element name="RequestUUID" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="36"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ServiceRequestId" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="64"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ServiceRequestVersion" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="8"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ChannelId" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="1"/>
+				<xs:maxLength value="10"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="LanguageId" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="10"/>
+                </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+		</xs:all>
+</xs:complexType>
+
+<xs:complexType name="RequestMessageInfoType">
+		<xs:all>
+			<xs:element name="BankId" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="6"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TimeZone" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="9"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EntityId" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="64"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="EntityType" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="64"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ArmCorrelationId" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="8"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MessageDateTime" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+</xs:complexType>
+
+<xs:complexType name="ResponseMessageInfoType">
+		<xs:all>
+			<xs:element name="BankId" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="6"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TimeZone" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="9"/>
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="MessageDateTime" type="xs:dateTime" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+</xs:complexType>
+
+<xs:complexType name="ReversalType">
+	<xs:all>
+		<xs:element name="ParentRequestUUID" minOccurs="1" maxOccurs="1">
+			<xs:simpleType>
+			<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="36"/>							
+			</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+	</xs:all>
+</xs:complexType>
+
+
+<xs:complexType name="TransactionType">
+		<xs:all>
+			<xs:element name="Id" minOccurs="1" maxOccurs="1"> 
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="28"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Status" minOccurs="1" maxOccurs="1">
+				<xs:simpleType>
+				<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="15"/>							
+				</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:all>
+</xs:complexType>
+
+<!--END OF COMMON ELEMENTS DEFINITION-->
+
+</xs:schema>
+

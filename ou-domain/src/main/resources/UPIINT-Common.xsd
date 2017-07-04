@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:upiint="http://rssoftware.com/upiint/schema/"
+	targetNamespace="http://rssoftware.com/upiint/schema/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:upi="http://npci.org/upi/schema/"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+	
+	<complexType name="ServiceResponse">
+		<sequence>
+			<element name="responseCode" type="string" />
+			<element name="error" type="upiint:Error" minOccurs="0"
+				maxOccurs="unbounded" />
+			<element name="result" type="anyType" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="ServiceRequest">
+		<sequence>
+			<element name="deviceDetails" type="upiint:DeviceDetails" />
+			<element name="request" type="anyType"/>
+		</sequence>
+	</complexType>
+	
+	<complexType name="Error">
+		<sequence>
+			<element name="errorCode" type="token" />
+			<element name="errorMessage" type="string" />
+		</sequence>
+	</complexType>
+	
+	<simpleType name="ChannelType">
+		<restriction base="string">
+			<enumeration value="MOBILE" />
+			<enumeration value="INTERNET" />
+			<enumeration value="BULK" />
+			<enumeration value="PARTNER" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="DeviceDetails">
+	<sequence>
+		<element name="txnId" type="token" />
+		<element name="userId" type="token"/>
+		<element name="deviceRegId" type="token" />
+		<element name="appId" type="string" />
+		<element name="channel" type="upiint:ChannelType" />
+		<element name="deviceType" type="string" />			
+		<element name="deviceOS" type="string" />
+		<element name="mobile" type="string" />
+		<element name="geoCode" type="string" />
+		<element name="location" type="string" />
+		<element name="ip" type="string" />
+		<element name="applcation" type="string" />
+		<element name="capabilty" type="string" />
+		<element name="hmac" type="string" />
+		</sequence>
+	</complexType>
+
+</schema>

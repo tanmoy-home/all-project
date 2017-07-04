@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+  <classpathentry kind="src" path="src/main/java" including="**/*.java"/>
+  <classpathentry kind="src" path="src/main/resources" excluding="static/fonts/**|**/*.java"/>
+  <classpathentry kind="output" path="target/classes"/>
+  <classpathentry kind="var" path="M2_REPO/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/transaction/javax.transaction-api/1.2/javax.transaction-api-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/servlet/jstl/1.2/jstl-1.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/javax/inject/javax.inject/1/javax.inject-1.jar"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-web/1.2.5.RELEASE/spring-boot-starter-web-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter/1.2.5.RELEASE/spring-boot-starter-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot/1.2.5.RELEASE/spring-boot-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-core/4.1.7.RELEASE/spring-core-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-core/4.1.7.RELEASE/spring-core-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-core/4.1.7.RELEASE/spring-core-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context/4.1.7.RELEASE/spring-context-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context/4.1.7.RELEASE/spring-context-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-context/4.1.7.RELEASE/spring-context-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aop/4.1.7.RELEASE/spring-aop-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-aop/4.1.7.RELEASE/spring-aop-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-aop/4.1.7.RELEASE/spring-aop-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0.jar" sourcepath="M2_REPO/aopalliance/aopalliance/1.0/aopalliance-1.0-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-beans/4.1.7.RELEASE/spring-beans-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-beans/4.1.7.RELEASE/spring-beans-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-beans/4.1.7.RELEASE/spring-beans-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-expression/4.1.7.RELEASE/spring-expression-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-expression/4.1.7.RELEASE/spring-expression-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-expression/4.1.7.RELEASE/spring-expression-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-autoconfigure/1.2.5.RELEASE/spring-boot-autoconfigure-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/yaml/snakeyaml/1.14/snakeyaml-1.14.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-logging/1.2.5.RELEASE/spring-boot-starter-logging-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/jcl-over-slf4j/1.7.12/jcl-over-slf4j-1.7.12.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.12/slf4j-api-1.7.12.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/jul-to-slf4j/1.7.12/jul-to-slf4j-1.7.12.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/log4j-over-slf4j/1.7.12/log4j-over-slf4j-1.7.12.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.1.3/logback-classic-1.1.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-core/1.1.3/logback-core-1.1.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-tomcat/1.2.5.RELEASE/spring-boot-starter-tomcat-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-core/8.0.23/tomcat-embed-core-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-el/8.0.23/tomcat-embed-el-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-logging-juli/8.0.23/tomcat-embed-logging-juli-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-websocket/8.0.23/tomcat-embed-websocket-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-databind/2.4.6/jackson-databind-2.4.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-annotations/2.4.6/jackson-annotations-2.4.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/jackson/core/jackson-core/2.4.6/jackson-core-2.4.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-validator/5.1.3.Final/hibernate-validator-5.1.3.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/fasterxml/classmate/1.0.0/classmate-1.0.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-web/4.1.7.RELEASE/spring-web-4.1.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-webmvc/4.1.7.RELEASE/spring-webmvc-4.1.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-data-jpa/1.2.5.RELEASE/spring-boot-starter-data-jpa-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-aop/1.2.5.RELEASE/spring-boot-starter-aop-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjrt/1.8.6/aspectjrt-1.8.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/aspectj/aspectjweaver/1.8.6/aspectjweaver-1.8.6.jar" sourcepath="M2_REPO/org/aspectj/aspectjweaver/1.8.6/aspectjweaver-1.8.6-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/aspectj/aspectjweaver/1.8.6/aspectjweaver-1.8.6-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-jdbc/1.2.5.RELEASE/spring-boot-starter-jdbc-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-jdbc/4.1.7.RELEASE/spring-jdbc-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-jdbc/4.1.7.RELEASE/spring-jdbc-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-jdbc/4.1.7.RELEASE/spring-jdbc-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-tx/4.1.7.RELEASE/spring-tx-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-tx/4.1.7.RELEASE/spring-tx-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-tx/4.1.7.RELEASE/spring-tx-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-jdbc/8.0.23/tomcat-jdbc-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-juli/8.0.23/tomcat-juli-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/4.3.10.Final/hibernate-entitymanager-4.3.10.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/logging/jboss-logging-annotations/1.2.0.Beta1/jboss-logging-annotations-1.2.0.Beta1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-core/4.3.10.Final/hibernate-core-4.3.10.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/common/hibernate-commons-annotations/4.0.5.Final/hibernate-commons-annotations-4.0.5.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.1-api/1.0.0.Final/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/javassist/javassist/3.18.1-GA/javassist-3.18.1-GA.jar"/>
+  <classpathentry kind="var" path="M2_REPO/antlr/antlr/2.7.7/antlr-2.7.7.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jboss/jandex/1.1.0.Final/jandex-1.1.0.Final.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-orm/4.1.7.RELEASE/spring-orm-4.1.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-jpa/1.7.3.RELEASE/spring-data-jpa-1.7.3.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/data/spring-data-commons/1.9.3.RELEASE/spring-data-commons-1.9.3.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-aspects/4.1.7.RELEASE/spring-aspects-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-aspects/4.1.7.RELEASE/spring-aspects-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-aspects/4.1.7.RELEASE/spring-aspects-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-context-support/4.1.7.RELEASE/spring-context-support-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-context-support/4.1.7.RELEASE/spring-context-support-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-context-support/4.1.7.RELEASE/spring-context-support-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-security/1.2.5.RELEASE/spring-boot-starter-security-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-config/3.2.7.RELEASE/spring-security-config-3.2.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-core/3.2.7.RELEASE/spring-security-core-3.2.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-web/3.2.7.RELEASE/spring-security-web-3.2.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-taglibs/3.2.7.RELEASE/spring-security-taglibs-3.2.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/security/spring-security-acl/3.2.7.RELEASE/spring-security-acl-3.2.7.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/thymeleaf/extras/thymeleaf-extras-springsecurity3/2.1.2.RELEASE/thymeleaf-extras-springsecurity3-2.1.2.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/thymeleaf/thymeleaf/2.1.4.RELEASE/thymeleaf-2.1.4.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/ognl/ognl/3.0.8/ognl-3.0.8.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/unbescape/unbescape/1.1.0.RELEASE/unbescape-1.1.0.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/embed/tomcat-embed-jasper/8.0.23/tomcat-embed-jasper-8.0.23.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/eclipse/jdt/core/compiler/ecj/4.4.2/ecj-4.4.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/postgresql/postgresql/9.4-1201-jdbc41/postgresql-9.4-1201-jdbc41.jar" sourcepath="M2_REPO/org/postgresql/postgresql/9.4-1201-jdbc41/postgresql-9.4-1201-jdbc41-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/postgresql/postgresql/9.4-1201-jdbc41/postgresql-9.4-1201-jdbc41-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/oracle/ojdbc7/12.1.0.1/ojdbc7-12.1.0.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-lang3/3.4/commons-lang3-3.4.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-io/commons-io/1.3.2/commons-io-1.3.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/jettison/jettison/1.3/jettison-1.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/stax/stax-api/1.0.1/stax-api-1.0.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-thymeleaf/1.2.5.RELEASE/spring-boot-starter-thymeleaf-1.2.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/thymeleaf/thymeleaf-spring4/2.1.4.RELEASE/thymeleaf-spring4-2.1.4.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/nz/net/ultraq/thymeleaf/thymeleaf-layout-dialect/1.2.9/thymeleaf-layout-dialect-1.2.9.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/jsoup/jsoup/1.9.2/jsoup-1.9.2.jar"/>
+  <classpathentry kind="src" path="/ou-domain"/>
+  <classpathentry kind="var" path="M2_REPO/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" sourcepath="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/joda-time/joda-time/2.5/joda-time-2.5.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-validator/commons-validator/1.5.0/commons-validator-1.5.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-digester/commons-digester/2.1/commons-digester-2.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2.jar" sourcepath="M2_REPO/commons-logging/commons-logging/1.2/commons-logging-1.2-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/commons-logging/commons-logging/1.2/commons-logging-1.2-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/jackson/jackson-mapper-asl/1.9.13/jackson-mapper-asl-1.9.13.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/codehaus/jackson/jackson-core-asl/1.9.10/jackson-core-asl-1.9.10.jar" sourcepath="M2_REPO/org/codehaus/jackson/jackson-core-asl/1.9.10/jackson-core-asl-1.9.10-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/rssoftware/frameworks/ou/hibernate-data-accessor/1.0-SNAPSHOT/hibernate-data-accessor-1.0-SNAPSHOT.jar" sourcepath="M2_REPO/com/rssoftware/frameworks/ou/hibernate-data-accessor/1.0-SNAPSHOT/hibernate-data-accessor-1.0-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/json/json/20160212/json-20160212.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/poi/poi/3.15/poi-3.15.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.10/commons-codec-1.10.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-collections4/4.1/commons-collections4-4.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/18.0/guava-18.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/typesafe/config/1.2.1/config-1.2.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/integration/spring-integration-ip/4.1.5.RELEASE/spring-integration-ip-4.1.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/integration/spring-integration-core/4.1.5.RELEASE/spring-integration-core-4.1.5.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/projectreactor/reactor-core/1.1.6.RELEASE/reactor-core-1.1.6.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/goldmansachs/gs-collections/5.1.0/gs-collections-5.1.0.jar" sourcepath="M2_REPO/com/goldmansachs/gs-collections/5.1.0/gs-collections-5.1.0-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/com/goldmansachs/gs-collections/5.1.0/gs-collections-5.1.0-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/goldmansachs/gs-collections-api/5.1.0/gs-collections-api-5.1.0.jar" sourcepath="M2_REPO/com/goldmansachs/gs-collections-api/5.1.0/gs-collections-api-5.1.0-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/com/goldmansachs/gs-collections-api/5.1.0/gs-collections-api-5.1.0-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1.jar" sourcepath="M2_REPO/com/lmax/disruptor/3.2.1/disruptor-3.2.1-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/com/lmax/disruptor/3.2.1/disruptor-3.2.1-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/io/gatling/jsr166e/1.0/jsr166e-1.0.jar" sourcepath="M2_REPO/io/gatling/jsr166e/1.0/jsr166e-1.0-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/io/gatling/jsr166e/1.0/jsr166e-1.0-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/spring-messaging/4.1.7.RELEASE/spring-messaging-4.1.7.RELEASE.jar" sourcepath="M2_REPO/org/springframework/spring-messaging/4.1.7.RELEASE/spring-messaging-4.1.7.RELEASE-sources.jar">
+    <attributes>
+      <attribute value="jar:file:/D:/Work/repository/org/springframework/spring-messaging/4.1.7.RELEASE/spring-messaging-4.1.7.RELEASE-javadoc.jar!/" name="javadoc_location"/>
+    </attributes>
+  </classpathentry>
+  <classpathentry kind="var" path="M2_REPO/org/springframework/retry/spring-retry/1.1.1.RELEASE/spring-retry-1.1.1.RELEASE.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/fastnate/fastnate-data/1.2.0/fastnate-data-1.2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/fastnate/fastnate-generator/1.2.0/fastnate-generator-1.2.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/commons-lang/commons-lang/2.6/commons-lang-2.6.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/jsr305/2.0.3/jsr305-2.0.3.jar"/>
+  <classpathentry kind="var" path="M2_REPO/net/sf/supercsv/super-csv/2.4.0/super-csv-2.4.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/reflections/reflections/0.9.10/reflections-0.9.10.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/code/findbugs/annotations/2.0.1/annotations-2.0.1.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/poi/poi-ooxml/3.15/poi-ooxml-3.15.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/poi/poi-ooxml-schemas/3.15/poi-ooxml-schemas-3.15.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/xmlbeans/xmlbeans/2.6.0/xmlbeans-2.6.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/github/virtuald/curvesapi/1.04/curvesapi-1.04.jar"/>
+</classpath>

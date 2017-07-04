@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="StateList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="stateList" type="bbps:stateDetail"
+						minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="stateName" type="bbps:stateName"/>
+						<xs:element type="xs:long" name="stateId" minOccurs="0" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="stateDetail">
+		<xs:sequence>
+			<xs:element type="xs:long" name="state_id" />
+			<xs:element type="xs:string" name="state_name" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="stateName">
+		<xs:sequence>
+			<xs:element type="xs:string" name="state_name"/>
+		</xs:sequence>
+	</xs:complexType>
+		
+</xs:schema>

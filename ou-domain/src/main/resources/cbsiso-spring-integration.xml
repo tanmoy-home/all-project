@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-ip="http://www.springframework.org/schema/integration/ip"
+	xmlns:stream="http://www.springframework.org/schema/integration/stream"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.1.xsd
+        http://www.springframework.org/schema/integration/ip http://www.springframework.org/schema/integration/ip/spring-integration-ip-4.1.xsd
+        http://www.springframework.org/schema/integration/stream http://www.springframework.org/schema/integration/stream/spring-integration-stream-4.1.xsd">
+
+
+	<!-- The correct Serializer / Deserializer needs to be built. The below 
+		ByteArrayLfSerializer is useful for testing since "nc" uses the same scheme 
+		- linefeed to demarcate between messages -->
+
+	<bean id="cbsIsoSerializer"
+		class="com.rssoftware.ou.cbsiso.util.UPICustomRawSerializer" />
+		
+	<bean id="cbsIsoDeSerializer"
+		class="com.rssoftware.ou.cbsiso.util.UPICustomMsgHeaderDeserializer" />
+		
+	<bean id="dispatcherServlet"
+		class="org.springframework.web.servlet.DispatcherServlet" />		
+
+	<bean id="cbsIsoTcpSocketSupport" class="com.rssoftware.ou.cbsiso.service.impl.CbsIsoTcpSocketSupport" />
+
+	<int-ip:tcp-connection-factory id="cbsIsoConnectionFactory"
+		type="client" host="${iso.host}" port="${iso.port}" single-use="false" 
+		deserializer="cbsIsoDeSerializer" serializer="cbsIsoSerializer"
+		socket-support="cbsIsoTcpSocketSupport" />
+<!-- 
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>application.properties</value>
+		</property>
+	</bean>
+ -->
+
+	<!-- UPI to IMPS connectors - start -->
+	<bean class="com.rssoftware.ou.cbsiso.service.impl.CbsIsoServiceImpl" id="cbsIsoService" />
+
+	<int:gateway id="cbsIsoFromUPIGateway"
+		service-interface="com.rssoftware.ou.cbsiso.gateway.CbsIsoFromUPIGateway"
+		default-request-channel="cbsIsoFromUPIChannel"></int:gateway>
+
+	<int:channel id="cbsIsoFromUPIChannel" />
+
+	<int:service-activator input-channel="cbsIsoFromUPIChannel"
+		method="mapToMessage" output-channel="toCbsIsoChannel" ref="cbsIsoService" />
+
+	<int:channel id="toCbsIsoChannel" />
+
+	<int-ip:tcp-outbound-channel-adapter
+		id="toCbsIsoChannelAdapter" client-mode="true" auto-startup="true"
+		retry-interval="20000" channel="toCbsIsoChannel" connection-factory="cbsIsoConnectionFactory" />
+
+	<!-- UPI to IMPS connectors - end -->
+
+
+	<!-- IMPS to UPI connectors - start -->
+	<int-ip:tcp-inbound-channel-adapter
+		id="fromCbsIsoChannelAdapter" client-mode="true" auto-startup="true"
+		channel="fromCbsIsoChannel" connection-factory="cbsIsoConnectionFactory" retry-interval="20000" />
+
+	<int:channel id="fromCbsIsoChannel" />
+
+	<int:service-activator input-channel="fromCbsIsoChannel"
+		method="mapFromMessage" ref="cbsIsoService" />
+	<!-- IMPS to UPI connectors - end -->
+	
+	<int:gateway id="cbsIsoTimeoutGateway" service-interface="com.rssoftware.ou.cbsiso.gateway.CbsIsoTimeoutGateway" default-request-channel="cbsIsoTimeoutChannel"></int:gateway>
+	<int:channel id="cbsIsoTimeoutChannel" />
+	<int:service-activator input-channel="cbsIsoTimeoutChannel" method="processTimeout" ref="cbsIsoService"/> 
+	
+</beans>

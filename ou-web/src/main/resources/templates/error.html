@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<title>System Error</title>
+<link rel="stylesheet" th:href="@{/css/style-error-page.min.css}" />
+</head>
+<body>
+	<div class="page-container">	
+		<div class="image">
+			<img src="/images/error-warning-shield.png"/>
+		</div>
+		<div class="main">
+			<h1 class="text-large">Oops!</h1>
+			<h2>An error has occurred during the current request. Please contact support.</h2>
+			<h4>Error code: <span th:text="${respCode}"></span></h4>
+			<ul class="list-unstyled">
+				<li>Here are some helpful links instead:</li>
+				<li><a target="_top" href="/home">Home Page</a></li>
+				<li><a href="#" onclick="window.history.back()">Back Page</a></li>
+				<li th:if="${ex!=null}"><a href="#" onclick="showLog()">Show Error Log</a></li>
+			</ul>
+		</div>
+	</div>
+	<div th:if="${ex!=null}"  id="error-stack-trace" style="display: none;">
+		<textarea id="error-log" spellcheck="false"><span th:if="${ex.getCause() !=null}" th:text="@{|${ex.getCause().getMessage()}&#10;|}" th:remove="tag"/><span th:each="msg : ${ex.getStackTrace()}" th:text="@{|${msg}&#10;|}" th:remove="tag"/></textarea>
+		<button onclick="cloaseLog()">Close</button>
+		<button onclick="saveTextAsFile()">Save</button>
+	</div>
+</body>
+<script type="text/javascript">
+	function showLog() {
+		document.getElementById('error-stack-trace').style.display = 'block';
+	}
+
+	function cloaseLog() {
+		document.getElementById('error-stack-trace').style.display = 'none';
+	}
+
+	function saveTextAsFile() {
+		var textToSave = document.getElementById("error-log").value;
+		var textToSaveAsBlob = new Blob([ textToSave ], {type : "text/plain"});
+		var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+		var fileNameToSaveAs = 'error_log.txt';
+
+		var downloadLink = document.createElement("a");
+		downloadLink.download = fileNameToSaveAs;
+		downloadLink.innerHTML = "Download File";
+		downloadLink.href = textToSaveAsURL;
+		downloadLink.onclick = destroyClickedElement;
+		downloadLink.style.display = "none";
+		document.body.appendChild(downloadLink);
+
+		downloadLink.click();
+	}
+
+	function destroyClickedElement(event) {
+		document.body.removeChild(event.target);
+	}
+</script>
+</html>

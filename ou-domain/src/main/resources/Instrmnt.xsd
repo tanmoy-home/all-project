@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+
+
+<xs:complexType name="Instrmnt">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ instrument used to transfer the amount. For example, Cheque, DD and so on. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="PmtInstDt" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+                <xs:documentation><![CDATA[ date of the instrument. This field is mandatory if Inst. Type is specified. The format for the date is 'DD-MM-YYYY'. FI Supports only yyyy-MM-dd'T'hh:mm:ss.SSS  format.]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+<xs:element name="PmtInstAlpha"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ number of the instrument. This field consists of two fields. Type the alpha part of the instrument number in the first block and the numeric portion in the second block. Alpha field is not mandatory. No validation is done on this field. This field is mandatory if Inst. Type is specified. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="6"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="PmtInstNum"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ number of the instrument. This field consists of two fields. Type the alpha part of the instrument number in the first block and the numeric portion in the second block. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="16"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="PmtInstType"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ instrument used to transfer the amount. For example, Cheque, DD and so on. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

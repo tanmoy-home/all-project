@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:ReqDiagnostic xmlns:ns2="http://bbps.org/schema">
+	<Head origInst="MH02" refId="T8BsEPKP6M726XuJ5U7ZDvZo4toX0XlIsS9" ts="2016-06-08T15:43:14+05:30" ver="1.0" />	
+</ns2:ReqDiagnostic>

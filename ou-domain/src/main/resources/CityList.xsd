@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="cityList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="city" type="bbps:cityDetail"
+							minOccurs="0" maxOccurs="unbounded" />
+						<xs:element type="xs:long" name="cityId" />
+						<xs:element type="xs:long" name="stateId" />	
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="cityDetail">
+		<xs:sequence>
+			<xs:element type="xs:long" name="city_id" />
+			<xs:element type="xs:string" name="city_name" />
+			<xs:element type="xs:long" name="state_id" />
+			<!-- <xs:element type="bbps:CityListStatus" name="cityListStatus" /> -->
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- <xs:simpleType name="CityListStatus">
+	   	<xs:restriction base="xs:string">
+	   		<xs:enumeration value="INVALID_CITY"></xs:enumeration>
+	   		<xs:enumeration value="INVALID_STATE"></xs:enumeration>
+	   	</xs:restriction>
+   	</xs:simpleType> -->
+   
+</xs:schema>

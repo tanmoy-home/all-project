@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Payment Gateway Intermediate Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       //setTimeout($("#pg_intermediate_page").submit(),1000);
+       $("#pg_intermediate_page").submit();
+    });   
+</script>
+</head>
+<body>
+	<p th:text="${payment_page_heading} + '!'" />
+
+	<form id="pg_intermediate_page" method="post" th:action="${submit_url}">
+		<input type="hidden" name="encdata" id="encdata" th:value="${encdata}"/>
+		<input type="submit" value="Pay Now!">
+	</form>
+
+</body>
+</html>

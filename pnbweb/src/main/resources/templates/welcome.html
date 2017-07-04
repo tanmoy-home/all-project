@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<link rel="stylesheet" th:href="@{|/css/portal-home.${session.tenatntId}.min.css|}" />
+</head>
+<body id="portal-welcome">
+<div id="content">Welcome to <img th:src="@{|/images/${session.tenatntId}_logo_small.png|}"/> Payment System</div>
+</body>
+</html>

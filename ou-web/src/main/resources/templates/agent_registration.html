@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/simple-sidebar.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/customcss/agentinstitute.css}" /> -->
+
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+
+<meta charset="UTF-8" />
+<title th:text="@{BBPS Portal}"></title>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+<!-- <link rel="stylesheet"
+	th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" /> 
+<link rel="stylesheet" th:href="" /> -->
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script>
+<style>
+#wrapper {
+	float: left;
+	margin-top: 10px;
+	width: 728px;
+}
+
+#wrapper .form-div {
+	-moz-border-radius: 7px 7px 7px 7px;
+	border: 1px solid silver;
+	float: left;
+	margin: 10px;
+	min-height: 100px;
+	padding: 5px;
+	width: 180px; . input { display : block;
+	width: 100%;
+	height: 26px;
+	padding: 2px 8px;
+	font-size: 14px;
+	line-height: 14px;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow
+		ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out
+		.15s;
+	transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+}
+</style>
+</head>
+<body>
+	<div class="wrapper">
+		<form autocomplete="off" th:action="@{/submitRegistration}"
+			method="post" target="_top" th:object="${agent}" id="agent"
+			name="agent" onsubmit="return validate()">
+			<div class="form-div">
+				<table id="agentView" style="width: 60%;">
+					<tr>
+						<td colspan="2"><small>(<span class="required">*</span>)
+								<span style="color: red; font-weight: bold;">Required
+									fields.</span>
+						</small></td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Agent Name :<span style="color: red;">*</span></td>
+						<td style="width: 50%;"><input type="text" id="agentName"
+							name="agentName" th:field="*{agentName}" maxlength="45" size="45"
+							required="required" pattern="^[a-zA-Z][a-zA-Z0-9'._@ ]*$"
+							title="e.g. Alphanumeric .  _' @ with Maximum 45 characters and start with alphabet" /></td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Agent Alias Name :<span
+							style="color: red;">*</span></td>
+						<td style="width: 50%;"><input type="text"
+							id="agentAliasName" name="agentAliasName"
+							th:field="*{agentAliasName}" maxlength="45" size="45"
+							required="required" pattern="^[a-zA-Z][ a-zA-Z0-9_.]+$"
+							title="e.g. Alphanumeric but start with Alphabet only.Maximum is 45 characters" /></td>
+					</tr>
+					<tr>
+						<td>Linked Agent Institution:<span style="color: red;">*</span></td>
+						<td th:if="*{isView} == 'Y'"><input type="text" id="agentIns"
+							name="agentIns" th:field="*{agentInst}" size="30" /></td>
+						<td th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"><select
+							th:field="*{agentInst}" class="form-control agentInsName"
+							id="agentInsName" name="agentInsName" required="required">
+								<option th:each="agentIns : ${agentInsList}"
+									th:value="${agentIns.agentInstId}+'~'+${agentIns.agentInstLinkedOU}"
+									th:text="${agentIns.agentInstName}"></option>
+
+						</select></td>
+						<td th:if="*{isEdit} == 'Y'"><select th:field="*{agentInst}"
+							class="form-control agentInsName" id="agentInsName"
+							name="agentInsName" required="required">
+
+								<option th:if="${agentIns.isSelected==true}"
+									th:each="agentIns : ${agentInsList}"
+									th:value="${agentIns.agentInstId}"
+									th:text="${agentIns.agentInstName}" selected='selected' />
+								<!-- <option th:if="${agentIns.isSelected==false}" th:each="agentIns : ${agentInsList}"
+												th:value="${agentIns.agentInstId}"
+												th:text="${agentIns.agentInstName}"/> -->
+
+						</select></td>
+					</tr>
+					<tr>
+						<td>Mobile Number :<span style="color: red;">*</span></td>
+						<td>
+							<!-- <input type="text" name="alias" /> --> <br /> <input
+							type="text" id="agentMobile" name="agentMobile"
+							th:field="*{agentMobileNo}" maxlength="10" size="30"
+							required="required" pattern="^[789]\d{9}$"
+							title="e.g. only numbers starts with 7 or 8 or 9" /> <br />(i.e.
+							9830012345)
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 50%;">Agent Shop Name :</td>
+						<td style="width: 50%;"><input type="text" id="agentShopName"
+							name="agentShopName" th:field="*{agentShopName}" size="45"
+							maxlength="45" pattern="^[a-zA-Z][a-zA-Z0-9'._@ ]*$"
+							title="e.g. Alphanumeric .  _' @ with Maximum 45 characters and start with alphabet" /></td>
+					</tr>
+					<tr>
+						<td>Type of business :<span style="color: red;">*</span></td>
+						<td th:if="*{isView} == 'Y'"><input type="text" id="bussType"
+							name="bussType" th:field="*{businessType}" size="30" /></td>
+						<td th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"><select
+							th:field="*{businessType}" class="form-control" id="businessType"
+							name="businessType" required="required">
+								<option th:each="btl : ${businessTypeList}"
+									th:value="${btl.categoryName}" th:text="${btl.categoryName}">
+								</option>
+						</select></td>
+						<td th:if="*{isEdit} == 'Y'"><select
+							th:field="*{businessType}" class="form-control" id="businessType"
+							name="businessType" required="required">
+								<option th:if="${btl.isSelected==true}"
+									th:each="btl : ${businessTypeList}"
+									th:value="${btl.categoryName}" th:text="${btl.categoryName}"
+									selected='selected' />
+								<option th:if="${btl.isSelected==false}"
+									th:each="btl : ${businessTypeList}"
+									th:value="${btl.categoryName}" th:text="${btl.categoryName}" />
+
+						</select></td>
+					</tr>
+					<!-- <tr>
+						<td><label>Payment Mode</label></td>
+						<td><input id="txtpaymentMode"
+							th:field="*{agentPaymentModes}" type="text" name="paymentMode"
+							class="input" required="required"/></td>
+					</tr> -->
+					<tr>
+						<td>Registered address 1 :<span style="color: red;">*</span></td>
+						<td><textarea maxlength="200" id="adr1" th:field="*{agentRegisteredAdrline}"
+								class="txtAreaComplaint" pattern=".*[^ ].*" required="required"
+								title="Address is required.">
+		    						</textarea></td>
+					</tr>
+					<tr>
+						<td>State :<span style="color: red;">*</span></td>
+						<td th:if="*{isView} == 'Y'"><input type="text" id="state"
+							name="state" th:field="*{agentRegisteredState}" size="30" /></td>
+						<td th:if="*{isView} != 'Y' and *{isEdit} != 'Y'"><select
+							th:field="*{agentRegisteredState}" class="form-control state" id="state"
+							name="state" required="required">
+								<option th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}"></option>
+						</select></td>
+
+						<td th:if="*{isEdit} == 'Y'"><select th:field="*{state}"
+							class="form-control state" id="state" name="state"
+							required="required">
+								<option th:if="${sl.isSelected==true}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" selected='selected' />
+								<option th:if="${sl.isSelected==false}"
+									th:each="sl : ${stateList}" th:value="${sl.stateId}"
+									th:text="${sl.stateName}" />
+						</select></td>
+					</tr>
+					<tr>
+						<td>City :</td>
+						<td th:if="*{isView} == 'Y'"><input type="text" id="city"
+							name="city" th:field="*{agentRegisteredCity}" size="30" /></td>
+						<td th:if="*{isEdit} == 'Y'"><select
+							class="form-control city" id="city" name="city"
+							th:field="*{agentRegisteredCity}">
+								<option value=''>Please select.</option>
+								<option th:if="${cl.isSelected==true}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" selected='selected' />
+								<option th:if="${cl.isSelected==false}"
+									th:each="cl : ${cityList}" th:value="${cl.cityId}"
+									th:text="${cl.cityName}" />
+
+						</select></td>
+						<td th:if="*{isView} != 'Y' and *{isEdit} != 'Y' "><select
+							th:field="*{city}" class="form-control city" id="city">
+
+						</select></td>
+					</tr>
+					<tr>
+						<td>Country :</td>
+						<td><input type="text" id="country" name="country"
+							th:field="*{agentRegisteredCountry}" size="10"
+							readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td>Pincode :<span style="color: red;">*</span></td>
+						<td th:if="*{isView} == 'Y'"><input type="text" id="pin"
+							name="pin" th:field="*{agentRegisteredPinCode}" size="30" /></td>
+						<td th:if="*{isEdit} == 'Y'"><select
+							class="form-control city" id="pincode" name="pincode"
+							th:field="*{agentRegisteredPinCode}" required="required">
+								<option value=''>Please select.</option>
+								<option th:if="${pin.isSelected==true}"
+									th:each="pin : ${pinList}" th:value="${pin.pinCode}"
+									th:text="${pin.pinCode}" selected='selected' />
+								<option th:if="${pin.isSelected==false}"
+									th:each="pin : ${pinList}" th:value="${pin.pinCode}"
+									th:text="${pin.pinCode}" />
+
+						</select></td>
+
+						<td th:if="*{isView} != 'Y' and *{isEdit} != 'Y' ">
+							<!-- <input type="text" id="pincode" name="pincode" th:field="*{pincode}" maxlength="6" size="6" /> -->
+							<select th:field="*{pincode}" class="form-control" id="pincode"
+							name="pincode" required="required">
+
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>GEO Code</td>
+						<td><input type="text" name="geoCode" id="txtgeoCode" th:field="*{agentGeoCode}"/></td>
+					</tr>
+					<tr>
+						<td>Agent Effective From :</td>
+
+						<td><input type="text" id="datepickerEffctvFrom"
+							class="datepicker" name="datepickerEffctvFrom"
+							th:field="*{agentEffctvFrom}" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td>Agent Effective To :</td>
+						<td><input type="text" id="datepickerEffctvTo"
+							class="datepicker" name="datepickerEffctvTo"
+							th:field="*{agentEffctvTo}" readonly="readonly" /></td>
+					</tr>
+					<tr th:if="*{isEdit} == 'Y' or *{isView} == 'Y'">
+						<!-- <td>Status :</td> -->
+						<td><input id="entityStatus" th:field="*{status}"
+							class="form-control" type="hidden" maxlength="8" size="25"
+							readonly="readonly" /></td>
+					</tr>
+
+				</table>
+				<button id="btnSaveAsDraft" type="submit"
+					class="btn btn-info btn-lg" name="action" value="draft"
+					th:text="#{button.draft}" title="Save as Draft"></button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

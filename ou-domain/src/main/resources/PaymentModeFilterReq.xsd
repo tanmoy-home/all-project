@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+
+	<xs:element name="PaymentModeFilterReq">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="defaultPaymentChannel"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="xs:string" name="agentPaymentChannel"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="xs:string" name="billerId" minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

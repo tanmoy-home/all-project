@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+	
+
+	<bean id="dictionaryTaskletStep"
+		class="com.rssoftware.ou.batch.tasklet.DictionaryInitializerTasklet"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql"
+			value="Select a.biller_id, a.file_type, a.date_format, a.target_class_name, a.root_element, 
+		a.delimiter,b.end_position, b.start_position, b.sequence, b.field_qualifier, b.field_format, b.field_data_type 
+		from #{jobParameters['schema_name']}.bill_file_config a, #{jobParameters['schema_name']}.bill_mapping_config b 
+		where a.biller_id = b.biller_id and a.biller_id=#{jobParameters['biller_id']}" />
+	</bean>
+
+	
+	<bean id="itemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
+		<property name="resource" value="file:E:/BBPS/WS/file/employees.xml" />
+		<property name="marshaller" ref="dictionaryMarshaller" />
+		<property name="rootTagName" value="dictionary" />
+	</bean>
+	
+  <bean id="postgreslItemWriter"
+	class="org.springframework.batch.item.database.JdbcBatchItemWriter"
+	scope="step">
+	<property name="dataSource" ref="dataSource" />
+ 	<property name="sql" value="
+            	insert into #{jobParameters['schema_name']}.bill_details(biller_id,customer_param1,customer_param2,customer_param3,
+            	customer_param4,customer_param5,customer_name,actual_amount,due_date,bill_date,bill_number,bill_period,
+            	additional_amounts,additional_info)
+				values (:billerId,:customerParam1,:customerParam2,:customerParam3,:customerParam4,:customerParam5,:customerName,
+				:actualAmount,:dueDate,:billDate,:billNumber,:billPeriod,:concatAA,:concatAI)
+	  "/>
+ 
+	<property name="itemSqlParameterSourceProvider">
+		<bean
+		class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider" />
+	</property>
+  </bean>
+	
+
+	<bean id="dictionaryMarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.BillDetails</value>
+		</property>
+	</bean>
+
+	<!--  Define Item Reader here  -->
+	
+	<bean id="flatFileItemReader"
+		class="com.rssoftware.ou.batch.reader.GenericFlatFileItemReader"
+		scope="step">
+		<property name="dictionary" value="#{jobExecutionContext['dictionary']}" />
+		<property name="inputFile" value="#{jobParameters['input_file']}" />
+		<property name="billerId" value="#{jobParameters['biller_id']}" />
+		<property name="validationReport" value="#{jobParameters['validation_Report']}" />
+		
+	</bean>
+
+	<bean id="genericXmlItemReader"
+		class="com.rssoftware.ou.batch.reader.GenericXMLItemReader"
+		scope="step">
+		<property name="dictionary" value="#{jobExecutionContext['dictionary']}" />
+		<property name="inputFile" value="#{jobParameters['input_file']}" />
+	</bean>
+	
+	<bean id="readerWriterDecider" class="com.rssoftware.ou.batch.decider.ReaderWriterDecider"/>
+
+ <!-- Filtering process -->
+  <bean id="filterReportProcessor" class="com.rssoftware.ou.batch.processor.BillDetailsItemProcessor" />
+            
+	<batch:job id="billFetchJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="init" next="readerDecision">
+			<batch:tasklet ref="dictionaryTaskletStep" />
+		</batch:step>
+		<batch:decision decider="readerWriterDecider" id="readerDecision">
+			<batch:next on="XML" to="xmlReadWrite" />
+			<batch:next on="FlatFile" to="flatFileReadWrite" />
+		</batch:decision>
+		<batch:step id="xmlReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="genericXmlItemReader" writer="itemWriter"
+					commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="flatFileItemReader" writer="postgreslItemWriter" 
+				processor="filterReportProcessor" commit-interval="1"> 
+				</batch:chunk>
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+
+	<!-- Read and map values to object, via jaxb2 -->
+	<bean id="reportUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<list>
+				<value>com.rssoftware.ou.batch.to.BillDetails</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+
+</beans>

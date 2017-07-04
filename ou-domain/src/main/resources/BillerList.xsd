@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="billerList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="biller" type="bbps:billerDetail"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="billerDetail">
+		<xs:sequence>
+			<xs:element type="xs:string" name="id" />
+			<xs:element type="xs:string" name="name" />
+			<xs:element type="xs:string" name="categoryName" />
+			<xs:element type="xs:string" name="mode" />
+			<xs:element type="xs:boolean" name="acceptsAdhoc" />
+			<xs:element type="xs:boolean" name="isParent" />
+			<xs:element type="xs:string" name="parentBillerId" />
+			<xs:element type="xs:string" name="fetchRequirement" />
+			
+			<xs:sequence>
+				<xs:element name="subBiller" type="bbps:billerDetail"
+					minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

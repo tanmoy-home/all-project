@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bbps:BillerFetchRequest xmlns:bbps="http://bbps.org/schema">
+  <Head ver="1.0" ts="2015-02-16T22:02:35+05:30" origInst="MH01" refId="HENSVVR4QOS7X1UGPY7JGUV444PL9T2C3QN" />
+</bbps:BillerFetchRequest>

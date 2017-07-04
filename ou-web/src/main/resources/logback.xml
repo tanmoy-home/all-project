@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration scan="true">
+
+	<include resource="org/springframework/boot/logging/logback/base.xml" />
+	<jmxConfigurator />
+
+	<appender name="BBPS_UPDATES_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${user.home}/logs/oulogs/ou-web-app.log
+		</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern> ${user.home}/logs/oulogs/ou-web-app.%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>100</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>10MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<Pattern>%d %X %-5level %logger{36} - %msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_BBPS_UPDATES_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>2000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="BBPS_UPDATES_APPENDER" />
+	</appender>
+
+
+	<appender name="BBPS_API_APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<File>logs/bbpslogs/bbps-api.log
+		</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>logs/bbpslogs/bbps-api.%i.log
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>100</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>200MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<Pattern>%msg%n%ex</Pattern>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_BBPS_API_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>2000</queueSize>
+		<discardingThreshold>0</discardingThreshold>
+		<appender-ref ref="BBPS_API_APPENDER" />
+	</appender>
+
+	<logger name="api" level="INFO" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_API_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+	
+	<logger name="org.springframework.security" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.DispatcherServlet" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor" level="DEBUG" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.springframework.web.client.RestTemplate" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.npci.bbps" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="com.netflix" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.loader" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+	
+	<logger name="org.hibernate.persister" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.cfg" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.type" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.engine.jdbc.internal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.id.factory.internal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.validator.internal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.integrator.internal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.internal" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.engine" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+	
+	<logger name="org.hibernate.boot" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.dialect" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<logger name="org.hibernate.mapping" level="WARN" additivity="false">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</logger>
+
+	<root level="DEBUG">
+		<appender-ref ref="ASYNC_BBPS_UPDATES_APPENDER" />
+	</root>
+
+</configuration>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Welcome to BBPOU</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+
+		<!-- MetisMenu CSS -->
+		<link rel="stylesheet" th:href="@{/css/metisMenu.min.css}" />
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" th:href="@{/css/bbpou.css}" />
+
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+		<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}" />
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via  -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body class="">
+
+		<!-- HEADER -->
+		<!-- Navigation -->
+		<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
+			<div class="navbar-header header-color">
+
+				<!-- OU code snippet start -->
+				<div class="bbpou-header-container">
+					<!--<iframe src="header.html" frameborder="0" allowfullscreen></iframe>-->
+					<div class="ou-logo">
+						<a class="" href=""> <img th:src="@{/images/idbi_logo_small.png}" class="logo-size"> </a>
+					</div>
+
+
+
+				</div>
+				<!-- OU code snippet end -->
+
+			</div>
+			<!-- /.navbar-header -->
+
+			<!-- welcome user message -->
+
+			<!-- welcome user message end -->
+
+		</nav>
+
+		<!-- /HEADER -->
+
+		<!-- SIDEBAR -->
+		<!-- left menu -->
+		<div id="wrapper">
+
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+									<!-- /.row -->
+
+						<div class="box ">
+						<div class="box-body">
+														<!-- /.row -->
+							<form method="post" action="bill-payment-screen.html">
+							<div class="row">
+											<div class="col-sm-4 left-width ">
+												<div class="form-group required" >
+											<label class="control-label" >Type your Mobile  Number</label>
+											</div>
+											</div>
+
+										<div class="col-sm-4 ">
+											<div class="form-group required" >
+												<input type="text" class="form-control "
+													name="agentIns"
+												placeholder="Type your Mobile  Number" name="Agent Name" required>
+											</div>
+
+							</div>
+
+												</div>
+												<div class="row">
+																<div class="col-sm-4 left-width ">
+																	<div class="form-group " >
+																<label class="control-label" >Type your Email Id</label>
+																</div>
+																</div>
+
+															<div class="col-sm-4 ">
+																<div class="form-group " >
+																	<input type="text" class="form-control "
+																	placeholder="Type your Email Id" name="Agent Name" required>
+																</div>
+
+												</div>
+
+													</div>
+													<div class="row" style="text-align: center;">
+
+															<button class="btn btn-primary" type="submit" required >Submit</button>
+
+													</div>
+
+								</form>
+
+
+												</div>
+
+											
+							</div>
+							<!-- /.row -->
+
+
+
+						</div>
+
+					</div>
+
+					<!-- /box -->
+
+
+					<div class="clearfix"></div>
+
+					<!-- extra bottom space -->
+					<div class="btm-pad-lg">
+						&nbsp;
+					</div>
+
+					</form>
+				</div>
+				<!-- /.col-sm-12 -->
+			</div>
+			<!-- /.row -->
+
+			<!-- extra bottom space -->
+			<div class="btm-pad-lg">
+				&nbsp;
+			</div>
+
+		</div>
+		</div>
+		<!-- /#page-wrapper -->
+
+		<!-- FOOTER -->
+		<footer class="bbpou-footer">
+			Copyright &copy; 2016, R S Software. All rights reserved.
+		</footer>
+		<!-- /FOOTER -->
+
+	</body>
+
+</html>

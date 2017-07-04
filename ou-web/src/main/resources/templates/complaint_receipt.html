@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      
+	<head >
+    <link th:substituteby="common/common_header" />
+	<script type="text/javascript" th:src="@{/js/downloadPdf.js}"></script>		
+    
+</head>
+
+	<body class="">
+	
+		<div id="wrapper">
+			
+			<!-- HEADER -->
+			<div lang="en" th:replace="common/header :: header"> </div>
+			<!-- /HEADER -->	
+
+			<!-- left menu -->
+            <div lang="en" th:replace="common/left_menu:: leftmenu"> </div>
+			<!-- / left menu -->
+
+			<div id="page-wrapper" >
+
+                         
+					       
+					<!-- RECEPT BOX START -->
+					
+          <div class="recept-box" style="padding-top:30px;">
+          <span th:if="${resp.isDup} == 'yes'" >
+          <div style="text-align: center; margin-bottom: 20px;font-size: 18px;font-family: roboto; color:red;"  th:text="${resp.responseMsg}" >
+				 	
+					</div>
+					</span>
+					<span th:if="${resp.isDup} == 'no'" >
+          <div style="text-align: center; margin-bottom: 20px;font-size: 18px;font-family: roboto; color:green;"  th:text="${resp.responseMsg}">
+				 	
+					</div>
+					</span>
+					
+            <!-- RECEPT LOGO BOX START-->
+            <div class="row recipt-logo-align">
+                <img src="/images/bbpou-recept-logo.png" class="recept-logo pull-left">
+                <img src="/images/BBPS-recept-logo.png" class="recept-logo pull-right" style="padding-top:6px;">
+            </div>
+            <!-- RECEPT LOGO BOX START-->
+            <div class="recept-title-box">BBPS Complain Receipt</div>
+            <!-- RECEPT TABLE START -->
+            <div>
+              <table class="table table-bordered paymentRecept">
+                 <tr>
+                      <th>Complaint Id</th>
+                      <td th:text="${resp.complaintId}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Complaint Date Time </th>
+                      <td th:text="${resp.complaintDate}">
+                      
+                      </td>
+                  </tr> 
+                  
+                  <tr>
+                      <th th:text="${resp.transactionLabel}"></th>
+                      <td th:text="${resp.transactionId}">
+                      
+                      </td>
+                  </tr>
+                 
+                  <tr>
+                      <th>Reason</th>
+                      <td th:text="${resp.reason}">
+                      
+                      </td>
+                  </tr>
+<!--                    <tr> -->
+<!--                       <th>Assigned TO</th> -->
+<!--                       <td th:text="${resp.assignedTo}"> -->
+                      
+<!--                       </td> -->
+<!--                   </tr> -->
+<!--                    <tr> -->
+<!--                       <th>Status</th> -->
+<!--                       <td th:text="${resp.status}"> -->
+                      
+<!--                       </td> -->
+<!--                   </tr> -->
+                  
+                  
+                 
+                </table>
+                
+            </div>
+            <!-- RECEPT TABLE END -->
+            <!-- BUTTON BOX START -->
+            <div class="text-center" style="padding-top:10px; padding-bottom:10px;">
+            <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-md" onclick="showcompmodal()">
+              View
+            </button>
+            &nbsp;
+            <button class="btn btn-primary" type="button" onclick="download_pdf_server('complaint_receipt','Complaint Receipt','BBPS Complaint Receipt');">
+              Download
+            </button>
+            &nbsp;
+          </div>
+            <!-- BUTTON BOX END -->
+          </div>
+         <form  id="reciptData"  method="post" >
+                  <input type="hidden" id="id"  name="Complaint Id" th:value="${resp.complaintId}" />
+                  <input type="hidden" id="cdate" name="Complaint Date Time" th:value="${resp.complaintDate}" />
+                  <input type="hidden" id="transactionId" th:name="${resp.transactionLabel}" th:value="${resp.transactionId}" />
+                  <input type="hidden" id="reason"  name="Reason" th:value="${resp.reason}" />
+<!--                    <input type="hidden" id="assignedTo" th:field="*{assignedTo}" /> -->
+<!--                   <input type="hidden" id="status"  th:field="*{status}" /> -->
+                   <input type="hidden" id="tranLabel"  name="" th:value="${resp.transactionLabel}" />
+                  
+                  </form>
+            <!-- MODAL BOX START -->
+            <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                      <div class="recept-box-modal">
+                        <!-- RECEPT LOGO BOX START-->
+                        <div style="padding-left:10px; padding-right:10px;">
+                            <img src="/images/bbpou-recept-logo.png" class="recept-logo pull-left">
+                            <img src="/images/BBPS-recept-logo.png" class="recept-logo pull-right">
+                        </div>
+                        <!-- RECEPT LOGO BOX START-->
+
+                        <!-- RECEPT TABLE START -->
+                        <div>
+                          <table class="table table-bordered paymentRecept">
+                             <tr>
+                       <th>Complaint Id</th>
+                      <td id="compId"></td>
+                  </tr>
+                  <tr>
+                     <th>Complaint Date & Time </th>
+                      <td id="compDt"></td>
+                  </tr> 
+                  <tr>
+                     <th id="compLbl"></th>
+                      <td id="compTranid"></td>
+                  </tr>
+                  
+                    <tr>
+                       <th>Reason</th>
+                      <td id="compRsn"></td>
+                  </tr>
+<!--                   <tr> -->
+<!--                        <th>Assigned To</th> -->
+<!--                       <td id="compAsnto"></td> -->
+<!--                   </tr> -->
+<!--                   <tr> -->
+<!--                        <th>Status</th> -->
+<!--                       <td id="compsts"></td> -->
+<!--                   </tr> -->
+                  </table>
+                        </div>
+                        <!-- RECEPT TABLE END -->
+                        <!-- BUTTON BOX START -->
+                        <div class="text-center" style="padding-top:10px; padding-bottom:10px;">
+                          <button class="btn btn-primary">Print</button>
+                        &nbsp;
+                        <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+                        &nbsp;
+                      </div>
+                        <!-- BUTTON BOX END -->
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL BOX END -->
+
+
+
+          <!-- RECEPT BOX END -->
+
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+
+			<!-- FOOTER -->
+			 <div lang="en" th:replace="common/footer:: footer"> </div>
+			<!-- /FOOTER -->
+
+	</body>
+
+</html>

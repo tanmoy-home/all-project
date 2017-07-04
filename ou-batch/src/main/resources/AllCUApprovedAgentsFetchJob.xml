@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+	<bean id="cuApprovedAgentsCsvFileItemReader" class="org.springframework.batch.item.file.FlatFileItemReader" scope="step">
+
+		<property name="resource" value="#{jobParameters['all_cu_approved_agents_file_loc']}" />
+		<property name="lineMapper">
+		    <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+			<property name="lineTokenizer">
+				<bean
+					class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+					<property name="names" value="agentId, agentName, agentAliasName, agentMobileNo, agentShopName, agentBusnsType, agentPaymentModes, dummyAgent, agentLinkedAgentInst, agentPaymentChannels, agentRegisteredAdrline, agentRegisteredCity, agentRegisteredPinCode, agentRegisteredState, agentEffctvFrom, agentEffctvTo, agentType, agentGeoCode, agentCUID " />
+				</bean>
+			</property>
+			<property name="fieldSetMapper">
+				<bean class="com.rssoftware.ou.batch.common.CUApprovedAgentsFieldSetMapper" />
+
+				 <!-- if no data type conversion, use BeanWrapperFieldSetMapper to map by name
+				<bean
+					class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+					<property name="prototypeBeanName" value="report" />
+				</bean>
+				 -->
+			</property>
+		    </bean>
+		</property>
+		<property name="strict" value="false" />
+	</bean>
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.AgentDetails</value>
+		</property>
+	</bean>
+   
+
+  <bean id="allCUApprovedAgentsFetchProcessor" class="com.rssoftware.ou.batch.processor.AllCUApprovedAgentsFetchProcessor" scope="step"/>
+     <!--  <bean id="fileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+    
+
+    <property name="resource" value="#{jobParameters['tempContentLoc']}" />
+
+	<property name="lineAggregator">
+	  <bean
+		class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+		<property name="delimiter" value="," />
+		<property name="fieldExtractor">
+		  <bean
+			class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+			<property name="names" value="agentId, agentName, agentAliasName, agentMobileNo, agentShopName, agentBusnsType, agentPaymentModes" />
+		   </bean>
+		</property>
+	   </bean>
+	</property>
+  </bean> --> 
+  
+  <bean id="approvedAgentsItemWriter" class="com.rssoftware.ou.batch.writer.AllCUApprovedAgentsWriter" scope="step">
+	<!--	<property name="settlementId" value="#{jobParameters['settlement_id']}"></property>
+		<property name="reconMaxTry" value="#{jobParameters['recon_max_try']}"></property>
+	 
+		<property name="matchedTxns" value="#{jobParameters['matchedTxns']}"></property>
+		<property name="notInOuTxns" value="#{jobParameters['notInOuTxns']}"></property>
+		<property name="notInCuTxns" value="#{jobParameters['notInCuTxns']}"></property>
+		<property name="mismatchedTxns" value="#{jobParameters['mismatchedTxns']}"></property>
+		<property name="pendingTxns" value="#{jobParameters['pendingTxns']}"></property>
+		<property name="broughtForwardTxns" value="#{jobParameters['broughtForwardTxns']}"></property> -->
+	</bean>
+  
+  <bean id="agentDao" class="com.rssoftware.ou.tenant.dao.impl.AgentDaoImpl" />
+  <bean id="transactionDataDao" class="com.rssoftware.ou.tenant.dao.impl.TransactionDataDaoImpl" />
+  
+ <!-- <bean id="agentDetailsItemWriter" scope="step"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<ref bean="fileItemWriter" /> 
+				<ref bean="approvedAgentsItemWriter" />
+			</list>
+		</property>
+	</bean> -->
+    
+    <batch:job id="allCUApprovedAgentsFetchJob" job-repository="jobRepository" parent="simpleJob">
+        <batch:step id="flatFileReadWrite">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="cuApprovedAgentsCsvFileItemReader" writer="approvedAgentsItemWriter"  processor="allCUApprovedAgentsFetchProcessor" commit-interval="100">
+                </batch:chunk>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+        
+</beans>

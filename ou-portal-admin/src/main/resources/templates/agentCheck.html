@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+</head>
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1>
+            List of Agents
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Agent Institutes</a></li>
+            <li class="active">List of Agents</li>
+          </ol>
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+              <!-- FORM START -->
+              <form id ="agentForm" th:object="${agent}" method="post" >
+                  <!-- DATAGRID START -->
+                  <div class="datagrid">
+                      <table id="agentList">
+							<thead>
+								<tr>	
+									<th></th>
+									<th>Agent Id</th>
+									<th>Agent Name</th>
+									<th>Mobile</th>
+									<th>Address</th>
+									<!-- <th>Account#</th>
+									<th>Scheme</th> -->								
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+                  </div>
+                  <!-- DATAGRID END -->
+                  <!-- BUTTON START -->
+                  <div>
+                    <button class="btn btn-default waves-effect waves-light" type="button" id="btnApprove" onclick="agentApprove();">Approve</button>
+					<button class="btn btn-danger waves-effect waves-light" type="button" id="btnReject" onclick="agentReject();">Reject</button>
+                  </div>
+                  <!-- BUTTON END -->
+              </form>
+              <!-- FORM END -->
+            
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>
+      <script type="text/javascript" th:src="@{/js/agent.js}"></script>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+</body>
+
+</html>

@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-fragment="hdr">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<title>BBPS</title>
+
+<!-- Font Awesome -->
+
+	
+<link type="text/css" rel="stylesheet"
+	th:href="@{/css/font-awesome.css?version=1.0.0}" />
+
+<!-- Bootstrap -->
+<link type="text/css" rel="stylesheet"
+	th:href="@{/css/default-fonts.css?version=1.0.0}" />
+	
+<!-- Bootstrap -->
+<link type="text/css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}" />
+
+<!-- Material Design Bootstrap -->
+<link type="text/css" th:href="@{/css/mdb.min.css}" rel="stylesheet" />
+
+
+
+<!-- JQUERY UI CSS 
+<link type="text/css" th:href="@{/css/jquery-ui.css}" rel="stylesheet" />
+
+-->
+
+
+<link th:href="@{/css/bootstrap-datepicker3.css}" rel="stylesheet" />
+
+<!-- jQuery DataTable CSS -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/jquery.dataTables.min.css}" />
+
+
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/dataTables.bootstrap.min.css}" />
+
+<!-- JQUERY UI CSS -->
+<link type="text/css" th:href="@{/css/bootstrap-duallistbox.min.css}"
+	rel="stylesheet" />
+
+
+
+<link type="text/css" th:href="@{/css/style.css}" rel="stylesheet" />
+<!-- SIDEBAR CSS -->
+<link type="text/css" th:href="@{/css/sidebar.css}" rel="stylesheet" />
+<link type="text/css" th:href="@{/css/bootstrap-multiselect.css}" rel="stylesheet" />
+        
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script th:src="@{/js/jquery-1.12.3.min.js}"></script>
+</head>
+
+<body>
+	<!-- TOP NAV BAR START -->
+	<header
+		class="navbar navbar-dark navbar-fixed-top scrolling-navbar primary-color"
+		data-th-fragment="top-nav">
+		<!-- LOGO OR APP NAME BOX START -->
+		<a class="navbar-brand logo" href="#">BBPS</a>
+		<!-- LOGO OR APP NAME BOX END-->
+		<!-- LEFT PANEL or SIDE NAV PANEL TOGGALE BUTTON START -->
+		<a href="#" class="sidebar-toggle " data-toggle="offcanvas"
+			role="button"> <span class="sr-only">Toggle navigation</span> <span
+			class="icon-bar"></span> <span class="icon-bar"></span> <span
+			class="icon-bar"></span>
+		</a>
+		<!-- LEFT PANEL or SIDE NAV PANEL TOGGALE BUTTON END -->
+		<!-- LOG OUT BOX START -->
+		<ul class="nav navbar-nav pull-right">
+			<li class="dropdown">
+			<a href="#" class="dropdown-toggle"
+				id="drop1" data-toggle="dropdown" role="button" aria-haspopup="true"
+				aria-expanded="false" data-th-text="Profile"><span
+					class="caret"></span>Profile<i class="fa fa-user-circle-o"></i>
+</a>
+				<ul class="dropdown-menu pull-right" aria-labelledby="drop1">
+
+					<li sec:authorize="@securityService.userHasAccess(authentication, 'Profile')">
+						<a href="profile.html"> <i class="fa fa-fw fa-user"></i>
+							Profile
+					</a>
+					</li>
+					<li
+						sec:authorize="@securityService.userHasAccess(authentication, 'Inbox')">
+
+						<a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+					</li>
+					<li><a href="/change-password"
+						th:href="@{/users/change-password}"> <i
+							class="fa fa-fw fa-edit"></i> Change Password
+					</a></li>
+					<li role="separator" class="divider"></li>
+					<li><a href="/logout" th:href="@{/logout}"> <i
+							class="fa fa-fw fa-power-off"></i> Log Out
+					</a></li>
+				</ul></li>
+
+
+		</ul>
+		<!-- LOG  OUT BOX END -->
+	</header>
+	<!-- TOP NAV BAR END -->
+	<!--BODY WRAPPER START -->
+	<div class="wrapper">
+		<!--SIDE NAV START -->
+		<aside class="main-sidebar" data-th-fragment="vert-nav-admin">
+			<ul class="sidebar-menu">
+				<li class="header">MAIN NAVIGATION</li>
+				<li><a href="/home" th:href="@{/home}"><i
+						class="fa fa-home"></i> Home</a></li>
+				<li
+					sec:authorize="@securityService.userHasAccess(authentication, 'Profile')">
+					<a href="/profile"><i class="fa fa-user fa-fw"></i> Profile</a>
+				</li>
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/user/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Users')">
+					<a href="#"> <i class="fa fa-users"></i> <span>Users</span> <i
+						class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/user-list') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'List users')">
+							<a href="/user-list" th:href="@{/user/user-list}"><i
+								class="fa fa-circle-o"></i> List Users</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/add-user') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'New User')">
+							<a href="/add-user" th:href="@{/user/add-user}"><i
+								class="fa fa-circle-o"></i> New User</a>
+						</li>
+					</ul>
+				</li>
+				<!-- <li class="treeview" th:classappend="${#httpServletRequest.getRequestURI().contains('/organization/') ? 'active':''}"
+						sec:authorize="@securityService.userHasAccess(authentication, 'Org. structure')">
+                  <a href="#">
+                  <i class="fa fa-cubes"></i> <span>Org. Structure</span> <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                     <li th:classappend="${#httpServletRequest.getRequestURI().contains('/organization-list') ? 'active':''}">
+								<a href="/organization-list"
+								th:href="@{/organization/organization-list}"><i class="fa fa-circle-o"></i>List Organizations</a></li>
+                     <li th:classappend="${#httpServletRequest.getRequestURI().contains('/add-organization') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'New organization')">
+								<a href="/add-organization"
+								th:href="@{/organization/add-organization}"><i class="fa fa-circle-o"></i>New Organizations</a></li>
+                  </ul>
+               </li> -->
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/role/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Roles')">
+					<a href="#"> <i class="fa fa-universal-access"></i> <span>Roles</span>
+						<i class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/role-list') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'List roles')">
+							<a href="/role-list" th:href="@{/role/role-list}"><i
+								class="fa fa-circle-o"></i>List Roles</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/add-role') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'New role')">
+							<a href="/add-role" th:href="@{/role/add-role}"><i
+								class="fa fa-circle-o"></i>New Role</a>
+						</li>
+					</ul>
+				</li>
+				<!-- <li class="treeview"	th:classappend="${#httpServletRequest.getRequestURI().contains('/service/') ? 'active':''}"
+						sec:authorize="@securityService.userHasAccess(authentication, 'Services')">
+						<a href="/trade/details">
+                  <i class="fa fa-star"></i> <span>Services</span> <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                  <ul class="treeview-menu">
+                     <li th:classappend="${#httpServletRequest.getRequestURI().contains('/service-list') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'List services')">
+								<a href="/service-list" th:href="@{/service/service-list}"><i class="fa fa-circle-o"></i>List Services</a></li>
+                     <li th:classappend="${#httpServletRequest.getRequestURI().contains('/add-service') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'New service')">
+								<a href="/add-service" th:href="@{/service/add-service}"><i class="fa fa-circle-o"></i>New Service</a></li>
+                  </ul>
+               </li> -->
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/webpage/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'UI Elements')">
+					<a href="/trade/details"> <i class="fa fa-tree"></i> <span>UI
+							Elements</span> <i class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/webpage-list') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'List UI Elements')">
+							<a href="/webpage-list" th:href="@{/webpage/webpage-list}"><i
+								class="fa fa-circle-o"></i>List UI Elements</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/save-webpage') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'New UI Element')">
+							<a href="/save-webpage" th:href="@{/webpage/add-webpage}"><i
+								class="fa fa-circle-o"></i>New UI Element</a>
+						</li>
+					</ul>
+				</li>
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/agentInstitute/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Agent Institutes')">
+					<a href="/trade/details"> <i class="fa fa-university"></i> <span>Agent
+							Institutes</span> <i class="fa fa-angle-left pull-right"></i>
+				</a>
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentBoarding') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent OnBoarding')">
+							<a href="/agentBoarding"
+							th:href="@{/agentInstitute/agentBoarding/I/0}"><i
+								class="fa fa-circle-o"></i>Agent Onboarding</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentView') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent List')">
+							<a href="/agentView" th:href="@{/agentInstitute/agentView}"><i
+								class="fa fa-circle-o"></i>Agent List</a>
+						</li>						
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentReconciliationReport') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent Reconciliation Report')">
+							<a href="/agentReconciliationReport"
+							th:href="@{/agentInstitute/agentReconciliationReport}"><i
+								class="fa fa-circle-o"></i>Agent Reconciliation Report</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentCommissionReport') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent Commission Report')">
+							<a href="/agentCommissionReport"
+							th:href="@{/agentInstitute/agentCommissionReport}"><i
+								class="fa fa-circle-o"></i>Agent Commission Report</a>
+						</li>
+					</ul>
+				</li>
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/COUAdmin') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Agent')">
+					<a href="/trade/details"><i class="fa fa-thumbs-up"></i> Agent <span class="fa arrow"></span><i
+						class="fa fa-angle-left pull-right"></i></a>
+
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentBoarding') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent Boarding')">
+							<a href="/agentBoarding"
+							th:href="@{/COUAdmin/agentBoarding/I/0}"><i
+								class="fa fa-circle-o"></i>Agent Onboarding</a>
+						</li>
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/agentViewCOU') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Agent List')">
+							<a href="/agentViewCOU" th:href="@{/COUAdmin/agentViewCOU}"><i
+								class="fa fa-circle-o"></i>Agent List</a>
+						</li>
+					</ul>
+				</li>
+
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/reconciliation/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Reconciliation')">
+					<a href="/trade/details"><i class="fa fa-sign-language"></i>
+						Reconciliation <span class="fa arrow"></span><i
+						class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/pgReconFiles') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Payment Gateway Report')">
+							<a href="/pgReconFiles" th:href="@{/reconciliation/pgReconFiles}"><i
+								class="fa fa-circle-o"></i>Payment Gateway Report</a>
+						</li>
+
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/cuouReconFiles') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'CU-OU Report')">
+							<a href="/cuouReconFiles"
+							th:href="@{/reconciliation/cuouReconFiles}"><i
+								class="fa fa-circle-o"></i>CU-OU Report</a>
+						</li>
+
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/blrReconFiles') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'Biller Report')">
+							<a href="/blrReconFiles"
+							th:href="@{/reconciliation/blrReconFiles}"><i
+								class="fa fa-circle-o"></i>Biller Report</a>
+						</li>
+					</ul>
+				</li>
+				<li class="treeview"
+					th:classappend="${#httpServletRequest.getRequestURI().contains('/settlement/') ? 'active':''}"
+					sec:authorize="@securityService.userHasAccess(authentication, 'Settlement')">
+					<a href="/trade/details"><i class="fa fa-thumbs-up"></i>
+						Settlement <span class="fa arrow"></span><i
+						class="fa fa-angle-left pull-right"></i></a>
+
+					<ul class="treeview-menu">
+						<li
+							th:classappend="${#httpServletRequest.getRequestURI().contains('/cuSettlementFiles') ? 'active':''}"
+							sec:authorize="@securityService.userHasAccess(authentication, 'View Settlement Report')">
+							<a href="/cuSettlementFiles"
+							th:href="@{/settlement/cuSettlementFiles}"><i
+								class="fa fa-circle-o"></i>View Settlement Report</a>
+						</li>
+					</ul>
+				</li>
+
+<li  class="treeview" 
+						th:classappend="${#httpServletRequest.getRequestURI().contains('/weeklyReport/') ? 'active':''}"
+						sec:authorize="@securityService.userHasAccess(authentication, 'Weekly Report')">
+						<a href="/trade/details"><i class="fa fa-sign-language"></i>
+							Weekly Report <span class="fa arrow"></span><i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+							<li
+								th:classappend="${#httpServletRequest.getRequestURI().contains('/txnReport') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'Transaction Report')">
+								<a href="/txnReport"
+								th:href="@{/weeklyReport/txnReport}"><i class="fa fa-circle-o"></i>Transaction
+									Report</a>
+							</li>
+
+							<li
+								th:classappend="${#httpServletRequest.getRequestURI().contains('/complaintReport') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'Complaint Report')">
+								<a href="/complaintReport"
+								th:href="@{/weeklyReport/complaintReport}"><i class="fa fa-circle-o"></i>Complaint Report</a>
+							</li>
+
+							<li
+								th:classappend="${#httpServletRequest.getRequestURI().contains('/segmentReport') ? 'active':''}"
+								sec:authorize="@securityService.userHasAccess(authentication, 'Segment Report')">
+								<a href="/segmentReport"
+								th:href="@{/weeklyReport/segmentReport}"><i class="fa fa-circle-o"></i>Segment Report</a>
+							</li>
+						</ul>
+					</li>
+
+
+			</ul>
+
+		</aside>
+		<!--SIDE NAV END -->
+		<!-- BODY OR CONTENT BOX START -->
+		<main class="content-wrapper"> <!-- PAGE TITLE BOX START -->
+		<section class="content-header">
+			<h1>Agent On Boarding</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="#">Examples</a></li>
+				<li class="active">Blank page</li>
+			</ol>
+		</section>
+		<!-- PAGE TITLE BOX END --> <!-- CONTENT AREA START -->
+		<div class="content-area">ccc</div>
+		<!-- CONTENT AREA END --> </main>
+		<!-- BODY OR CONTENT BOX START -->
+		<!-- FOOTER BOX START -->
+		<footer class="main-footer" data-th-fragment="footer">
+			<div class="pull-right hidden-xs">
+				<!--<b>Version</b> 2.0-->
+			</div>
+			<!-- <strong>Copyright © 2016 <a href="#">RBL Bank</a>.
+			</strong> All rights reserved. -->
+			<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+			
+			<script th:src="@{/js/bootstrap.min.js}"></script>
+			
+			
+
+
+			<!-- jQuery DataTable JavaScript -->
+
+
+
+
+			<script type="text/javascript"
+				th:src="@{/js/jquery.dataTables.min.js}"></script>
+				
+				
+				<script type="text/javascript" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
+				
+			
+			<script type="text/javascript"
+				th:src="@{/js/dataTables.buttons.min.js}"></script>
+			
+			
+
+			<script type="text/javascript" th:src="@{/js/buttons.html5.min.js}"></script>
+				
+				<script type="text/javascript" th:src="@{/js/jszip.min.js}"></script>
+
+			
+
+
+			<!-- jQuery Select -->
+			<script type="text/javascript" th:src="@{/js/bootstrap-select.js}"></script>
+
+			<!-- Include all compiled plugins (below), or include individual files as needed -->
+			
+			<!-- MDB core JavaScript -->
+			<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+			<script type="text/javascript" th:src="@{/js/app.min.js}"></script>
+			<script type="text/javascript" th:src="@{/js/sidebar-menu.js}"></script>
+			<script type="text/javascript"
+				th:src="@{/js/bootstrap-datepicker.js}"></script>
+			<script type="text/javascript"
+				th:src="@{/js/jquery.bootstrap-duallistbox.min.js}"></script>
+				
+				<script type="text/javascript"
+				th:src="@{/js/bootstrap-multiselect.js}"></script>
+				
+				
+			<script>
+				$.sidebarMenu($('.sidebar-menu'));
+				
+				$(document).ready(function() {
+					$('input').tooltip({
+                        placement: "bottom",
+                        trigger: "hover"
+                    });
+
+					  /* $('#pmMode').multiselect({
+				            buttonWidth: '100%'
+				        });
+					  $('.multiselect').removeClass('btn btn-default').addClass('select-style');
+					 */
+					
+				//	$('.dropdown open a').html('<i class="fa fa-user-circle-o"></i>');
+					$('.dropdown > a').html('<i class="fa fa-user-circle-o"></i>');
+					
+					
+					$('.treeview-menu>.active>a>.fa').removeClass('fa-circle-o');
+					$('.treeview-menu>.active>a>.fa').addClass('fa-circle');
+					$('fa-circle').css({'color':'#627279'});
+					//$(".dt-buttons").find(".dt-button");
+			
+					// $('#_IsActive','#_resetPasswordFlag','#_isAccountLocked').remove();
+
+					$("input[type='hidden']").remove();
+					
+					
+					
+				});
+			</script>
+
+		</footer>
+		<!-- FOOTER BOX END -->
+	</div>
+	<!--BODY WRAPPER START -->
+	
+
+
+</body>
+
+</html>

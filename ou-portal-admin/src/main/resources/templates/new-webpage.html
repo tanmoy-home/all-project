@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+</head>
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+<div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1> UI Element </h1>
+         <!-- <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Agent Institutes</a></li>
+            <li class="active">Reconciliation Report</li>
+          </ol>-->
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+             
+              <!-- FORM START -->
+                			<form class="form-horizontal" action="#" data-th-action="@{/webpage/add-webpage/save-webpage}" data-th-object="${menu}" method="post">
+                          <div class="row">
+                            <div class="input-field col-md-6 col-lg-4">
+                            <label for="UIElementName">UI Element Name</label>
+                              <input type="text" hidden="hidden" data-th-value="*{id}" data-th-field="*{id}" />
+                              <input type="text" placeholder="Enter UI Element Name" class="validate" data-th-value="*{menuName}" data-th-field="*{menuName}"/>
+                              
+                            </div> 
+                               
+                            <div class="input-field col-md-6 col-lg-4">
+                             <label for="UIElementType">UI Element Type</label>
+                              <input type="text" placeholder="Enter UI Element Type" class="validate" data-th-value="*{menuType}" data-th-field="*{menuType}"/>
+                             
+                            </div>
+                              
+                            
+                              
+                             <div class="input-field col-md-6 col-lg-4">
+                                 <input id="OrganizationName" type="checkbox" th:checked="*{isActive}" 
+                                     th:field="*{isActive}" />
+				                    <label for="OrganizationName">Is Active ?</label>
+                                 
+                              
+                            </div>
+                              
+                          </div>
+                        
+               <!-- BUTTON START -->
+                  <div>
+                      
+                      <button type="submit" class="btn btn-default waves-effect waves-light" id="btnSubmit" name="action">Save</button>
+					  <button type="button" class="btn btn-default waves-effect waves-light" name="action">Cancel</button>
+                      
+                 
+                </div>
+             <!-- BUTTON END --> 
+                </form>
+              <!-- FORM END -->
+
+
+            
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+       
+</body>
+
+</html>

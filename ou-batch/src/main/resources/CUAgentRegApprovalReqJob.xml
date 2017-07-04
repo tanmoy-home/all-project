@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+
+<!-- ItemReader which reads from database and returns the row mapped by rowMapper -->
+    <bean id="agentDetailsItemReader"
+        class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+ 
+        <property name="dataSource" ref="dataSource" />
+ 
+        <property name="sql"
+ 
+            value="SELECT agent_id, agent_name, agent_alias_name, agent_mobile_no, agent_shop_name, agent_busns_type, agent_payment_modes, agent_dummy, agent_linked_agent_inst, agent_payment_channels, agent_registered_adrline, agent_registered_state, agent_registered_city, agent_registered_pin_code, agent_effctv_from, agent_effctv_to, agent_type, agent_geo_code FROM agent_details where entity_status='CU_PENDING'" />
+ 
+        <property name="rowMapper">
+            <bean class="com.rssoftware.ou.batch.common.AgentDetailsRowMapper" />
+        </property>
+ 
+    </bean>
+    <bean id="agentDao" class="com.rssoftware.ou.tenant.dao.impl.AgentDaoImpl"/>
+    
+    	 
+<!--     <bean id="tenantParamDao" class="com.rssoftware.ou.tenant.dao.impl.TenantParamDaoImpl"/> -->
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.AgentDetails</value>
+		</property>
+	</bean>
+   
+       
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+    <bean id="cuAgentApprovalReqProcessor" class="com.rssoftware.ou.batch.processor.CUAgentApprovalReqProcessor" scope="step"/>
+    
+    <bean id="fileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+    
+	<!-- write to this csv file -->
+    <property name="resource" value="#{jobParameters['output_file']}" />
+
+	<property name="lineAggregator">
+	  <bean
+		class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+		<property name="delimiter" value="," />
+		<property name="fieldExtractor">
+		  <bean
+			class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+			<property name="names" value="agentId, agentName, agentAliasName, agentMobileNo, agentShopName, agentBusnsType, agentPaymentModes, dummyAgent, agentLinkedAgentInst, agentPaymentChannels, agentRegisteredAdrline, agentRegisteredCity, agentRegisteredPinCode, agentRegisteredState, agentEffctvFrom, agentEffctvTo, agentType, agentGeoCode" />
+		   </bean>
+		</property>
+		<!-- <property name="headerCallback" ref="fileItemWriterHeader" /> -->
+	   </bean>
+	</property>
+  </bean>
+  
+  <!-- <bean id="fileItemHeader" class="org.springframework.batch.item.file.FlatFileItemWriter">
+    <property name="delegate" ref="fileItemWriter"/>
+  </bean> -->
+  
+  <bean id="agentDetailsItemWriter"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<ref bean="fileItemWriter" />
+			</list>
+		</property>
+	</bean>
+  
+    <batch:job id="cuAgentApprovalReqJob" job-repository="jobRepository" parent="simpleJob">
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="agentDetailsItemReader" writer="agentDetailsItemWriter"
+					processor="cuAgentApprovalReqProcessor" commit-interval="100" />					
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+        
+</beans>

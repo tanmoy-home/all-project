@@ -1,0 +1,41 @@
+package com.rssoftware.ou.common;
+
+import java.io.Serializable;
+
+public enum MetaApiName implements Serializable {
+	ReqBalEnq, 
+	RespBalEnq, 
+	ReqChkTxn, 
+	RespChkTxn, 
+	ReqListPsp, 
+	RespListPsp, 
+	ReqListAccount, 
+	RespListAccount, 
+	ReqListAccPvd, 
+	RespListAccPvd, 
+	ReqListKeys, 
+	RespListKeys, 
+	ReqListVae, 
+	RespListVae, 
+	ReqManageVae, 
+	RespManageVae, 
+	ReqOtp, 
+	RespOtp, 
+	ReqPendingMsg, 
+	RespPendingMsg, 
+	ReqValAdd, 
+	RespValAdd, 
+	ReqSetCre, 
+	RespSetCre, 
+	ReqRegMob, 
+	RespRegMob, 
+	Healthcheck,
+	UpiHbtResponse,
+	ReqHbt,
+	RespHbt,
+	ReqTxnConfirmation, 
+	RespTxnConfirmation,
+	CheckRequestStatus,
+	ReqActivityLog,
+	RegisterTokenK0;
+}

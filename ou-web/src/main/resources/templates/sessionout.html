@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<title>Session Time Out</title>
+<link rel="stylesheet" th:href="@{/css/style-error-page.min.css}" />
+</head>
+<body>
+	<div class="page-container">	
+		<div class="image">
+			<img src="/images/error-restriction-hield.png"/>
+		</div>
+		<div class="main">
+			<h1 class="text-large">Oops!</h1>
+			<h2>Your session has already expired. Please sign in again.</h2>
+			<!-- <h4>Error code: 401</h4> -->
+			<ul class="list-unstyled">
+				<li>Here are some helpful links instead:</li>
+				<li><a href="/bbps/login" target="_top">Login Page</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

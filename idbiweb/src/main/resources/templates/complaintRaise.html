@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+<link rel="stylesheet" th:href="@{/css/bbps-bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+
+<script type="text/javascript" th:src="@{/js/jquery-1.12.3.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/autocomplete-0.3.0.min.js}"></script>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+<script type="text/javascript"
+	src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" th:src="@{/js/complaint.js}"></script>
+
+
+
+<meta charset="UTF-8" />
+<title th:text="@{BBPS Portal}"></title>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+</head>
+<body>
+	<div id="wrapper">
+
+		<div id="page-content-wrapper">
+			<div class="col-md-12 container-fluid">
+				<div class="col-xs-2 col-md-2"></div>
+				<div id="divType" class="col-xs-10 col-md-10" bgcolor="#CCCCCC"
+					align="center">
+
+					<p th:text="${message}" align="center" style="color: red;" />
+
+					<h4 style="color: #006dcc; text-align: center">Complaint Entry
+						Form</h4>
+
+					<ul class="col-xs-10 col-md-10 ulraise">
+						<li class="col-md-4 tblclas"><input type="radio"
+							name="requestType" value="complaintShown" /> <span>Register
+								Complaint</span></li>
+						<li class="col-md-2 tblclas">&nbsp;</li>
+						<li class="col-md-4 tblclas"><input type="radio"
+							name="requestType" value="checkStatus" /> <span>Check
+								Status </span></li>
+					</ul>
+				</div>
+				<div class="whiteSpace">&nbsp;</div>
+				<div id="divChkStatus">
+					<!-- <form th:action="@{/ou04/complaint/complaintLists}"
+						th:method="post" th:object="${complaint}">
+						select <select class="form-control"
+							onchange="cmsFunction(this.value);">
+							<option th:each="complaintType : ${complaintTypes}"
+								th:value="${complaintType.key}" th:text="${complaintType.value}"></option>
+						</select> <label for="complaintId">Complaint ID: <span
+							class="required">*</span>
+						</label> <input type="text" name="complaintId" id="complaintId"
+							maxlength="6"
+							onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input> <br></br>
+						OR <br></br> <label for="mobNo"> Mobile Number: <span
+							class="required">*</span></label> <input type="text" id="mobNo"
+							name="mobNo" pattern="[789][0-9]{9}" maxlength="10" size="15"
+							required="required" /> <br></br> <span style="font-size: 8pt">(10
+							digits. ex - 9630098300)</span> <br></br>
+						<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+						<input type="submit" class="button" value="Next >>" />
+					</form> -->
+				</div>
+				<div id="divcomplaintShown">
+					<div id="divTranType">
+
+						<label for="TOC">Type of Complaint:</label> <select
+							class="form-control" id="TOC" onchange="cmsFunction(this.value);">
+							<option th:each="complaintType : ${complaintTypes}"
+								th:value="${complaintType.key}" th:text="${complaintType.value}"></option>
+						</select>
+
+					</div>
+					<div id="divAgentTBCR">
+						<form id="tblDataGridForm"
+							th:action="@{/OU04/complaint/saveComplaint}" th:method="post"
+							th:object="${complaint}">
+							<input type="hidden" id="complaintTypeCd" th:field="*{complaintTypeCd}"/>
+							<div id="divtxnSearch">
+								<label for="mobNo"> Mobile Number: <span
+									class="required">*</span></label> <input type="text" id="mobNo"
+									name="mobNo" pattern="[789][0-9]{9}" maxlength="10" size="15"
+									th:field="*{mobNo}" required="required" /> <br></br> <span
+									style="font-size: 8pt">(10 digits. ex - 9630098300)</span> <br />
+								<br /> OR <br /> <br /> <label for="transactionId">
+									Transaction Id: <span class="required">*</span>
+								</label> <input type="text" id="transactionId" name="transactionId"
+									th:field="*{transactionId}" pattern="" maxlength="40" size="15" />
+								<!-- <br></br> <span style="font-size: 8pt">(10 digits. ex -
+									9830167123)</span> -->
+								<br /> <br /> <input type="button" class="button"
+									value="Next >>" onclick="trnxClick();" />
+							</div>
+
+							<div id="divtxnList" class="container">
+								<div class="datagrid">
+									<!-- <table id="tblDataGrid">
+										<tr>
+											<td> -->
+									<table id="Trxnlist">
+										<thead>
+											<tr>
+												<th>&nbsp;</th>
+												<th>Transaction Reference Id</th>
+												<th>Agent Id</th>
+												<th>Transaction Date(DD/MM/YYYY)</th>
+												<th>Amount</th>
+												<th><strong>Status</strong></th>
+											</tr>
+										</thead>
+										<tbody id="listBody"></tbody>
+									</table>
+									<!-- </td>
+										</tr>
+									</table> -->
+
+								</div>
+							</div>
+
+							<div id="divComplaint">
+								<label for="compDisposition">Complaint Disposition:</label> <select
+									class="form-control" id="compDisposition" th:field="*{disposition}">
+									<option th:each="dispotionType : ${dispositionList}"
+										th:value="${dispotionType.dispositionName}"
+										th:text="${dispotionType.dispositionName}"></option>
+								</select> <br />
+								<input id="txnRefId" type="hidden" th:field="*{TxnRefId}"/>
+								<br /> <label>Problem Description:<span
+									style="color: red;">*</span></label>
+								<textarea rows="15" cols="160" maxlength="2400"
+									class="txtAreaComplaint" id="compDesc" name="compDesc"
+									th:field="*{complaintDescription}" required="required"></textarea>
+								<br /> <br/>
+								<input type="hidden" name="_csrf"
+									th:value="${_csrf.token}" /> <input type="submit"
+									class="button" value="Submit"
+									onsubmit="return ckeckvalidation()" />
+							</div>
+						</form>
+					</div>
+					<div id="divAgentSBCR">
+						<form id="tblSB" th:action="@{/OU04/complaint/saveComplaint}"
+							th:method="post" th:object="${complaint}">
+							 <input type="hidden" id="complaintTypeCd" th:field="*{complaintTypeCd}"/>
+							<table id="agentDetails" class="tableComplaintInst">
+								<tr>
+									<td>Assigned To:</td>
+									<td>
+										<table>
+											<tr>
+												<td>Agent <input type="radio" name="serviceType"
+													value="AGENT" id="agent" checked="checked"
+													th:field="*{serviceType}" /></td>
+												<td>Biller <input type="radio" name="serviceType"
+													value="BILLER" id="biller" /></td>
+												<td>System <input type="radio" name="serviceType"
+													value="SYSTEM" id="system" />
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>Select Reason:<span style="color: red;">*</span></td>
+									<td>
+										<table id="agentServList">
+											<tr>
+												<td><select class="form-control" id="serviceTagAgent"
+													th:field="*{serviceReasonCd}" name="serviceTag"
+													required="required">
+														<option value="">Select Reason</option>
+														<option th:each="serviceTag : ${agentServiceTagList}"
+															th:value="${serviceTag.reasonCode}"
+															th:text="${serviceTag.reasonName}" selected='selected'></option>
+												</select></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td><div id="noagent"></div></td>
+								</tr>
+								<tr>
+									<td><strong>Search By:</strong></td>
+								</tr>
+								<tr>
+									<td><label id="lblAllName" for="txtSearch">Agent
+											Name</label> <input type="text" name="txtSearch" id="txtSearch" 
+										maxlength="50"></input> <input type="hidden" name="agentBuzId"
+										id="agentBuzId" th:field="*{agentBuzId}" /></td>
+
+								</tr>
+								<tr>
+									<td></td>
+								</tr>
+								<tr>
+									<td><div id="noagentseleted"></div></td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+								</tr>
+
+								<tr>
+									<td>Problem Description:<span style="color: red;">*</span>
+										<textarea rows="10" cols="10" maxlength="100"
+											class="txtAreaComplaint" id="compDesc" name="compDesc"
+											th:field="*{complaintDescription}" required="required"></textarea>
+										<br></br>
+										<div style="color: red;" id="compDescMsg"></div>
+									</td>
+								</tr>
+								<tr>
+									<td align="center"><input type="hidden" name="_csrf"
+										th:value="${_csrf.token}" /> <input type="submit"
+										class="button" value="Submit"
+										onsubmit="return ckeckvalidation()" /></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

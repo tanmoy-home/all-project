@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+<xs:include schemaLocation="AcctType.xsd"/>
+<xs:include schemaLocation="BankInfo.xsd"/>
+
+
+<xs:complexType name="AcctId">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ Bank Information.This aggregate contains information to identify the bank at which the account is held. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="AcctId"  minOccurs="1"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Account Identifier. This is a data item containing a series of digits and/or characters which uniquely identify a customer account, also known as account number. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="16"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="AcctType"  type="AcctType"  minOccurs="0" > 
+<xs:annotation>
+                <xs:documentation><![CDATA[ Account Type.Based on the nature and behavior of the accounts, they are classified into different products. This aggregate identifies the product type to which the account belongs. AcctType represents a product.It consists of SchmCode and SchmType.. ]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+<xs:element name="AcctCurr"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Account Currency. Specifies the currency of the account in which account operates. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="3"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="BankInfo"  type="BankInfo"  minOccurs="0" > 
+<xs:annotation>
+                <xs:documentation><![CDATA[ Bank Information.This aggregate contains information to identify the bank at which the account is held. ]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

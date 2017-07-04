@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<!-- <element xmlns:fix="http://rssoftware.com/upiint/rbl/cif"
+		name="RBL" /> -->
+	<element name="Request">
+		<complexType>
+			<sequence>
+				<element type="string" name="MobNumber" />
+				<element type="string" name="CardNumber" />
+				<element type="string" name="ExpiryDate" />
+				<element type="string" name="CIF" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="Response">
+		<complexType>
+			<sequence>
+				<element type="string" name="CIF" maxOccurs="unbounded"
+					minOccurs="0" />
+				<element type="string" name="Status" />
+				<element type="string" name="ResponseCode" />
+				<element type="string" name="Description" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>

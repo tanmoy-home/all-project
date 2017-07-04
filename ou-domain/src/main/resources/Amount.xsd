@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+
+
+<xs:complexType name="Amount">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ transfer Amt ccy ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="amountValue" type="xs:double"   minOccurs="1">
+<xs:annotation>
+                <xs:documentation><![CDATA[ transfer Amt value ]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+<xs:element name="currencyCode"  minOccurs="1"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ transfer Amt ccy ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="3"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

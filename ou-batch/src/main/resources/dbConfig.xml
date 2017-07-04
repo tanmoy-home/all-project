@@ -1,0 +1,54 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/jdbc
+		http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:annotation-config />
+
+	<!-- ************************* Proxy Data Source *********************** -->
+	<bean id="dataSource" class="com.rssoftware.ou.batch.ProxyDataSource" />
+
+	<!--************************* Proxy JdbcTemplate *********************** -->
+	<bean id="jdbcTemplate" class="com.rssoftware.ou.batch.ProxyJdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- ************************* Proxy Transaction Manager ******************************** -->
+	<bean id="transactionManager" class="com.rssoftware.ou.batch.ProxyTransactionManager" />
+
+
+	<bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+<!-- 		<property name="databaseType" value="ORACLE" /> -->
+		<property name="databaseType" value="POSTGRES" />
+	</bean>
+
+
+	<bean id="jobLauncher"
+		class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository" />
+		<!-- <property name="taskExecutor">
+			<bean class="org.springframework.core.task.SimpleAsyncTaskExecutor">
+            	<property name="concurrencyLimit" value="2" />
+        	</bean>
+		</property> -->
+	</bean>
+
+	<bean id="simpleJob" class="org.springframework.batch.core.job.SimpleJob"
+		abstract="true">
+		<property name="jobRepository" ref="jobRepository" />
+	</bean>
+
+	<!-- create job-meta tables automatically -->
+	<!-- <jdbc:initialize-database data-source="dataSource"> <jdbc:script location="org/springframework/batch/core/schema-drop-postgresql.sql" 
+		/> <jdbc:script location="org/springframework/batch/core/schema-postgresql.sql" 
+		/> </jdbc:initialize-database> -->
+
+</beans>

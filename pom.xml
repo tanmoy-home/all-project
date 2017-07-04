@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.rssoftware.ou</groupId>
+	<artifactId>bbps-ou</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>bbps-ou</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-framework.version>4.1.7.RELEASE</spring-framework.version>
+		<spring-security.version>3.2.7.RELEASE</spring-security.version>
+		<!-- <start-class>com.rssoftware.ou.Application</start-class> -->
+		<oracle.version>12.1.0.1</oracle.version>
+		<postgresql.version>9.4-1201-jdbc41</postgresql.version>
+		<spymemcached.version>2.12.0</spymemcached.version>
+		<quartz.version>2.2.1</quartz.version>
+		<jexl.version>2.1.1</jexl.version>
+		<build.number></build.number>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>dd-MM-yyyy HH:mm</maven.build.timestamp.format>
+	</properties>
+
+	<!-- Inherit defaults from Spring Boot -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.2.5.RELEASE</version>
+	</parent>
+
+	<modules>
+		<module>ou-domain</module>
+		<module>ou-security</module>
+		<module>ou-dao</module>
+		<module>ou-dao-impl</module>
+		<module>ou-service</module>
+		<module>ou-service-impl</module>
+		<module>ou-core</module>
+		<module>ou-batch</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>http://central.maven.org/maven2/</url>
+		</repository>
+	</repositories>
+
+	<profiles>
+
+		<profile>
+			<id>pnb</id>
+			<modules>
+				<module>pnbweb</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>rbl</id>
+			<modules>
+				<module>rblweb</module>
+				<module>ou-portal-admin</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>sib</id>
+			<modules>
+				<module>sibweb</module>
+				<module>ou-portal-admin</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>sbi</id>
+			<modules>
+				<module>sbiweb</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>idbi</id>
+			<modules>
+				<module>idbiweb</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>canara</id>
+			<modules>
+				<module>canaraweb</module>
+				<module>ou-portal-admin</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>admin</id>
+			<modules>
+				<module>ou-portal-admin</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>core</id>
+			<modules>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>ou-domain</module>
+				<module>ou-security</module>
+				<module>ou-dao</module>
+				<module>ou-dao-impl</module>
+				<module>ou-service</module>
+				<module>ou-service-impl</module>
+				<module>ou-core</module>
+				<module>ou-batch</module>
+				<module>ou-portal-admin</module>
+				<module>pnbweb</module>
+				<module>rblweb</module>
+				<module>sibweb</module>
+				<module>sbiweb</module>
+				<module>idbiweb</module>
+				<module>canaraweb</module>
+			</modules>
+		</profile>
+	</profiles>
+
+</project>

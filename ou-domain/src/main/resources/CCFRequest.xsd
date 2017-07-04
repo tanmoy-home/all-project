@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+
+	<xs:element name="CCFRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="billAmount" minOccurs="1" />
+				<xs:element type="xs:string" name="billerId" minOccurs="1" />
+				<xs:element type="bbps:agentType" name="agent" minOccurs="1"
+					maxOccurs="1" />
+				<xs:element type="bbps:pmtMtdType" name="paymentMethod"
+					minOccurs="1" maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

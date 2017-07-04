@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by 
+		rowMapper -->
+	<bean id="complaintReportItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="sql"
+	value="with query1 as (
+  select 1 sl, count(*) txnCount 
+  from COMPLAINT_REQUEST req, COMPLAINT_RESPONSE resp 
+  where req.ref_id=resp.ref_id
+  and req.crtn_ts between sysdate-7 and sysdate 
+  and req.CMP_TYPE = 'Transaction'
+), 
+query2 as (
+ select 1 sl, count(*) serviceCount 
+  from COMPLAINT_REQUEST req, COMPLAINT_RESPONSE resp 
+  where req.ref_id=resp.ref_id
+  and req.crtn_ts between sysdate-7 and sysdate 
+  and req.CMP_TYPE = 'Service'
+) 
+select query1.txnCount, query2.serviceCount 
+from query1,query2 
+where query1.sl=query2.sl" />
+
+		<property name="rowMapper">
+			<bean class="com.rssoftware.ou.batch.common.ComplaintReportRowMapper" />
+		</property>
+
+	</bean>
+ 
+	<bean id="complaintReportDao"
+		class="com.rssoftware.ou.tenant.dao.impl.ComplaintReportDaoImpl" />
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.ComplaintReport</value>
+		</property>
+	</bean>
+
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
+		records -->
+	<bean id="complaintReportItemProcessor" class="com.rssoftware.ou.batch.processor.ComplaintReportItemProcessor"
+		scope="step" >
+		<property name="ouName" value="#{jobParameters['OU_Name']}"></property>
+	</bean>
+	<bean id="fileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+
+		<!-- write to this csv file -->
+		<property name="resource" value="#{jobParameters['output_file']}" />
+
+		<property name="lineAggregator">
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="bbpouName, onUsoutstandingLastWeekCount, OnUsreceivedThisWeekCount, onUsTot, offUsoutstandingLastWeekCount, OffUsreceivedThisWeekCount, offUsTot, onUsResolvedCount, offUsResolvedCount, onUsPendingCount, offUsPendingCount, txnBasedCount, serviceBasedCount" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dbItemWriter" class="com.rssoftware.ou.batch.writer.ComplaintReportDBItemWriter"
+		scope="step"/>
+		
+	<bean id="complaintReportItemWriter"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<ref bean="dbItemWriter" />
+				<ref bean="fileItemWriter" />
+			</list>
+		</property>
+	</bean>
+
+	<batch:job id="complaintReportJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="complaintReportItemReader" writer="complaintReportItemWriter"
+					processor="complaintReportItemProcessor" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+</beans>

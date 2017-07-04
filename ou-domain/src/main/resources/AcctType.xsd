@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+
+
+<xs:complexType name="AcctType">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ Scheme Type. This is a data item which classifies the type of product with which an account is associated.Depending upon the type, nature and behaviour of the account, classifications are done, and are referred to as Scheme Type. Example of the SchmType are SBA - Savings Account, CAA - Current Accounts, CCA - Cash Credit Accounts, ODA - Overdraft Accounts, TDA - Term Deposits, LAA - Loan Accounts, and TUA - Top Up Deposit Accounts ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="SchmCode"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Scheme Code. Within a Scheme Type, accounts may further be classified into different configurable scheme codes. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="SchmType"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Scheme Type. This is a data item which classifies the type of product with which an account is associated.Depending upon the type, nature and behaviour of the account, classifications are done, and are referred to as Scheme Type. Example of the SchmType are SBA - Savings Account, CAA - Current Accounts, CCA - Cash Credit Accounts, ODA - Overdraft Accounts, TDA - Term Deposits, LAA - Loan Accounts, and TUA - Top Up Deposit Accounts ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

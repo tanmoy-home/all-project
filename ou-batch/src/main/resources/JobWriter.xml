@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+
+<!-- ItemReader which reads from database and returns the row mapped by rowMapper -->
+    <bean id="databaseItemReader"
+        class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+ 
+        <property name="dataSource" ref="dataSource" />
+ 
+        <property name="sql"
+            value="SELECT t.biller_id,t.customer_param1,t.customer_param2,t.customer_param3,t.customer_param4,t.customer_param5,
+            t.customer_name,t.actual_amount,t.due_date,t.bill_date,t.bill_number,t.bill_period,t.additional_amounts,t.additional_info 
+            FROM #{jobParameters['schema_name']}.bill_details t WHERE t.biller_id = #{jobParameters['biller_id']}" />
+ 
+        <property name="rowMapper">
+            <bean class="com.rssoftware.ou.batch.common.BillDetailsRowMapper" />
+        </property>
+ 
+    </bean>
+    
+    
+	<bean id="xmlItemWriter" class="org.springframework.batch.item.xml.StaxEventItemWriter">
+		<property name="resource" value="file:E:/BBPS/WS/file/billPayment.xml" />
+		<property name="marshaller" ref="userUnmarshaller" />
+		<property name="rootTagName" value="BillDetails" />
+	</bean>
+
+	<bean id="userUnmarshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.BillDetails</value>
+		</property>
+	</bean>
+	
+	<!-- <bean id="userUnmarshaller"   class="org.springframework.oxm.xstream.XStreamMarshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.BillDetails</value>
+		</property>
+	</bean> -->
+   
+       
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+    <bean id="itemProcessor" class="com.rssoftware.ou.batch.processor.BillDetailsItemProcessor" scope="step"/>
+    
+    <bean id = "customWriter" class="com.rssoftware.ou.batch.writer.CustomWriter" scope="step">
+    	<property name="dictionary" value="#{jobExecutionContext['dictionary']}" />
+    	<property name="outputFile" value="#{jobParameters['output_file']}" />
+    </bean>
+    
+    <batch:job id="billPaymentJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="init" next="writerDecision">
+			<batch:tasklet ref="dictionaryTaskletStep" />
+		</batch:step>
+		<batch:decision decider="readerWriterDecider" id="writerDecision">
+			<batch:next on="XML" to="xmlReadWrite" />
+			<batch:next on="FlatFile" to="flatFileReadWrite" />
+		</batch:decision>
+		<batch:step id="xmlReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReader" writer="xmlItemWriter"
+					processor="itemProcessor" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="databaseItemReader" writer="customWriter"
+					processor="itemProcessor" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+
+	<bean id="dictionaryTaskletStep"
+		class="com.rssoftware.ou.batch.tasklet.DictionaryInitializerTasklet"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+		<property name="sql"
+			value="Select a.biller_id, a.file_type, a.date_format, a.target_class_name, a.root_element, 
+		a.delimiter,b.end_position, b.start_position, b.sequence, b.field_qualifier, b.field_format, b.field_data_type 
+		from #{jobParameters['schema_name']}.bill_file_config a, #{jobParameters['schema_name']}.bill_mapping_config b 
+		where a.biller_id = b.biller_id and a.biller_id=#{jobParameters['biller_id']}" />
+	</bean>
+    
+    <bean id="readerWriterDecider" class="com.rssoftware.ou.batch.decider.ReaderWriterDecider"/>
+    
+</beans>

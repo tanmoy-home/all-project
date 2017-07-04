@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8" />
+<title>404 Page Not Found</title>
+<link rel="stylesheet" th:href="@{/css/style-error-page.min.css}" />
+</head>
+<body>
+	<div class="page-container">
+		<div class="image">
+			<img src="/images/error-delete-shield.png"/>
+		</div>
+		<div class="main">
+			<h1 class="text-large">Oops!</h1>
+			<h2>We can't seem to find the page you're looking for.</h2>
+			<h4>Error code: 404</h4>
+			<ul class="list-unstyled">
+				<li>Here are some helpful links instead:</li>
+				<li th:if="${session.tenatntId !=null}"><a href="/home" target="_top">Home Page</a></li>
+				<li><a href="#" onclick="window.history.back()">Back Page</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

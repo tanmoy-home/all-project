@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+
+	<xs:element name="ReconSummaryList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+					<xs:element name="reconSummaryList" type="bbps:ReconSummary"
+							maxOccurs="unbounded" />
+							</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ReconSummary">
+		<xs:sequence>
+						<xs:element name="reconId" type="xs:string" />
+						<xs:element name="matchedCount" type="xs:decimal" />
+						<xs:element name="notInOUCount" type="xs:decimal" />
+						<xs:element name="notInCUCount" type="xs:decimal" />
+						<xs:element name="mismatchedCount" type="xs:decimal" />
+						<xs:element name="pendingCount" type="xs:decimal" />
+						<xs:element name="broughtForwardCount" type="xs:decimal" />
+						<xs:element name="reconTs" type="xs:dateTime" />
+						<xs:element name="notInOuList" type="bbps:ReconDetails"
+							maxOccurs="unbounded" />
+						<xs:element name="notInCuList" type="bbps:ReconDetails"
+							maxOccurs="unbounded" />
+						<xs:element name="mismatchedList" type="bbps:ReconDetails"
+							maxOccurs="unbounded" />
+						<xs:element name="pendingList" type="bbps:ReconDetails"
+							maxOccurs="unbounded" />
+						<xs:element name="broughtForwardList" type="bbps:ReconDetails"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+		</xs:complexType>
+	<xs:complexType name="ReconDetails">
+		<xs:sequence>
+			<xs:element type="xs:string" name="refId" />
+			<xs:element type="xs:string" name="txnRefId" />
+			<xs:element type="xs:string" name="txnType" />
+			<xs:element type="xs:string" name="reconId" />
+			<xs:element type="xs:string" name="agentId" />
+			<xs:element type="xs:string" name="billerId" />
+			<xs:element type="xs:string" name="reconDescription" />
+			<xs:element type="xs:string" name="reconStatus" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

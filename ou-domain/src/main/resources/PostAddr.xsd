@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+
+
+<xs:complexType name="PostAddr">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ Address Type. These are the reference codes created and maintained at Finacle Host to specify the type of the address. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="Addr1"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Address Line 1 of the Postal Address. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="50"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="Addr2"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Address Line 2 of the Postal Address. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="50"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="Addr3"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Address Line 3 of the Postal Address. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="50"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="City"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ City Code. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="StateProv"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ State Code or Province. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="PostalCode"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Postal Code (Zip Code, in the US.) ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="10"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="Country"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Country Code. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="5"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+<xs:element name="AddrType"  minOccurs="0"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Address Type. These are the reference codes created and maintained at Finacle Host to specify the type of the address. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="100"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

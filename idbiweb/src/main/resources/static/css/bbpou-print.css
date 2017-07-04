@@ -1,0 +1,19 @@
+@media screen {
+        #printSection {
+           display: none;
+        }
+   }
+
+   @media print {
+        body > *:not(#printSection) {
+           display: none;
+        }
+        #printSection, #printSection * {
+            visibility: visible;
+        }
+        #printSection {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+   }

@@ -1,0 +1,11 @@
+Fetch Category List Dropdown:
+http://localhost:9000/resource/biller-category-list/OU13?paymentChannels=INT&paymentModes=Internet_Banking
+
+Fetch Biller List Dropdown:
+http://localhost:9000/resource/biller-list/OU13?billerCategory=Telecom_^_Jaali&paymentChannels=INT&paymentModes=Internet_Banking
+
+Fetch Sub-Biller List Dropdown:
+http://localhost:9000/resource/sub-biller-list/OU13?parentBillerId=VODA0TESTMUM01_^P&billerCategory=Telecom_^_Jaali&paymentChannels=INT&paymentModes=Internet_Banking
+
+Bill Fetch Form:
+http://localhost:9000/resource/biller-fetch-form/OU13?billerId=VODA0TESTMUM02

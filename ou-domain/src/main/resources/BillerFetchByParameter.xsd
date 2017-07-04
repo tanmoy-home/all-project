@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="BillerFetchByParameter" type="bbps:BillerFetchByParameterType">
+		<xs:annotation>
+			<xs:documentation>OU API Response</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:complexType name="BillerFetchByParameterType">
+	   <xs:sequence>
+		  <xs:element type="xs:string" name="hrColonMins" minOccurs="0" maxOccurs="1"/>
+          <xs:element type="bbps:MyBiller" name="myBiller" minOccurs="0" maxOccurs="1"/>
+          <xs:element type="xs:string" name="billerId" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element type="xs:string" name="dateRange" minOccurs="0" maxOccurs="1"/>
+       </xs:sequence>  
+  	</xs:complexType>	
+	
+	<xs:simpleType name="MyBiller">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="YES"></xs:enumeration>
+    		<xs:enumeration value="NO"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>		
+</xs:schema>

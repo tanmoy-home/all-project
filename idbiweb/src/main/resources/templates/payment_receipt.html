@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      
+	<head >
+    <link th:substituteby="common/common_header" />    
+	<script type="text/javascript" th:src="@{/js/downloadPdf.js}"></script>
+	<link type="text/css" rel="stylesheet" th:href="@{/css/bbpou-print.css}" />
+    
+</head>
+
+	<body class="">
+	
+		<div id="wrapper">
+			
+			<!-- HEADER -->
+			<div lang="en" th:replace="common/header :: header"> </div>
+			<!-- /HEADER -->	
+
+			<!-- left menu -->
+            <div lang="en" th:replace="common/left_menu:: leftmenu"> </div>
+			<!-- / left menu -->
+
+			<div id="page-wrapper" style="min-height: 502px;">
+
+
+					<!-- RECEPT BOX START -->
+					
+          <div class="recept-box" style="padding-top:30px;">
+            <!-- RECEPT LOGO BOX START-->
+            <div class="row recipt-logo-align no-margin">
+                <img src="/images/bbpou-recept-logo.png" class="recept-logo pull-left">
+                <img src="/images/BBPS-recept-logo.png" class="recept-logo pull-right" style="padding-top:6px;">
+            </div>
+            <!-- RECEPT LOGO BOX START-->
+            <div class="recept-title-box">BBPS Bill Recept</div>
+            <!-- RECEPT TABLE START -->
+            <div>
+              <table class="table table-bordered paymentRecept">
+                 <tr>
+                      <th>Customer Name</th>
+                      <td th:text="${receipt.customerName}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Phone</th>
+                      <td th:text="${receipt.customerMobileNumber}">
+                      
+                      </td>
+                  </tr> 
+                  <tr>
+                      <th th:text="${receipt.billIdentificationParam}"/>
+                      <td th:text="${receipt.customerAccountNumber}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Transaction Reference Id</th>
+                      <td th:text="${receipt.customerTransactionRefId}">
+                      
+                      </td>
+                  </tr>
+                  
+                   <tr>
+                      <th>Transaction Status</th>
+                      <td th:text="${receipt.transactionStatus}">
+                      
+                      </td>
+                  </tr>
+                 
+                  <tr>
+                      <th>Payment Channel</th>
+                      <td th:text="${receipt.customerPaymentChannel}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>payment Mode</th>
+                      <td th:text="${receipt.customerPaymentMode}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Biller Id</th>
+                      <td th:text="${receipt.billerId}">
+                      
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Biller Name</th>
+                      <td th:text="${receipt.billerName}">
+                      
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Bill Date</th>
+                      <td th:text="${receipt.customerBillDate}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Bill Amount</th>
+                      <td th:text="${receipt.CustomerBillAmount}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Customer Convenience Fee</th>
+                      <td th:text="${receipt.customerConvFee}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Total Amount</th>
+                      <td th:text="${receipt.customerTotalAmount}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                  
+                      <th>Transaction Date &nbsp; Time</th>
+                      <td th:text="${receipt.customerDateTime}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Authorization Code</th>
+                      <td th:text="${receipt.customerAuthCode}">
+                     
+                      </td>
+                  </tr>
+                </table>
+                
+            </div>
+            <!-- RECEPT TABLE END -->
+            <!-- BUTTON BOX START -->
+            <div class="text-center" style="padding-top:10px; padding-bottom:10px;">
+            <button class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-md">
+              View
+            </button>
+            &nbsp;
+            <button class="btn btn-primary" type="button" onclick="download_pdf_server('payment_receipt','Payment Receipt','BBPS Bill Receipt');">
+              Download
+            </button>
+            &nbsp;
+          </div>
+            <!-- BUTTON BOX END -->
+          </div>
+         <form  id="reciptData" method="post" th:action="@{/AgentService/downloadReciept}">
+                  <input type="hidden" id="customerName" name="Customer Name" th:value="${receipt.customerName}" />
+                  <input type="hidden" id="customerMobileNumber" name="Phone" th:value="${receipt.customerMobileNumber}" />
+                  <input type="hidden" id="customerAccountNumber" th:name="${receipt.billIdentificationParam}" th:value="${receipt.customerAccountNumber}" />
+                  <input type="hidden" id="CustomerTransactionRefId" name="Transaction Reference Id" th:value="${receipt.CustomerTransactionRefId}" />
+                  <input type="hidden" id="CustomerTransactionRefId" name="Transaction Status" th:value="${receipt.transactionStatus}" />
+                  <input type="hidden" id="customerPaymentChannel"  name="Payment Channel" th:value="${receipt.customerPaymentChannel}" />
+                  <input type="hidden" id="customerPaymentMode" name="Payment Mode" th:value="${receipt.customerPaymentMode}" />
+                  <input type="hidden" id="customerBillDate" name="Biller Id" th:value="${receipt.billerId}" />
+                  <input type="hidden" id="customerBillDate" name="Biller Name" th:value="${receipt.billerName}" />
+                  <input type="hidden" id="customerBillDate" name="Bill Date" th:value="${receipt.customerBillDate}" />
+                  <input type="hidden" id="CustomerBillAmount" name="Bill Amount" th:value="${receipt.CustomerBillAmount}" />
+                  <input type="hidden" id="customerConvFee" name="Customer Convenience Fee" th:value="${receipt.customerConvFee}" />
+                  <input type="hidden" id="customerTotalAmount" name="Total Amount" th:value="${receipt.customerTotalAmount}" />
+                  <input type="hidden" id="customerDateTime" name="Transaction Date Time" th:value="${receipt.customerDateTime}" />
+                  <input type="hidden" id="customerAuthCode" name="Authorization Code" th:value="${receipt.customerAuthCode}" />
+                  </form>
+            <!-- MODAL BOX START -->
+            <div class="modal fade bs-example-modal-md" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-md" role="document">
+                    <div id="modalContent" class="modal-content">
+                      <div class="recept-box-modal">
+                        <!-- RECEPT LOGO BOX START-->
+                        <div style="padding-left:10px; padding-right:10px;">
+                            <img src="/images/bbpou-recept-logo.png" class="recept-logo pull-left">
+                            <img src="/images/BBPS-recept-logo.png" class="recept-logo pull-right">
+                        </div>
+                        <!-- RECEPT LOGO BOX START-->
+
+                        <!-- RECEPT TABLE START -->
+                        <div>
+                          <table class="table table-bordered paymentRecept">
+                            <tr>
+                      <th>Customer Name</th>
+                      <td th:text="${receipt.customerName}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Phone</th>
+                      <td th:text="${receipt.customerMobileNumber}">
+                      
+                      </td>
+                  </tr> 
+                  <tr>
+                      <th th:text="${receipt.billIdentificationParam}"/>
+                      <td th:text="${receipt.customerAccountNumber}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Transaction Reference Id</th>
+                      <td th:text="${receipt.customerTransactionRefId}">
+                      
+                      </td>
+                  </tr>
+                  
+                   <tr>
+                      <th>Transaction Status</th>
+                      <td th:text="${receipt.transactionStatus}">
+                      
+                      </td>
+                  </tr>
+                 
+                  <tr>
+                      <th>Payment Channel</th>
+                      <td th:text="${receipt.customerPaymentChannel}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>payment Mode</th>
+                      <td th:text="${receipt.customerPaymentMode}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Biller Id</th>
+                      <td th:text="${receipt.billerId}">
+                      
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Biller Name</th>
+                      <td th:text="${receipt.billerName}">
+                      
+                      </td>
+                  </tr>
+                  
+                  <tr>
+                      <th>Bill Date</th>
+                      <td th:text="${receipt.customerBillDate}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Bill Amount</th>
+                      <td th:text="${receipt.CustomerBillAmount}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Customer Convenience Fee</th>
+                      <td th:text="${receipt.customerConvFee}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Total Amount</th>
+                      <td th:text="${receipt.customerTotalAmount}">
+                     
+                      </td>
+                  </tr>
+                  <tr>
+                  
+                      <th>Transaction Date &nbsp; Time</th>
+                      <td th:text="${receipt.customerDateTime}">
+                      
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>Authorization Code</th>
+                      <td th:text="${receipt.customerAuthCode}">
+                     
+                      </td>
+                  </tr>
+                            </table>
+                        </div>
+                        <!-- RECEPT TABLE END -->
+                        <!-- BUTTON BOX START -->
+                        <div id="modalFooter"  class="text-center" style="padding-top:10px; padding-bottom:10px;">
+                          <button class="btn btn-primary" onclick=printDiv('modalContent');>Print</button>
+                        &nbsp;
+                        <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+                        &nbsp;
+                      </div>
+                        <!-- BUTTON BOX END -->
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- MODAL BOX END -->
+
+
+
+          <!-- RECEPT BOX END -->
+
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+
+			<!-- FOOTER -->
+			 <div lang="en" th:replace="common/footer:: footer"> </div>
+			<!-- /FOOTER -->
+
+	</body>
+
+</html>

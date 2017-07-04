@@ -1,0 +1,8 @@
+<xs:schema targetNamespace="http://www.finacle.com/fixml"  xmlns:xs="http://www.w3.org/2001/XMLSchema"  xmlns:commonheader="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+	<xs:include schemaLocation="FICommonHeader.xsd"/>
+	<xs:include schemaLocation="FIServiceRequestHeader.xsd"/>
+	<xs:include schemaLocation="FIServiceResponseHeader.xsd"/>
+	<xs:include schemaLocation="FIServiceNotificationHeader.xsd"/>	
+</xs:schema>
+

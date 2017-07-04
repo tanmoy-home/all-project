@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+		<title>Welcome to BBPOU</title>
+
+		<!-- Bootstrap Core CSS -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<!-- MetisMenu CSS -->
+		<link href="css/metisMenu.min.css" rel="stylesheet">
+
+		<!-- Custom CSS -->
+		<link href="css/bbpou.css" rel="stylesheet">
+
+		<!-- Custom Fonts -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via  -->
+		<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+	</head>
+
+	<body class="">
+		<div id="wrapper">
+			
+			<!-- HEADER -->
+			<!-- Navigation -->
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+              
+					<!-- OU code snippet start -->
+					<div class="bbpou-header-container">
+						<!--<iframe src="header.html" frameborder="0" allowfullscreen></iframe>-->
+						<div class="ou-logo">
+							<a class="" href="index.html">
+								<img src="images/bbpou-logo.png">
+							</a>
+						</div>
+    
+						<div class="ou-name">
+							<h1>Operating Unit Name</h1>
+						</div>
+					</div> 
+					<!-- OU code snippet end -->
+					  
+				</div>
+				<!-- /.navbar-header -->
+
+				<!-- welcome user message -->
+				<div class="bbpou-welcome-user-msg">
+					Welcome, John Smith. Last login: 15:36:47 27-Apr-2016
+					<a href="index.html" class="left-pad-sm"><i class="fa fa-power-off fa-fw"></i> Logout</a>
+				</div>
+				<!-- welcome user message end -->
+
+			</nav>
+			<!-- /HEADER -->	
+
+			<!-- SIDEBAR -->
+			<!-- left menu -->
+			<div class="left-side">
+				<a class="sidebar_switch on_switch" href="javascript:void(0)">Sidebar switch</a>
+				<div class="navbar-default sidebar" role="navigation">
+					<div class="sidebar-nav navbar-collapse">
+						<ul class="nav" id="side-menu">
+							<li>
+								<a href="javascript:void(0);">Dashboard</a>
+							</li>
+							<li>
+								<a href="bill-payment-screen.html">Pay Bill</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">Transaction History</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);">Menu Item 1<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="javascript:void(0);">Sub-Menu Item 1</a>
+											
+									</li>
+									<li>
+										<a href="javascript:void(0);">Sub-Menu Item 2</a>
+											
+									</li>
+										
+								</ul>
+								<!-- /.nav-second-level -->
+							</li>
+								
+						</ul>
+					</div>
+					<!-- /.sidebar-collapse -->
+				</div>
+				<!-- /.navbar-static-side -->
+			</div>
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<h2 class="page-header">Pay Bill</h2>
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>	
+					<!-- /.row -->
+					
+					<div class="row">	
+						<div class="col-sm-12">
+							<form class="box-form" action="confirmation.html" method="post">																										
+								<div class="box">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Biller</label>
+											        <select class="form-control" id="inputBiller">
+											        	<option value=""></option>
+											        	<option value="">Biller 01</option>
+											        	<option value="">Biller 02</option>
+											        	<option value="">Biller 03</option>
+											        </select>
+											    </div>
+									    	</div>
+										</div> <!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								<div class="box">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill information to fetch bill</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Mobile</label>
+											        <input type="text" class="form-control" id="inputMobile">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Aadhaar Number</label>
+											        <input type="text" class="form-control" id="inputAadhaarNum">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>PAN</label>
+											        <input type="text" class="form-control" id="inputPAN">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Email</label>
+											        <input type="text" class="form-control" id="inputEmail">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Customer ID</label>
+											        <input type="text" class="form-control" id="inputCustId">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>A/C Number</label>
+											        <input type="text" class="form-control" id="inputACNum">
+											    </div>
+									    	</div>
+									    	
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary">Quick Pay</button>&nbsp;
+		          					<button type="button" class="btn btn-primary">Fetch Bill</button>&nbsp;
+								</div>
+								
+								<div class="clearfix"></div>
+								
+								<!-- extra bottom space -->
+	            				<div class="btm-pad-lg">&nbsp;</div>
+								
+								<div class="box">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill Information</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Bill Period</label>
+											        <input type="text" class="form-control" id="inputBillPeriod">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Bill Number</label>
+											        <input type="text" class="form-control" id="inputBillNum">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Bill Date</label>
+											        <input type="text" class="form-control" id="inputBillDate">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Convenience Fees</label>
+											        <input type="text" class="form-control" id="inputConvFees">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-6">
+											    <div class="form-group">
+											        <label>Convenience Description</label>
+											        <textarea class="form-control" id="inputConvDescription"></textarea>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Due Date</label>
+											        <input type="text" class="form-control" id="inputDueDate">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Amount</label>
+											        <input type="text" class="form-control" id="inputAmount">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Customer Name</label>
+											        <input type="text" class="form-control" id="inputCustName">
+											    </div>
+									    	</div>
+									    	
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								
+								<div class="box">
+									<div class="box-body">
+
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Split Pay</label>
+											        <select class="form-control" id="inputSplitPay">
+											        	<option value=""></option>
+											        	<option value="">Option 01</option>
+											        	<option value="">Option 02</option>
+											        	<option value="">Option 03</option>
+											        </select>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Mode of Payment</label>
+											        <select class="form-control" id="inputModeOfPayment">
+											        	<option value=""></option>
+											        	<option value="">Option 01</option>
+											        	<option value="">Option 02</option>
+											        	<option value="">Option 03</option>
+											        </select>
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Pay Amount</label>
+											        <input type="text" class="form-control" id="inputPayAmount">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Late Payment Fee</label>
+											        <input type="text" class="form-control" id="inputLatePayFee">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Convenience Fees</label>
+											        <input type="text" class="form-control" id="inputConvFees">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Approval Code</label>
+											        <input type="text" class="form-control" id="inputApprovalCode">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>IFSC Code | A/C Number</label>
+											        <input type="text" class="form-control" id="inputIFSCCode">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Card Number</label>
+											        <input type="text" class="form-control" id="inputCardNum">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Mobile | MMID</label>
+											        <input type="text" class="form-control" id="inputMobile">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <label>Aadhaar | IIN</label>
+											        <input type="text" class="form-control" id="inputAadhar">
+											    </div>
+									    	</div>
+									    	
+									    	<div class="clearfix"></div>
+									    	
+									    	<div class="col-sm-6">
+											    <div class="form-group">
+											        <label>Additional Information</label>
+											        <textarea class="form-control" id="inputAdditionalInfo"></textarea>
+											    </div>
+									    	</div>
+									    	
+									    </div>	<!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+								<div class="pull-right">
+									<button type="submit" class="btn btn-primary">Pay Now</button>&nbsp;
+		          					<button type="button" class="btn btn-default">Reset</button>&nbsp;
+								</div>
+								
+								
+							</form>
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>	
+					<!-- /.row -->				
+							
+					<!-- extra bottom space -->
+	            	<div class="btm-pad-lg">&nbsp;</div>					
+					
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+			
+			
+			<!-- FOOTER -->
+			<footer class="bbpou-footer">
+				Copyright &copy; 2016, R S Software. All rights reserved.
+			</footer>
+		    <!-- /FOOTER -->        	
+
+	</body>
+	
+	<!-- jQuery -->
+	<script src="js/jquery-1.12.3.min.js"></script>
+
+	<!-- Bootstrap Core JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- Metis Menu Plugin JavaScript -->
+	<script src="js/metisMenu.min.js"></script>
+
+ 
+	<!-- Custom Theme JavaScript -->
+	<script src="js/bbpou.js"></script>
+
+</html>

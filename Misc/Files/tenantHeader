@@ -1,0 +1,32 @@
+			<!-- HEADER -->
+			<!-- Navigation -->
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="navbar-header">
+              
+					<!-- OU code snippet start -->
+					<div class="bbpou-header-container">
+						<!--<iframe src="header.html" frameborder="0" allowfullscreen></iframe>-->
+						<div class="ou-logo">
+							<a class="" href="index.html">
+								<img src="[${BBPOULOGO}]">
+							</a>
+						</div>
+    
+						<div class="ou-name">
+							<h1>[${OU_NAME}]</h1>
+						</div>
+					</div> 
+					<!-- OU code snippet end -->
+					  
+				</div>
+				<!-- /.navbar-header -->
+
+				<!-- welcome user message -->
+				<div class="bbpou-welcome-user-msg">
+					Welcome, Guest.
+					<a href="index.html" class="left-pad-sm"><i class="fa fa-power-off fa-fw"></i> Logout</a>
+				</div>
+				<!-- welcome user message end -->
+
+			</nav>
+			<!-- /HEADER -->

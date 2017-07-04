@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Actions List</title>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<link rel="stylesheet" th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" />
+<link rel="stylesheet" th:href="@{|/css/jquery.dataTables.${session.tenatntId}.min.css|}" />
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script>
+</head>
+<body>
+<h3>Actions List</h3><hr/>
+	<div>
+		<table class="display cell-border hover order-column dataTable">
+			<thead>
+				<tr>					
+					<th>Sl. No.</th>
+					<th>Access Code</th>
+					<th>Description</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="forAccess,counter : ${accessList}">
+					<td th:text="${counter.count}"></td>
+					<td th:text="${forAccess.accessCode}"></td>
+					<td th:text="${forAccess.desc}"></td>
+					<td th:id="${forAccess.id}" th:text="${forAccess.statusStr}"></td>
+					<td><a class="pop-up" th:href="@{|/admin/viewAccess/${forAccess.id}|}">View</a></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+</body>
+</html>

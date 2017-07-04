@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      
+	<head >
+    <link th:substituteby="common/common_header" />
+	
+	<script type="text/javascript" th:src="@{/js/bbpou.js}"></script>
+	<script type="text/javascript" th:src="@{/js/paybill.js}"></script>		
+	
+    <style>
+        .no-border-on-me>thead>tr>th,
+        .no-border-on-me>tbody>tr>th,
+        .no-border-on-me>tfoot>tr>th,
+        .no-border-on-me>thead>tr>td,
+        .no-border-on-me>tbody>tr>td,
+        .no-border-on-me>tfoot>tr>td
+        {
+            border-top-style: none;
+            border-bottom-style: none;
+        }
+    </style>
+        
+   
+
+</head>
+
+	<body class="">
+	
+		<div id="wrapper">
+			
+			<!-- HEADER -->
+			<div lang="en" th:replace="common/header :: header"> </div>
+			<!-- /HEADER -->	
+
+			<!-- SIDEBAR -->
+			<!-- left menu -->
+            <div lang="en" th:replace="common/left_menu:: leftmenu"> </div>
+			<!-- / left menu -->
+			<!-- /SIDEBAR -->
+
+			<div id="page-wrapper">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<h2 class="page-header">Pay Bill</h2>
+						</div>
+						
+					</div>	
+					
+					<input type="hidden"  id="agentId" th:value="${agentId}">
+					<div class="row">	
+						<div class="col-sm-12">
+																																 
+								<div class="box">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-3">
+											    <div class="form-group">
+
+											        <label>Biller Catagory</label>
+											         <select class="form-control" id="BillerCategoryLists" onchange="showbiller(this);" >
+													    <option value="" >Please Select</option>
+													    <option th:each="BillerCategoryList:${BillerCategoryLists}" th:value="${BillerCategoryList}" th:text="${BillerCategoryList}"></option>
+													 </select>
+											    </div>
+									    	</div>
+									    	<div class="col-sm-3" id="biller" style="display:none">
+											    <div class="form-group">
+											        <label>Biller </label>
+											         <select class="form-control" id="BillerLists" onchange="showCustomerInfoArea(this);" >
+													    
+													 </select>
+											    </div>
+									    	</div>
+									    	<div class="col-sm-3" id="subBiller" style="display:none">
+											    <div class="form-group">
+											        <label>Sub Biller </label>
+											         <select class="form-control" id="SubBillerLists" onchange="subBillerSelection(this);" >
+													 </select>
+											    </div>
+									    	</div>
+										</div> <!-- /.row -->
+									</div> <!-- /box-body -->
+								</div> <!-- /box -->
+								
+
+<!-- 								<div class="box"  id="biller" style="display:none"> -->
+<!-- 									<div class="box-body"> -->
+<!-- 										<div class="row"> -->
+<!-- 											<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>Biller</label> -->
+<!-- 											         <select class="form-control" id="BillerLists" onchange="showCustomerInfoArea(this)" > -->
+													   
+<!-- 													 </select> -->
+<!-- 											    </div> -->
+<!-- 									    	</div> -->
+<!-- 										</div> /.row -->
+<!-- 									</div> /box-body -->
+<!-- 								</div> /box -->
+
+								<div class="box" id="customerInfoArea" style="display:none">
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">	
+												<h3>Bill information to fetch bill</h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row">	
+									    	<div class="col-sm-3">
+											    <div class="form-group">
+											        <div class='required'><label>Mobile <span style="color:red">*</span></label>
+											        <input type="text" class="form-control billinfobox" id="inputMobile" onblur="validateMobileNumber();" >
+											    </div>
+									    	</div>
+									    	
+<!-- 									    	<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>Aadhaar Number</label> -->
+<!-- 											        <input type="text" class="form-control billinfobox" id="inputAadhaarNum"> -->
+<!-- 											    </div> -->
+<!-- 									    	</div> -->
+									    	
+<!-- 									    	<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>PAN</label> -->
+<!-- 											        <input type="text" class="form-control billinfobox" id="inputPAN"> -->
+<!-- 											    </div> -->
+<!-- 									    	</div> -->
+									    	
+<!-- 									    	<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>Email</label> -->
+<!-- 											        <input type="text" class="form-control billinfobox" id="inputEmail"> -->
+<!-- 											    </div> -->
+<!-- 									    	</div> -->
+  </div>
+									    	</div>
+									    	<div class="row">
+											<div class="col-sm-12">	
+												<h3>Customer information </h3>
+											</div>
+										</div> <!-- /.row -->
+										
+										<div class="row" id="customerinfobox">
+<!-- 									    	<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>Customer ID <span style="color:red">*</span></label> -->
+<!-- 											        <input type="text" class="form-control " id="inputCustId" onchange="enableFetchbtn();"> -->
+<!-- 											    </div> -->
+<!-- 									    	</div> -->
+									    	
+<!-- 									    	<div class="col-sm-3"> -->
+<!-- 											    <div class="form-group"> -->
+<!-- 											        <label>A/C Number <span style="color:red">*</span></label> -->
+<!-- 											        <input type="text" class="form-control " id="inputACNum" onchange="enableFetchbtn();"> -->
+<!-- 											    </div> -->
+									    	</div>
+									    	
+									    </div>	<!-- /.row -->
+									 <!-- /box-body -->
+								 <!-- /box -->
+								
+								<div class="clearfix"></div>
+								<div class="pull-right">
+									<button type="button" class="btn btn-primary">Quick Pay</button>&nbsp;
+		          					<button type="button" class="btn btn-primary" id="btnFetchBill"  onclick="fetchBill(this)">Fetch Bill</button>&nbsp;
+								</div>
+								</div>
+								</div>
+								<div class="clearfix"></div>
+								
+								<!-- extra bottom space -->
+	            				<div class="btm-pad-lg">&nbsp;</div>
+								<div class="box" id="billInfoArea" style="display:none">
+                                    <form method="POST" id="paybillform" action="/pay" onsubmit="appendPayForm();">
+                                   <input type="hidden"   id="refid" >
+									<div class="box-body">
+										<div class="row">
+											<div class="col-sm-12">
+												<h3>Bill Information</h3>
+											</div>
+										</div>
+										<div class="row">
+											<div class="clearfix"></div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Customer Name </label>
+													<input type="text" class="form-control" readonly="readonly" name="inputCustomerName" id="inputCustomerName" >
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Biller Name</label>
+													<input type="text" class="form-control" readonly="readonly" name="inputBillerName" id="inputBillerName" >
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Bill Date</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputBillDate" name="inputBillDate"  >
+												</div>
+											</div>
+											
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Bill Number</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputBillNumber" name="inputBillNumber" >
+												</div>
+											</div>
+
+											<div class="clearfix"></div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Bill Period</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputBillPeriod" name="inputBillPeriod">
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Due Date</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputDueDate"  name="inputDueDate">
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Bill Amount</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputBillAmount" name="inputBillAmount">
+
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Meter No</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputMeterNo" name="inputMeterNo">
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Meter Reading Present</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputMeterReadingPresent" name="inputMeterReadingPresent">
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Meter Reading Past</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputMeterReadingPast" name="inputMeterReadingPast">
+												</div>
+											</div>
+
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>CCF + Tax(s)</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputCCFTax" name="inputCCFTax">
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Total Amount to be paid</label>
+													<input type="text" class="form-control" readonly="readonly" id="inputTotalAmtToPaid" name="inputTotalAmtToPaid" >
+												</div>
+											</div>
+											<div class="col-sm-3">
+												<div class="form-group">
+													<label>Payment Chanel</label>
+
+													<input type="text" class="form-control" readonly="readonly" id="inputPaymentChannel" name="inputPaymentChannel" value="INT">
+
+												</div>
+											</div>
+											<div class="col-sm-3 ">
+												<div class="form-group">
+													<label> Payment Methods</label>
+
+													<select class="form-control" id="paymentmethod" name="paymentmethod">
+
+														<option value="">-- Select Utility Payment --</option>
+
+														<option value="Cash">Cash</option>
+														<option value="Internet Banking">Internet Banking</option>
+		
+
+													</select>
+												</div>
+											</div>
+
+											<div class="col-sm-3 ">
+												<div class="form-group">
+													<label> Amount Option</label>
+													<select class="form-control" id="billerAmountOptions" name="billerAmountOptions" onChange=' return calculateCCF()';>
+<!-- 														<option value="">-- Select Utility Payment --</option> -->
+<!-- 														<option value="">Option 01</option> -->
+<!-- 														<option value="">Option 02</option> -->
+<!-- 														<option value="">Option 03</option> -->
+													</select>
+												</div>
+											</div>
+
+											<div class="clearfix"></div>
+
+										</div>
+										<!-- /.row -->
+									</div>
+									<!-- /box-body -->
+									
+									<div class="pull-right">
+									<button type="submit" class="btn btn-primary">
+										Pay Now
+									</button>
+									&nbsp;
+									<button type="button" class="btn btn-default">
+										Reset
+									</button>
+									&nbsp;
+								</div>
+								</form>
+								</div>
+								
+								<!-- /box -->
+
+								
+
+<!-- 							</form> -->
+						</div>
+						<!-- /.col-sm-12 -->
+					</div>
+					<!-- /.row -->
+
+					<!-- extra bottom space -->
+					<div class="btm-pad-lg">
+						&nbsp;
+					</div>
+
+				</div>
+			</div>
+			<!-- /#page-wrapper -->
+
+			<!-- FOOTER -->
+			 <div lang="en" th:replace="common/footer:: footer"> </div>
+			<!-- /FOOTER -->
+
+	</body>
+
+</html>

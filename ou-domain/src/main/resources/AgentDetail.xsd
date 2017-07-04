@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"  xmlns:bbps="http://bbps.rssoftware.co.in/schema"  targetNamespace="http://bbps.rssoftware.co.in/schema" 
+	 elementFormDefault="unqualified" attributeFormDefault="unqualified">
+ 
+ <xs:element name="AgentDetail" >
+ <xs:complexType>  
+    <xs:sequence>
+      <xs:element name="agentName" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentAliasName" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentID" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentInst" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentMobile" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentShopName" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentBusinessType" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentPaymentMode" type="bbps:PaymentModeLimit" minOccurs="1" maxOccurs="unbounded" />
+      <xs:element name="agentPaymentChannel" type="bbps:PaymentChannelLimit" minOccurs="0" maxOccurs="unbounded" />
+<!--       <xs:element name="agentPaymentMode" type="xs:string" minOccurs="0" maxOccurs="1" />
+ -->      <xs:element name="agentAddr" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentState" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentCity" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentCountry" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentPin" type="xs:string" minOccurs="1" maxOccurs="1" />
+      <xs:element name="agentLatitude" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentLongitude" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentGEOCode" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentEntityStatus" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="DummyAgent" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentEffectiveFrom" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentEffectiveTo" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentBankAccount" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentSchemeId" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="agentType" type="xs:string" minOccurs="0" maxOccurs="1" />
+      <xs:element name="isUpload" type="xs:boolean" minOccurs="0" maxOccurs="1" />
+      <xs:element name="rejectComment" type="xs:string" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType> 
+ </xs:element> 
+  
+  <xs:complexType name="PaymentModeLimit">
+		<xs:sequence>
+			<xs:element type="xs:string" name="paymentMode" minOccurs="1" maxOccurs="1" />
+			<xs:element type="xs:string" name="limit" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="PaymentChannelLimit">
+		<xs:sequence>
+			<xs:element type="xs:string" name="paymentChannel" minOccurs="1" maxOccurs="1" />
+			<xs:element type="xs:string" name="limit" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>
+	</xs:complexType> 
+	
+</xs:schema>

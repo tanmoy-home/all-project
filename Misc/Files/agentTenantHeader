@@ -1,0 +1,78 @@
+
+<!-- HEADER -->
+<!-- Navigation -->
+
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="navbar-header">
+
+		<!-- OU code snippet start -->
+		<div class="bbpou-header-container">
+			<!--<iframe src="header.html" frameborder="0" allowfullscreen></iframe>-->
+			<div class="ou-logo">
+				<a class="" href="index.html"> <img src="[${BBPOULOGO}]">
+				</a>
+			</div>
+
+			<div class="ou-name">
+				<h1>[${OU_NAME}]</h1>
+			</div>
+		</div>
+		<!-- OU code snippet end -->
+
+	</div>
+	<!-- /.navbar-header -->
+
+	<!-- welcome user message -->
+	<div class="bbpou-welcome-user-msg">
+		<input id="user" value="[${AGENTUSER}]" disabled="disabled" /> <input
+			id="balance" value="[${AGENTBAL}]" disabled="disabled" />
+			
+				<img id="refresh" src="[${REFRESH}]" style="width:4%">
+				
+		
+
+
+		<!-- <script>
+		$(#usr).onload(function() {
+			alert("in f1()");
+			$.ajax({
+				url : document.getElementById("user").value,
+				type: 'GET',
+        
+				async :false,
+				header:{   "Access-Control-Allow-Origin" : "*",
+                            "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS"},
+				success: function (results) {
+					alert(results);
+					document.getElementById("user").value = results;
+					
+					document.getElementById("user").type = 'show';
+				}
+			});
+		}
+		</script> -->
+		<!-- <script>
+					alert(document.getElementById("user").value);
+					</script> -->
+
+		<!-- <script>
+					 var x=${session.tenantId};
+					alert(document.getElementById("tenantId2").value);
+
+						alert(document.getElementById("user").text);
+						alert(document.getElementById("balance").text);
+
+					</script> 
+					 -->
+		<!-- 					<div id="balance">Available Balance </div>
+ -->
+		<a href="index.html" class="left-pad-sm">
+			<!-- <i class="fa fa-power-off fa-fw"></i> --> Logout
+		</a>
+	</div>
+	<!-- welcome user message end -->
+
+</nav>
+<!-- /HEADER -->
+

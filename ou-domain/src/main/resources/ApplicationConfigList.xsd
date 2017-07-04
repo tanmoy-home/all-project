@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="ApplicationConfigList">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element name="applicationConfig" type="bbps:applicationConfigDetail"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="applicationConfigDetail">
+		<xs:sequence>
+			<xs:element type="xs:string" name="configParam" />
+			<xs:element type="xs:string" name="configParamGroup" />
+			<xs:element type="bbps:paramValue" name="configParamValue" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element type="xs:string" name="configParamDesc" />
+		</xs:sequence>
+	</xs:complexType>   
+	<xs:complexType name="paramValue">
+		<xs:sequence>
+			<xs:element type="xs:string" name="paramElement" />
+		</xs:sequence>
+	</xs:complexType>   
+</xs:schema>

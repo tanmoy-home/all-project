@@ -1,0 +1,22 @@
+
+@font-face {
+    font-family: Lato-Regular;
+    src: url(../fonts/Lato-Regular.ttf);
+
+}
+@font-face {
+    font-family: Raleway-Light;
+    src: url(../fonts/Raleway-Light.ttf);
+
+    font-weight: bold;
+}
+@font-face {
+    font-family: Lato-Light;
+    src: url(../fonts/Lato-Light.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family:"Yantramanav-Light";
+    src: url(../fonts/Yantramanav-Light.ttf);
+    font-weight: bold;
+}

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"  xmlns:bbps="http://bbps.rssoftware.co.in/schema"  targetNamespace="http://bbps.rssoftware.co.in/schema" 
+ elementFormDefault="unqualified" attributeFormDefault="unqualified">
+ 	
+	<xs:element name="ComplainRequest" type="bbps:ComplainReqType">
+		<xs:annotation>
+			<xs:documentation>OU API request</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<xs:element name="ComplainStatusRequest" type="bbps:ComplainStatusRequestType">
+		<xs:annotation>
+			<xs:documentation>OU API request</xs:documentation>
+		</xs:annotation>
+	</xs:element>		
+	
+	<xs:complexType name="ComplainStatusRequestType">
+      <xs:sequence>
+          <xs:element type="bbps:ComplaintType" name="complaintType"  minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="xchangeId"  minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="complaintId" nillable="true"/>
+      </xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="TransactionSearchRequest" type="bbps:TransactionSearchRequestType">
+		<xs:annotation>
+			<xs:documentation>OU API request</xs:documentation>
+		</xs:annotation>
+	</xs:element>		
+	
+	<xs:complexType name="TransactionSearchRequestType">
+      <xs:sequence>
+          <xs:element type="bbps:ComplaintType" name="complaintType" minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="xchangeId" minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="mobile"/>
+          <xs:element type="xs:string" name="txnReferenceId"/>
+          <xs:element type="xs:string" name="fromDate"/>
+          <xs:element type="xs:string" name="toDate"/>
+      </xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="ComplaintsSearchRequest" type="bbps:ComplaintsSearchRequestType">
+		<xs:annotation>
+			<xs:documentation>OU API request</xs:documentation>
+		</xs:annotation>
+	</xs:element>		
+	
+	<xs:complexType name="ComplaintsSearchRequestType">
+      <xs:sequence>
+          <xs:element type="xs:string" name="mobile" nillable="true"/>
+      </xs:sequence>
+	</xs:complexType>
+	  
+    <xs:complexType name="ComplainReqType">
+      <xs:sequence>
+        <!--   <xs:attribute type="xs:string" name="msgId" use="required"/> -->
+        <!--   <xs:attribute type="xs:string" name="complaintId" use="optional"/> -->
+          <xs:element type="bbps:ComplaintType" name="complaintType"  minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="xchangeId"  minOccurs="1" maxOccurs="1"/>
+          <xs:element type="xs:string" name="servReason"  nillable="true"/>
+          <xs:element type="bbps:ParticipationType" name="participationType"  nillable="true"/>
+          <xs:element type="xs:string" name="agentId"  nillable="true"/>
+          <xs:element type="xs:string" name="billerId"  nillable="true"/>
+          <xs:element type="xs:string" name="mobile" nillable="true"/>
+          <xs:element type="xs:string" name="txnReferenceId"  nillable="true"/>
+          <xs:element type="xs:string" name="category"  nillable="true"/>
+          <xs:element type="xs:string" name="disposition"  nillable="true"/>
+          <xs:element type="xs:string" name="description"  nillable="true"/>          
+      </xs:sequence>
+    </xs:complexType>
+    
+   <xs:simpleType name="ComplaintType">
+   	<xs:restriction base="xs:string">
+   		<xs:enumeration value="Transaction"></xs:enumeration>
+   		<xs:enumeration value="Service"></xs:enumeration>
+   	</xs:restriction>
+   </xs:simpleType>
+    
+    <xs:simpleType name="ParticipationType">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="AGENT"></xs:enumeration>
+    		<xs:enumeration value="BILLER"></xs:enumeration>
+    		<xs:enumeration value="SYSTEM"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>

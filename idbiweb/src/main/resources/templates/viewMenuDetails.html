@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Menu Details</title>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<link rel="stylesheet" th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" />
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script></head>
+<body>
+	<div class="response" th:if="${processResponse} != null">
+		<div th:if="${processResponse.status.name() == 'FAILURE'}" th:each="message : ${processResponse.message}" th:text="${message}" class="message error"></div>
+		<div th:if="${processResponse.status.name() == 'SUCCESS'}"	th:each="message : ${processResponse.message}" th:text="${message}" class="message success"></div>
+	</div>
+	<h3>Menu Details</h3>
+	<hr />
+	<div class="datagrid">
+		<table>
+			<tr>
+				<td>Menu Name:</td>
+				<td th:text="${menuDetail.menuName}"></td>
+			</tr>
+			<tr>
+				<td>Menu Url:</td>
+				<td th:text="${menuDetail.menuUrl!='#'?menuDetail.menuUrl:'NA'}"></td>
+			</tr>
+			<tr>
+				<td>Menu Access Point:</td>
+				<td th:text="${menuDetail.menuAccessPoint!=null?menuDetail.menuAccessPoint.desc:'NA'}"></td>
+			</tr>
+			<tr>
+				<td>Parent Menu Name:</td>
+				<td th:text="${menuDetail.parentMenu!=null?menuDetail.parentMenu.menuName:'NA'}"></td>
+			</tr>
+			<tr>
+				<td>Status:
+					<input type="hidden" id="id" th:value="${menuDetail.menuId}" /> 
+					<input type="hidden" id="status" th:value="${menuDetail.menuStatus.value()}" /></td>
+				<td th:text="${menuDetail.menuStatus.value()}"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="modal-footer">
+		<form autocomplete="off" th:action="@{|/menu/changeStatus/${menuDetail.menuId}|}" method="POST">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<button th:if="${menuDetail.menuStatus.name()=='ACTIVE'}" class="btn btn-warning" name="status" value="DEACTIVE">Deactivate</button>
+			<button th:if="${menuDetail.menuStatus.name()=='DEACTIVE'}" class="btn btn-success" name="status" value="ACTIVE">Activate</button>
+		</form>
+	</div>
+</body>
+</html>

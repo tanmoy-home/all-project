@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+	<xs:element name="FetchRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="origInst" />
+				<xs:element type="bbps:riskScoresType" name="riskScores"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:customerDtlsType" name="customer"
+					minOccurs="1" maxOccurs="1" />
+				<xs:element type="bbps:agentType" name="agent" minOccurs="1"
+					maxOccurs="1" />
+				<xs:element type="bbps:billDetailsType" name="billDetails"
+					minOccurs="1" maxOccurs="1" />							
+				<xs:element type="bbps:agentChannelDetails" name="AgentChannelDetails" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

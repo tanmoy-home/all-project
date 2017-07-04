@@ -1,0 +1,195 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/newstyle.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<title>Complaint List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head> 
+<script type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+<script> 
+  $(function(){
+   	 $("#header").load("/../header"); 
+
+        $( "#datepickerFromDt" ).datepicker({ dateFormat: 'mm-dd-yy' });
+        $( "#datepickerToDt" ).datepicker({ dateFormat: 'mm-dd-yy' });
+       
+   }); 
+  
+  function checkSearch()
+  {
+	  if($("#datepickerFromDt").val()=='' || $("#datepickerToDt").val()=='')
+	  {
+		  $("#msg").html("Both date fields are required.");
+		  return false;
+	  }  
+	  else
+	  {
+	   
+		var dtFrom =$("#datepickerFromDt").val();
+		var dtTo = $("#datepickerToDt").val();
+		
+		var tfr = changeFormat(dtFrom); 
+		var tt = changeFormat(dtTo);
+		
+		var fromDt = new Date(tfr);
+		var toDt = new Date(tt);
+		var todayDt = new Date();
+	
+		if(fromDt > toDt)
+		{
+			$("#msg").html("From date should not be greater than To date.");
+			return false;
+		}
+	
+		if ( toDt > todayDt)
+		{
+			$("#msg").html("Date should not be greater than current date.");
+			return false;
+		}
+		
+		return true;
+	  }
+  }
+  
+  function changeFormat(date){
+		if(date != ''){
+			var strDate = date.split("-");
+			var str = strDate[0]+"/"+strDate[1]+"/"+strDate[2];
+			return str;
+		}
+  }
+</script> 
+</head>
+<body>
+<div id="page-content-wrapper">
+
+<div id="header"></div>
+
+<table cellpadding="4" width="100%" bgcolor="#CCCCCC" align="center" cellspacing="4">
+<tr>
+<td align="right">
+<a th:href="@{/complaint/raiseComplaint}">[ Complaint Home ]</a>
+</td>
+</tr>
+
+<tr>
+<td align="center">
+<h4 class="headercolor">
+Transaction Details
+</h4>
+</td>
+</tr>
+</table>
+
+<!-- <form th:action="@{/complaint/txnParamSearch}" method="post" th:object="${searchParam}">
+<table align="center" >
+<tr>
+<td colspan="2" class="headercolor">Search by date range</td>
+</tr>
+<tr><td colspan="2"><div style="color:red;" id="msg"/></td></tr>
+
+<tr>
+<td>
+From Date: <input type="text" size="10" maxlength="10" style="width:80px" id="datepickerFromDt" name="fromDate" th:field="*{fromDate}" readonly="readonly"/><img class="ui-datepicker-trigger" th:src="@{/images/calendar.png}" alt="Select date" title="Select date"/> 
+To Date: <input type="text" size="10" maxlength="10" style="width:80px" id="datepickerToDt" name="toDate" th:field="*{toDate}" readonly="readonly"/><img class="ui-datepicker-trigger" th:src="@{/images/calendar.png}" alt="Select date" title="Select date"/>
+<input type="hidden" id="mobNo" name="mobNo" th:value="${mobNo}"/>
+</td>
+<td>
+<input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+<input class="button" id="searchFormBtn" type="submit" value="Search" onClick="return checkSearch()"/>
+</td>
+</tr>
+</table>
+</form>
+ -->
+<form th:action="@{/complaint/complaintDetails}" method="post">
+
+<div class="container">
+<div class="datagrid">
+
+<table cellpadding="4" width="100%" bgcolor="#99FFFF" align="center" cellspacing="4">
+
+<tr>
+	<th>&nbsp;</th>
+	<th>Transaction ID</th>
+	<th>Transaction Date</th>
+	<th>Customer Name</th>
+	<th>Customer Mobile Number</th>
+	<th>Biller Name</th>
+	<th>Biller's Reference</th>
+	<th>Payment Mode</th>
+	<th>Transaction Amount (Rs)</th>
+	<th>Transaction Status</th>
+	
+</tr>
+
+<!-- <tr th:if="${message}!=null">
+<td colspan="8" align="center" th:text="${message}"></td>
+</tr>
+ -->
+
+	<tr th:each="complaintObj  : ${complaints}">
+	<td><input type="radio" name="txnSelected" th:value="${complaintObj.transactionId}" th:checked="true"/></td>
+	<td th:text="${complaintObj.transactionId}"></td>
+	<td th:text="${complaintObj.transactionDate}"></td>
+	<td th:text="${complaintObj.customerName}"></td>
+	<td th:text="${complaintObj.customerMobile}"></td>
+	<td th:text="${complaintObj.billerName}"></td>
+	<td th:text="${complaintObj.billerRef}"></td>
+	<td th:text="${complaintObj.transactionPaymentMode}"></td>
+	<td th:text="${complaintObj.transactionAmount}"></td>
+	<td th:text="${complaintObj.transactionStatus}"></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="whiteSpace">&nbsp;</div>
+<table width="100%" align="center" th:if="${message}==null">
+<tr>
+	<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
+	<td align="right">
+	<input type="submit" class="button" name="reqStatus" value="Register Complaint" />
+	</td>
+	<td align="left">
+	<input type="submit" class="button" name="reqStatus" value="Cancel" />
+	</td>
+</tr>
+</table>
+</form>
+
+</div>
+
+<div class="col-md-12 text-center">
+		<div class='pagination pagination-centered'>
+			<!-- <span th:if='${currentIndex > 0}'>
+			<ul class='pagination'>
+				<li th:if="${currentIndex ==1}" th:class='disabled'><span
+					th:if='${currentIndex ==1}'>First<a
+						th:if='${currentIndex != 1}' th:href='@{"#"}'>First</a></span></li>
+				<li th:class="${currentIndex !=1}? '' : 'disabled'"><span
+					th:if='${currentIndex ==1}'>Previous</span><a th:if='${currentIndex != 1}'
+						th:href='${1}'>First</a></li>
+				<li th:class="${currentIndex ==0 ||currentIndex ==1}? 'disabled' :''">
+					<a th:if='${currentIndex !=1 }'	th:href="${currentIndex != null}? ${currentIndex-1}:''" title='Pre'>Previous</a>
+				 </li>
+				   <li th:each="item :${#numbers.sequence(beginIndex, endIndex)}"
+					th:class="${item == currentIndex ? 'active': '' }" ><span th:if='${item ==	currentIndex}' th:text='${item}'>1</span> <a th:href="${item}" th:text='${item}'>${item}</a>
+				</li>   
+				<li th:class="${currentIndex != totalPageCount}? '' : 'disabled'">
+					<a th:href="${currentIndex != totalPageCount}? ${currentIndex+1}: ${currentIndex}" title='NEXT'>Next</a>
+				</li>
+				<li th:class="${currentIndex==totalPageCount}? 'disabled': '' ">
+					<span th:if='${currentIndex == totalPageCount}'>Last</span> <a
+					th:if='${currentIndex != totalPageCount}'
+					th:href="${totalPageCount}">Last</a>
+				</li>
+			</ul>
+			</span> -->
+		</div>
+
+	</div>
+</body>
+</html>
+ 

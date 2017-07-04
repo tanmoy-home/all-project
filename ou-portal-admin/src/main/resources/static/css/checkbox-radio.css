@@ -1,0 +1,42 @@
+
+/*Hide the Odinary Checkbox*/
+input[type="checkbox"]{
+	display: none;
+	color: #222;
+}
+/*Chechbox icons*/
+label {
+    color:black;
+    cursor: pointer;
+    font-size: 30px;
+    padding: 16px 28px 0 0;
+    position: relative;
+}
+label::before {
+    content: '\f096';
+}
+label::before, label::after {
+    font-family: FontAwesome;
+    font-size: 50px;
+    left: -45px;
+    position: absolute;
+    top: 9px;
+}
+label::after {
+    color: #6c5300;
+    content: '\f00c';
+    font-size: 27px;
+    left: -42px;
+    max-width: 0;
+    opacity: 0.5;
+    overflow: hidden;
+    top: 16px;
+    transition: all 0.5s ease 0s;
+}
+/*Animating the Checkbox icons*/
+input[type="checkbox"]:checked + label::after {
+    margin-right: 90px;
+    max-width: 25px;
+    opacity: 1;
+    width: 25px;
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
+<head>
+	<title>Menu</title>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	<link rel="stylesheet" th:href="@{|/css/portal-home.${session.tenatntId}.min.css|}" />
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+</head>
+<body id="portal-menu" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+	<noscript>
+		<h2 style="color: #ff0000">Seems your browser doesn't support
+			Javascript! Websocket relies on Javascript being enabled. Please
+			enable Javascript and reload this page!</h2>
+	</noscript>
+	<div id="wrapper">
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<!-- <li><a target="content" href="#">Dashboard</a></li> -->				
+				<!-- <li th:if="${isSuperAdmin || isAdmin}"><a href="#">Profile Management</a>
+					<ul>
+						<li th:if="${isSuperAdmin}"><a target="content" th:href="@{/admin/addProfile}" th:text="@{Add Profile}"></a></li>
+						<li><a target="content" th:href="@{/admin/viewProfile}" th:text="@{View Profiles}"></a></li>
+					</ul>
+				</li>
+				
+
+				<li  th:if="${isSuperAdmin || isAdmin}"><a href="#">Access Management</a>
+					<ul>
+						<li><a target="content"	th:href="@{/admin/populatePendingQueue}" th:text="@{Access Approval}"></a></li>
+						<li th:if="${isSuperAdmin}"><a target="content" th:href="@{/admin/addAccessModule}" th:text="@{Add Access Module}"></a></li>
+						<li><a target="content" th:href="@{/admin/listAccessModule}" th:text="@{View Access Modules}"></a></li>
+					</ul>
+				</li>
+				
+				<li  th:if="${isSuperAdmin || isAdmin}"><a href="#">User Management</a>
+					<ul>
+						<li><a target="content" th:href="@{/admin/addUser}" th:text="@{Create User}"></a></li>
+						<li><a target="content" th:href="@{/admin/viewUser}" th:text="@{View Users}"></a></li>
+					</ul>
+				</li>	
+				
+				<li  th:if="${isSuperAdmin}"><a href="#">Menu Management</a>
+					<ul>
+						<li><a target="content" th:href="@{/menu/add}" th:text="@{Add Menu}"></a></li>
+						<li><a target="content" th:href="@{/menu/list}" th:text="@{View Menu}"></a></li>
+					</ul></li>		
+				
+				<li  th:if="${isAdmin}">
+					<a target="content" th:href="@{/admin/viewUserConfiguration}" id="menu-userConfiguration">User Configuration</a>
+				</li>		
+					
+				<li  th:if="${isAdmin}">
+					<a target="content" th:href="@{/showBulkUpload}" id="menu-bulkupload">Bulk Upload Management</a>
+				</li>
+				
+				<li th:if="${isAdmin}">
+					<a href="#">Transaction Management</a>
+					<ul>
+						<li  th:if="${isAdmin}">
+							<a target="content" th:href="@{/addTransactionDetailsView}" th:text="@{Add Transaction}"></a>
+						</li>
+						<li th:if="${isAdmin}">
+							<a target="content" th:href="@{/filterTransactionDetails}" th:text="@{Search Transaction}"></a>
+						</li>						
+					</ul>
+				</li> -->
+				
+				<li th:each="node : ${finalMenuList}" >
+					<a th:target="@{|${node.menuUrl!='#'?'content':'_self'}|}" th:href="${node.menuUrl}" th:text="${node.menuName}"></a>
+					<ul th:fragment="fragment_node(node)" th:unless="${#lists.isEmpty(node.subMenu)}">
+						<li th:each="child : ${node.subMenu}">
+							<a target="content" th:href="${child.menuUrl}" th:text="${child.menuName}"></a>
+							<ul th:replace="this::fragment_node(${child})"></ul>
+						</li>
+					</ul>
+				</li>
+			</ul>			
+		</div>
+	</div>
+	<script type="text/javascript">
+		//<![CDATA[	
+		$(document).ready(function() {
+			$(".sidebar-nav li").each(function() {
+				var len = $(this).find('ul').length;
+				if (len == 0)
+					$(this).addClass('no-child');
+				else
+					$(this).addClass('has-child').addClass('close');
+			});
+
+			$("a").click(function(event) {
+				if ($(this).attr('href') == '#') {
+					event.stopPropagation();
+					return false;
+				}
+			});
+
+			$(".has-child > a").click(function() {
+				var $parent_li = $(this).parent('li');
+				var $parent_ul = $parent_li.parent('ul');
+				var is_closed = $parent_li.hasClass('close');
+
+				$parent_ul.find('>li').each(function() {
+					if ($(this).hasClass('has-child'))
+						$(this).removeClass('open').addClass('close');
+				});
+				if (is_closed)
+					$parent_li.removeClass('close').addClass('open');
+			});
+		});
+		// ]]>
+	</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+
+.main-sidebar,
+.left-side {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /*padding-top: 56px;*/
+    min-height: 100%;
+    width: 240px;
+    background: rgba(236,239,241,0.56);
+    box-shadow: 3px 0 6px rgba(0,0,0,0.24);
+    -webkit-transition: -webkit-transform .3s cubic-bezier(.32, 1.25, .375, 1.15);
+    -moz-transition: -moz-transform .3s cubic-bezier(.32, 1.25, .375, 1.15);
+    -o-transition: -o-transform .3s cubic-bezier(.32, 1.25, .375, 1.15);
+    transition: transform .3s cubic-bezier(.32, 1.25, .375, 1.15)
+}
+.sidebar-toggle {
+    float: left;
+    background-color: transparent;
+    background-image: none;
+    padding: 15px 15px;
+    font-family: fontAwesome;
+    color:#a7dedd;
+}
+
+.sidebar-toggle:before {
+    content: "\f0c9"
+}
+.sidebar-toggle:link {
+    color: #fff;
+}
+.sidebar-toggle:hover {
+    color: #fff;
+}
+
+.sidebar-toggle .icon-bar {
+    display: none
+}
+@media (max-width:767px) {
+    .sidebar-open .main-sidebar,
+    .sidebar-open .left-side {
+        -webkit-transform: translate(0, 0);
+        -ms-transform: translate(0, 0);
+        -o-transform: translate(0, 0);
+        transform: translate(0, 0)
+    }
+}
+@media (max-width:767px) {
+    .main-sidebar,
+    .left-side {
+        
+        -webkit-transform: translate(-240px, 0);
+        -ms-transform: translate(-240px, 0);
+        -o-transform: translate(-240px, 0);
+        transform: translate(-240px, 0)
+    }
+}
+
+@media (min-width:768px) {
+    .sidebar-collapse .main-sidebar,
+    .sidebar-collapse .left-side {
+        
+        -webkit-transform: translate(-240px, 0);
+        -ms-transform: translate(-240px, 0);
+        -o-transform: translate(-240px, 0);
+        transform: translate(-240px, 0)
+    }
+}
+
+
+.sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+}
+.sidebar-menu > li {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    border-bottom: solid 1px #dfe5e7;
+
+}
+.sidebar-menu > li > a {
+    padding: 14px;
+    display: block;
+    border-left: 3px solid transparent;
+    color: #647d8b; /* Primary LINK or Primary or main NAV text color */
+    font-size:13px;
+    font-family: Lato-Regular;
+}
+.sidebar-menu > li > a > .fa {
+    width: 20px;
+}
+.sidebar-menu > li:hover > a {
+    color: #000; /* Primary LINK or Primary or main NAV HOVAR and ACTIVE state TEXT color */
+    background: #eceff1; /* Primary LINK or Primary or main NAV HOVAR and ACTIVE state BG color */
+    border-left-color: #000;
+
+}
+.sidebar-menu > li.active>a {
+    color:#000;
+    font-weight: bold;
+    margin-bottom: 3px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.24);/* Primary LINK or Primary or main NAV SHADOW for ACTIVE state */
+    border-left-color: #000;
+}
+.sidebar-menu > li > .treeview-menu {
+    margin: 0 1px;
+    background: #dfe5e7;
+
+}
+.sidebar-menu > li .label,
+.sidebar-menu > li .badge {
+    margin-top: 3px;
+    margin-right: 5px;
+}
+.sidebar-menu li.header {
+    padding: 7px 25px 5px 15px;
+    font-size: 12px;
+    color: #fff;
+    background: #000; /* NAvigation HEADER BACKGROUND */
+}
+.sidebar-menu li > a > .fa-angle-left {
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin-right: 10px;
+    margin-top: 3px;
+    transform: rotate(180deg);
+}
+.sidebar-menu li.active > a > .fa-angle-left {
+    transform: rotate(-90deg);
+}
+.sidebar-menu li.active > .treeview-menu {
+    display: block;
+}
+.sidebar-menu a {
+    color: #b8c7ce;
+    text-decoration: none;
+}
+.sidebar-menu .treeview-menu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    padding-left: 5px;
+}
+.sidebar-menu .treeview-menu .treeview-menu {
+    padding-left: 20px;
+}
+.sidebar-menu .treeview-menu > li {
+    margin: 0;
+}
+.sidebar-menu .treeview-menu > li > a {
+    padding: 8px 5px 8px 15px;
+    display: block;
+    font-size: 12px; /* SUB MENU TEXT SIZE*/
+    color: #607d8b; /* SUB MENU TEXT COLOR*/
+}
+.sidebar-menu .treeview-menu > li > a > .fa {
+    width: 20px;
+}
+.sidebar-menu .treeview-menu > li > a > .fa-angle-left,
+.sidebar-menu .treeview-menu > li > a > .fa-angle-down {
+    width: auto;
+}
+
+.sidebar-menu .treeview-menu > li > a:hover {
+    color: #000; /* SUB MENU TEXT COLOR FOR HOVER */
+    background-color: #e7ebed; /* SUB MENU BG COLOR FOR HOVER */
+}
+.sidebar-menu .treeview-menu > li.active > a{
+    color: #000; /* SUB MENU TEXT COLOR FOR ACTIVE STATE */
+    background-color: #e7ebed; /* SUB MENU BG COLOR FOR ACTIVE STATE */
+    font-weight: bold;
+}

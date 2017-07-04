@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org">
+
+<head data-th-replace="fragments/sb-admin :: hdr">
+</head>
+
+<body>
+   <!-- TOP NAV BAR START -->
+   <div data-th-replace="fragments/sb-admin :: top-nav"></div>
+   <!-- TOP NAV BAR END -->
+   <!--BODY WRAPPER START -->
+   <div class="wrapper">
+      <!--SIDE NAV START -->
+      <div data-th-replace="fragments/sb-admin :: vert-nav-admin"></div>
+      <!--SIDE NAV END -->
+      <!-- BODY OR CONTENT BOX START -->
+      <main class="content-wrapper">
+          <!-- PAGE TITLE BOX START -->
+          <section class="content-header">
+          <h1>
+            Agent Details List
+          </h1>
+          <!-- <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Agent Institutes</a></li>
+            <li class="active">Reconciliation Report</li>
+          </ol> -->
+        </section>
+          <!-- PAGE TITLE BOX END -->
+          <!-- CONTENT AREA START -->
+          <div class="content-area">
+             <!-- MESSAGE SHOW BOX START -->
+              <div class="alert alert-success" th:text="${message}"></div>
+             <!-- MESSAGE SHOW BOX END -->
+             
+              
+              <!-- DATAGRID START -->
+              
+              <div class="datagrid">
+						<table id="agentUploadList" class="datalist-head">
+							<thead>
+								<tr class="success">	
+									<th>Is Dummy</th>
+									<th>Agent Institute ID</th>
+									<th>Agent Name</th>
+									<th>Agent Alias Name</th>
+									<th>Mobile Number</th>									
+									<th>Agent Shop Name</th>
+									<th>Type of Business</th>
+									<th>Payment Mode</th>
+									<th>Payment Channel</th>
+									<th>Address</th>
+									<th>Address2</th>
+									<th>Address3</th>
+									<th>State</th>
+									<th>City</th>
+									<th>Pincode</th>
+									<th>Latitude</th>
+									<th>Longitude</th>
+									<th>Effective Form Date</th>
+									<th>Effective To Date</th>
+									<th>Agent Reference Id</th>					
+								</tr>
+							</thead>
+							<tbody id="listBody"></tbody>
+						</table>
+					</div>
+             <!-- DATAGRID END -->
+
+             <!-- BUTTON START -->
+                  <!-- <div>
+                    <button type="button" id="btnView" onclick="agentDtl('V');" class="btn btn-default waves-effect waves-light">View Details</button>
+					<button type="button" id="btnEdit" onclick="agentDtl('E');" class="btn btn-default waves-effect waves-light">Edit Details</button>                   
+                </div> -->
+             <!-- BUTTON END --> 
+            
+          </div>
+          <!-- CONTENT AREA END -->
+      </main>
+      <!-- BODY OR CONTENT BOX START -->
+      <!-- FOOTER BOX START -->
+      <div data-th-replace="fragments/sb-admin :: footer"></div>
+      <script type="text/javascript" th:src="@{/js/couAdmin.js}"></script>
+      <script>
+      	$(document).ready(function(){
+      		alert('kkk');
+      		$('.buttons-csv').click(function(){
+      			alert('Called Success');
+      		});
+      		
+      	});
+      </script>
+      <!-- FOOTER BOX END -->
+   </div>
+   <!--BODY WRAPPER START -->
+</body>
+
+</html>

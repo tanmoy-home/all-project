@@ -1,0 +1,939 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.springframework.org/security/tags">
+<title>Complaint Entry Form</title>
+<link rel="stylesheet" th:href="@{/css/bbps-bootstrap.css}" />
+<link rel="stylesheet" th:href="@{/css/newstyle.css}" />
+<!-- <link rel="stylesheet" th:href="@{/css/style.css}" /> -->
+
+<head>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script type="text/javascript" src="/jsvalidation.functions.js"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.js"></script> -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+
+</head>
+<body>
+	<!-- <form  enctype="multipart/form-data" method="post" th:object="${complaint1}"> -->
+
+
+	<!-- <div id="header"></div> -->
+	<div id="wrapper">
+
+		<div id="page-content-wrapper">
+			<div class="col-md-12 container-fluid">
+				<div class="col-xs-2 col-md-2"></div>
+				<div class="col-xs-10 col-md-10"   bgcolor="#CCCCCC" align="center"	>
+					
+							<p th:text="${message}" align="center" style="color: red;" />
+						
+							<h4 style="color: #006dcc; text-align: center">Complaint Entry Form</h4>
+						
+					<ul class="col-xs-10 col-md-10 ulraise">
+						<li class="col-md-4 tblclas"><input type="radio" name="requestType"	value="complaintShown" /> <span>Register Complaint</span></li>
+						<li class="col-md-2 tblclas">&nbsp;</li>
+						<li class="col-md-4 tblclas"><input type="radio" name="requestType"	value="checkStatus" /> <span>Check Status </span></li>
+						<!-- 	<td><input type="radio" name="requestType" value="complaintHistory"/> <span>Complaint History </span>
+	</td> -->
+					</ul>
+				</div>
+				<div class="whiteSpace">&nbsp;</div>
+				<!-- register complaint -->
+
+				
+					<div class="col-xs-10 col-md-10 box" align="center" id="complaintShown"	style="display: none;" >
+						<ul class="col-xs-10 col-md-10 ulraise">
+							<li class="col-md-4 tblclas">Type of Complaint:</li>
+							<li class="col-md-2 tblclas">&nbsp;</li>
+							<li class="col-md-4 tblclas">
+							<select class="form-control" onchange="cmsFunction(this.value);">
+							<option th:each="complaintType : ${complaintTypes}"	th:value="${complaintType.key}"	th:text="${complaintType.value}"></option>
+							</select>
+							</li>
+						</ul>
+			
+					<ul class="col-xs-10 col-md-10 ulraise">
+						<li class="col-md-4 tblclas">
+							<form th:action="@{/1/complaint/complaintLists}" th:method="post" th:object="${complaint}">
+								<div style="display: none;" id="TBC">
+									<ul class="col-xs-10 col-md-10 ulraise">
+										<li  class="col-md-4 tblclas">Mobile Number: <span class="required">*</span></li>
+										<li class="col-md-6 tblclas">
+										<input type="text" id="mobNo" name="mobNo" th:field="*{mobNo}" pattern="[789][0-9]{9}"	maxlength="10" size="15" required="required"/>
+										<br></br><span style="font-size: 8pt">(10 digits. ex - 9830167123)</span>
+										<input type="hidden" th:field="*{tenantId}" />
+										</li>
+										
+										<input type="hidden" th:field="*{transactionId}" />
+									</ul>
+									<ul>
+										<li  class="col-md-6 tblclas" align="center">
+										<br></br>
+										<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
+										<input type="submit" class="button" value="Next >>" />
+										</li>									
+									</ul>
+								</div>
+							</form>
+						
+
+							<form id="serviceComplaint" th:action="@{/complaint/serviceBasedComplaint}" method="post" th:object="${serviceBasedComplaint}" onsubmit="return confirm('Do you want to submit the Complaint?')">
+								<table id="SBC" style="display: none;width: 100%; padding-left: 30%;">	
+								<tr>
+								<td>Assigned To:</td>
+								<td>
+									<table>
+									<tr>
+										<td>Agent <input  type="radio" name="serviceType" value="AGENT" id="agent" checked="checked" /></td> 
+										<td>Biller <input type="radio" name="serviceType" value="BILLER" id="biller" /></td>
+										<td>System <input type="radio" name="serviceType" value="SYSTEM" id="system" /> </td>
+									</tr>
+									</table>
+								</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2">&nbsp;</td>
+								</tr>
+								
+								<tr>
+								<td>Select Reason:<span style="color:red;">*</span></td>
+								<td>
+									<table id="agentServList">
+									<tr>
+										<td>
+											<select class="form-control" id="serviceTagAgent" name="serviceTag" required="required">
+											<option value="">Select Reason</option>
+											<option th:each="serviceTag : ${agentServiceTagList}"	
+											th:value="${serviceTag.complaintReasonCode}" th:text="${serviceTag.complaintReasonName}"></option>
+											</select>
+										</td>
+									</tr>
+									</table>
+									
+									<table id="billerServList">
+									<tr>
+										<td>
+											<select class="form-control" id="serviceTagBill" name="serviceTag" required="required">
+											<option value=""> Select Reason </option>
+											<option th:each="serviceTag : ${billerServiceTagList}"	
+											th:value="${serviceTag.complaintReasonCode}" th:text="${serviceTag.complaintReasonName}"></option>
+											</select>
+										</td>
+									</tr>
+									</table>
+									
+									<table id="systemServList">
+									<tr>
+										<td>
+											<select class="form-control" id="serviceTagSystem" name="serviceTag" required="required">
+											<option value=""> Select Reason </option>
+											<option th:each="serviceTag : ${systemServiceTagList}"	
+											th:value="${serviceTag.complaintReasonCode}" th:text="${serviceTag.complaintReasonName}"></option>
+											</select>
+										</td>
+									</tr>
+									</table>
+								
+								</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2">&nbsp;</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2" align="center">
+										<table id="agentDetails" class="tableComplaintInst">
+										<tr>
+											<td colspan="2"><div id="noagent"></div></td>
+										</tr>
+										<tr>
+											<td colspan="2"><strong>Search By:</strong></td>
+										</tr>
+										
+										<tr>
+											<td><label for="agentName">Agent Name</label> <input type="text" name="agentName" id="agentName" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');"></input></td>
+											
+											<td><label for="agentId">Agent ID</label> <input type="text" name="agentId" id="agentId" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');"></input></td>
+										</tr>
+										<tr>
+											<td><label for="agentLocation">Agent Location</label> <input type="text" name="agentLocation" id="agentLocation" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');"></input>
+											</td>
+											<td><label for="agentpin">Agent Pin</label> <input type="text" name="agentpin" id="agentpin" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"></input></td>
+										</tr>
+										<tr>
+											<td colspan="2"><input type="button" id="localAgent" value="Get Agent" /></td>
+										</tr>
+										<tr><td colspan="2"></td></tr>
+										<tr>															
+											<td colspan="2"><br></br>Agent<span style="color:red;">*</span>
+											<select class="form-control" id="agentInst" name="assignedBuzInst" size="1" required="required">
+											<option value=""> Select Agent </option>
+											<option th:each="agent : ${agentList}" th:value="${agent.agentID}" th:text="${agent.agentName}"></option>
+											</select>&nbsp;<input type="button" id="getAllAgent" value="Load All"/></td>
+										</tr>
+										<tr>
+											<td colspan="2"><div id="noagentseleted"></div></td>
+										</tr>
+										</table>
+											
+										<table id="billerDetails" class="tableComplaintInst">
+											<tr>
+												<td width="100%"><div id="nobiller"></div></td>
+											</tr>
+											<tr>
+												<td width="100%"><strong>Search By:</strong></td>
+											</tr>
+										
+											<tr>
+												<td>Biller Name <input type="text" name="billerName" id="billerName" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');"/></td>
+											</tr>
+											<tr>		
+												<td><input type="button" id="localBiller" value="Get Biller"/></td>
+											</tr>
+											<tr>
+												<td><br></br>Biller<span style="color:red;">*</span>
+												<select class="form-control" id="billerInst" name="assignedBuzInst" size="1" required="required">
+												<option value=""> Select Biller </option>
+												<option th:each="biller : ${billerList}" th:value="${biller.billerId}"	th:text="${biller.billerName}"></option>
+												</select>&nbsp;<input type="button" id="getAllBiller" value="Load All"/></td>
+											</tr>
+											<tr>
+												<td><div id="nobillerseleted"></div></td>
+											</tr>
+										</table>
+
+
+										<table id="systemDetails" class="tableComplaintInst" >
+											<tr>
+												<td width="100%"><div id="nosystem"></div></td>
+											</tr>
+										
+											<tr>
+												<td width="100%"><strong>Search By:</strong></td>
+											</tr>
+										
+											<tr>
+											<td><label for="systemName">Biller Name</label> <input type="text" name="systemName" id="systemName" onkeyup="this.value=this.value.replace(/[^0-9a-zA-Z]/g,'');"></input></td>
+										</tr>
+										
+										<tr>
+											<td width="100%"><input type="button" id="localSystem" value="Get Biller" /></td>
+										</tr>
+										<tr>
+											<td width="100%"><br></br>Biller<span style="color:red;">*</span>
+											<select class="form-control" id="systemInst" name="assignedBuzInst" size="1" required="required">
+											<option value=""> Select Biller </option>
+											<option th:each="biller : ${billerList}" th:value="${biller.billerId}"	th:text="${biller.billerName}"></option>
+											</select>&nbsp;<input type="button" id="getAllSystem" value="Load All"/></td>
+										</tr>
+										</table>
+								</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2">&nbsp;</td>
+								</tr>
+								
+								<tr>
+								<td>Problem Description:<span style="color:red;">*</span></td>
+								<td>
+									<table>
+									<tr>
+										<td>
+										<textarea rows="10" cols="10" maxlength="100" class="txtAreaComplaint" id="compDesc" name="compDesc" required="required"></textarea>
+										<br></br>
+    									<div style="color:red;" id="compDescMsg"></div>
+										</td>
+									</tr>
+									</table>
+								</td>
+								</tr>
+								
+								<tr>
+								<td colspan="2" align="center">
+								<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
+								<input type="submit" class="button" value="Submit" onsubmit="return ckeckCompDesc()"/>
+								</td>
+								</tr>
+								</table>
+
+							</form>
+						</li>
+					</ul>
+
+
+
+				</div>
+
+				<!--  end register complaint-->
+<!-- 
+				check status 
+				<form th:action="@{/complaint/viewComplaints}" th:object="${complaint}" method="get">
+					<div class="col-md-12 box" align="center" id="checkStatus"	style="display: none;" >
+
+						<table style="width: 50%;">
+
+							<tr>
+								<td width="30%">Type of Complaint:</td>
+								<td><select name="complaintType" class="form-control"
+									onchange="cmsStatusFunction(this.value);">
+										<option th:each="complaintType : ${complaintTypes}"
+											th:value="${complaintType.key}"
+											th:text="${complaintType.value}"></option>
+								</select></td>
+							</tr>
+
+							<tr>
+								<td>Complaint ID:  <span style="color:red;">*</span></td>
+								<td>
+								<input type="text" th:field="*{complaintId}" pattern="^[a-zA-Z]{2}[0-9]{13}" maxlength="15" size="15" required="required" />
+								<br></br><span style="font-size: 8pt">(15 Alpha. ex - AP9101121230110)</span>
+								</td>
+							</tr>
+							
+							<tr id="TBCStatusor">
+								
+								<td align="center" colspan="2">OR</td>
+							</tr>
+
+							<tr id="TBCStatusMob">
+								<td >Mobile Number:  <span style="color:red;">*</span></td>
+								<td align="left" valign="center">
+								<input type="text" id="statusMobNo" th:field="*{mobNo}" pattern="[789][0-9]{9}" maxlength="10" size="15" required="required" />
+								<br></br><span style="font-size: 8pt">(10 digits. ex - 9830167123)</span>
+								</td>
+							</tr>
+							
+							<tr>
+								
+								<td align="center" colspan="2">
+								<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+								<input type="submit" class="button" value="Next >>" />
+								</td>
+							</tr>
+							</table>
+
+						
+					</div>
+					
+				</form> -->
+				
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- </form> -->
+</body>
+</html>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		document.getElementById('TBC').style.display = 'block';
+		document.getElementById('SBC').style.display = 'none';
+		$('#TBCStatusor').prop("disabled", false);
+		$('#TBCStatusMob').prop("disabled", false);
+		$("#statusMobNo").prop("required", true);
+		
+		$("#agentDetails").show("slow");
+		$("#billerDetails").hide();
+		$("#systemDetails").hide();
+		
+		$("#billerServList").prop("disabled", true);
+		$("#systemServList").prop("disabled", true);
+		$("#serviceTagBill").prop("disabled", true);
+		$("#serviceTagSystem").prop("disabled", true);
+		$("#billerServList").hide();
+		$("#systemServList").hide();
+		
+		// start first time when all radio loaded only agent(select) enabled 
+		$("#agentInst").prop("disabled", false);
+		$("#billerInst").prop("disabled", true);		
+		$("#systemInst").prop("disabled", true);
+		//$("#iniChanel").attr('disabled', true);
+		// end first time when all radio loaded only agent(select) enabled 
+		
+		
+		$('input[type="radio"]').click(function() {
+
+			if ($(this).attr("value") == "complaintShown") {
+				$(".box").not("#complaintShown").hide();
+				$("#complaintShown").show();
+			}
+			if ($(this).attr("value") == "checkStatus") {
+
+				$(".box").not("#checkStatus").hide();
+				$("#checkStatus").show();
+				//$("#complaintShown").show();
+			}
+			if ($(this).attr("value") == "complaintHistory") {
+
+				url = window.location.origin + "/complaint/complaintHistory";
+				$(location).attr('href', url);
+			}
+
+		});
+		
+		$("#complaintId").blur(function() {
+			if ($(this).val() != "") {
+				$("#statusMobNo").prop("disabled", true);
+			}
+			else {
+				$("#statusMobNo").prop("disabled", false);
+			}
+		});
+
+		$("#statusMobNo").blur(function() {
+			if ($(this).val() != "") {
+				$("#complaintId").prop("disabled", true);
+			}
+			else {
+				$("#complaintId").prop("disabled", false);
+			}
+		});
+
+		
+
+	});
+
+	$("#agent").on("click", function() {
+		$("#agentDetails").show("slow");
+		$("#billerDetails").hide();
+		$("#systemDetails").hide();
+		
+		$("#agentInst").prop("disabled", false);
+		$("#billerInst").prop("disabled", true);		
+		$("#systemInst").prop("disabled", true);
+		
+		$("#agentDetails").prop("disabled", false);
+		$("#systemDetails").prop("disabled", true);
+		$("#billerDetails").prop("disabled", true);
+		//$("#iniChanel").attr('disabled', true);
+		
+		$("#billerServList").prop("disabled", true);
+		$("#systemServList").prop("disabled", true);
+		$("#serviceTagBill").prop("disabled", true);
+		$("#serviceTagSystem").prop("disabled", true);
+		$("#billerServList").hide();
+		$("#systemServList").hide();
+		
+		$("#agentServList").prop("disabled", false);
+		$("#serviceTagAgent").prop("disabled", false);
+		$("#agentServList").show();
+		
+		$("#billerName").val("");
+		$("#systemName").val("");
+		
+		//msg reset
+		$("#noagent").html("");
+		$("#nobiller").html("");
+		$("#nosystem").html("");
+		
+		document.getElementById("billerInst").options[0].selected = true;
+		document.getElementById("systemInst").options[0].selected = true;
+		
+	});
+
+	$("#biller").on("click", function() {
+		$("#billerDetails").show("slow");
+		$("#agentDetails").hide();
+		$("#systemDetails").hide();
+		
+		$("#billerInst").prop("disabled", false);	
+		$("#agentInst").prop("disabled", true);
+		$("#systemInst").prop("disabled", true);
+
+		$("#billerDetails").prop("disabled", false);
+		$("#agentDetails").prop("disabled", true);
+		$("#systemDetails").prop("disabled", true);
+		//$("#iniChanel").attr('disabled', true);
+		
+		$("#agentServList").prop("disabled", true);
+		$("#serviceTagAgent").prop("disabled", true);
+		$("#systemServList").prop("disabled", true);
+		$("#serviceTagSystem").prop("disabled", true);
+		$("#agentServList").hide();
+		$("#systemServList").hide();
+		
+		$("#billerServList").prop("disabled", false);
+		$("#serviceTagBill").prop("disabled", false);
+		$("#billerServList").show();
+		
+		$("#agentId").val("");
+		$("#agentName").val("");
+		$("#agentLocation").val("");
+		$("#agentpin").val("");
+		$("#systemName").val("");
+		
+		//msg reset
+		$("#noagent").html("");
+		$("#nobiller").html("");
+		$("#nosystem").html("");
+		
+		document.getElementById("agentInst").options[0].selected = true;
+		document.getElementById("systemInst").options[0].selected = true;
+		
+	});
+	$("#system").on("click", function() {
+		$("#systemDetails").show("slow");
+		$("#agentDetails").hide();
+		$("#billerDetails").hide();
+		
+		$("#systemInst").prop("disabled", false);
+		$("#agentInst").prop("disabled", true);
+		$("#billerInst").prop("disabled", true);
+		
+		$("#systemDetails").prop("disabled", false);
+		$("#billerDetails").prop("disabled", true);
+		$("#agentDetails").prop("disabled", true);
+		//$("#iniChanel").attr('disabled', false);
+		
+		
+		$("#agentServList").prop("disabled", true);
+		$("#serviceTagAgent").prop("disabled", true);
+		$("#billerServList").prop("disabled", true);
+		$("#serviceTagBill").prop("disabled", true);
+		$("#agentServList").hide();
+		$("#billerServList").hide();
+		
+		$("#systemServList").prop("disabled", false);
+		$("#serviceTagSystem").prop("disabled", false);
+		$("#systemServList").show();
+		
+		$("#billerName").val("");
+		$("#agentId").val("");
+		$("#agentName").val("");
+		$("#agentLocation").val("");
+		$("#agentpin").val("");
+		
+		//msg reset
+		$("#noagent").html("");
+		$("#nobiller").html("");
+		$("#nosystem").html("");
+		
+		document.getElementById("agentInst").options[0].selected = true;
+		document.getElementById("billerInst").options[0].selected = true;
+
+	});
+
+	$("#localAgent").on('click',	function() {
+
+				var agentName = $.trim($("#agentName").val());
+				var agentId = $.trim($("#agentId").val());
+				var agentLocation = $.trim($("#agentLocation").val());
+				var agentpin = $.trim($("#agentpin").val());
+				
+				var checkBlank = 0
+				if (agentName != ""){
+					checkBlank = 1;
+				}
+				if(agentId != ""){
+					if(checkBlank !=1){
+						checkBlank =1;
+					}
+				}
+				if(agentLocation != ""){
+					if(checkBlank !=1){
+						checkBlank =1;
+					}
+				}
+				if((agentpin != "")){
+					if(checkBlank !=1){
+						checkBlank =1;
+					}
+				}
+				
+				var lenChkFail = 0;
+				if(agentName != "")
+				{
+					var len = agentName.length;
+					if(3 > len)
+					{
+						lenChkFail = 1;
+					}
+				}
+				if(agentId != "")
+				{
+					var len = agentId.length;
+					if(3 > len)
+					{
+						lenChkFail = 1;
+					}
+				}
+				if(agentLocation != "")
+				{
+					var len = agentLocation.length;
+					if(3 > len)
+					{
+						lenChkFail = 1;
+					}
+				}
+				if(agentpin != "")
+				{
+					var len = agentpin.length;
+					if(3 > len)
+					{
+						lenChkFail = 1;
+					}
+				}
+
+				
+				if(checkBlank != 1) {
+					$("#noagent").html("Atleast enter one value to search an Agent");
+				}
+				else if(lenChkFail==1)
+				{
+					$("#noagent").html("Search field should contain atleast 3 charater");
+				}
+				else 
+				{
+					//$( "#getAllAgent" ).prop( "checked", false );
+					$("#noagent").html("");
+					var tbl = $("#agentDetails input").serialize();
+					$.ajax({
+						url : "getLocalAgent",
+						type : "post",
+						data : tbl,
+						success : function(htm) {
+							htm = JSON.stringify(htm);
+							
+							var html = JSON.parse(htm);//$.parseJSON(htm);
+							
+							if(html ==''){
+								$("#noagent").html("No Agent found on given criteria");
+							}
+							var se = $("#agentInst");
+							
+							se.empty();
+							var opt = $("<option />", {
+								value : '',
+								text : ' --- Select Agent --- '
+							});
+							opt.appendTo(se);
+							
+							var recordCnt = 0;
+							$.each(html, function(ip, ep) {
+								 var opt = $("<option />", {
+									value : ep.agentId,
+									text : ep.agentName
+								});
+								recordCnt++;
+								opt.appendTo(se);
+							});
+							
+							if(recordCnt==1)
+							{
+								document.getElementById("agentInst").options[1].selected = true;
+							}
+
+						}
+					});
+				} 
+			});
+
+	$("#localBiller").on('click', function() {
+
+		var billerName = $.trim($("#billerName").val());
+		var lenChkFail = 0;
+		if(billerName != "")
+		{
+			var len = billerName.length;
+			if(3 > len)
+			{
+				lenChkFail = 1;
+			}
+		}
+		else
+		{
+			lenChkFail = 1;
+		}
+		
+		if (lenChkFail == 0) {
+			var tbl = $("#billerDetails input").serialize();
+			$("#nobiller").html("");
+			//$( "#getAllBiller" ).prop( "checked", false );
+			$.ajax({
+				url  : "getBiller",
+				type : "post",
+				data : tbl,
+				success : function(htm) {
+					htm = JSON.stringify(htm);
+					var html = JSON.parse(htm);//$.parseJSON(htm);
+					if(html ==''){
+						$("#nobiller").html("No Biller found on given criteria");
+					}
+					var se = $("#billerInst");
+					
+					se.empty();
+					var opt = $("<option />", {
+						value : '',
+						text : ' --- Select Biller --- '
+					});
+					opt.appendTo(se);
+					
+					var recordCnt = 0;
+					$.each(html, function(ip, ep) {
+						var opt = $("<option />", {
+							value : ep.billerId,
+							text : ep.billerName
+						});
+						recordCnt++;
+						opt.appendTo(se);
+					});
+					
+					if(recordCnt==1)
+					{
+						document.getElementById("billerInst").options[1].selected = true;
+					}
+
+				}
+			});
+		} 
+		else {
+			$("#nobiller").html("Search field should contain atleast 3 charater");
+		}
+	});
+
+	$("#localSystem").on('click', function() {
+
+				var billerName = $.trim($("#systemName").val());
+				var lenChkFail = 0;
+				if(billerName != "")
+				{
+					var len = billerName.length;
+					if(3 > len)
+					{
+						lenChkFail = 1;
+					}
+				}
+				else
+				{
+					lenChkFail = 1;
+				}
+				
+				if (lenChkFail == 0)
+				{
+					//$( "#getAllSystem" ).prop( "checked", false );
+					var tbl = $("#systemDetails input").serialize();
+					$("#nosystem").html("");
+					$.ajax({
+						url  : "getLocalSystem",
+						type : "post",
+						data : tbl,
+						success : function(htm) {
+							htm = JSON.stringify(htm);
+							var html = JSON.parse(htm);//$.parseJSON(htm);
+
+							if(html =='')
+							{
+								$("#nosystem").html("No Biller found on given criteria");
+							}
+							var se = $("#systemInst");
+							
+							se.empty();
+							var opt = $("<option />", {
+								value : '',
+								text : ' --- Select Biller --- '
+							});
+							opt.appendTo(se);
+							
+							var recordCnt = 0;
+							$.each(html, function(ip, ep) {
+								var opt = $("<option />", {
+									value : ep.billerId,
+									text : ep.billerName
+								});
+								recordCnt++;
+								opt.appendTo(se);
+							});
+							
+							if(recordCnt==1)
+							{
+								document.getElementById("systemInst").options[1].selected = true;
+							}
+
+						}
+					});
+				}
+				else {
+					$("#nosystem").html("Search field should contain atleast 3 charater");
+				}
+			});
+	
+	
+	$("#getAllAgent").on('click', function() {
+		
+		if($("#getAllAgent").prop('checked', true) ){
+			$("#noagent").html("");
+			var tbl = $("#agentDetails input").serialize();
+			
+			$.ajax({
+				url : "getAllLocalAgent",
+				type : "post",
+				data : tbl,
+				success : function(htm) {
+					
+					htm = JSON.stringify(htm);
+					var html = JSON.parse(htm);//$.parseJSON(htm);
+					if(html ==''){
+						$("#noagent").html("No Agent found on given criteria");
+					}
+					var se = $("#agentInst");
+					
+					se.empty();
+					var opt = $("<option />", {
+						value : '',
+						text : ' --- Select Agent --- '
+					});
+					opt.appendTo(se);
+					$.each(html, function(ip, ep) {
+						 var opt = $("<option />", {
+							value : ep.agentId,
+							text : ep.agentName
+						});
+						opt.appendTo(se);
+					});
+
+				}
+			});
+		}
+
+	});
+	$("#getAllBiller").on('click', function() {
+		if($("#getAllBiller").prop('checked', true) ){
+			var tbl = $("#billerDetails input").serialize();
+			$("#nobiller").html("");
+			$.ajax({
+				url : "getAllBiller",
+				type : "post",
+				data : tbl,
+				success : function(htm) {
+					htm = JSON.stringify(htm);
+					var html = JSON.parse(htm);//$.parseJSON(htm);
+					
+					var se = $("#billerInst");					
+					se.empty();
+					var opt = $("<option />", {
+						value : '',
+						text : ' --- Select Biller --- '
+					});
+					opt.appendTo(se);
+					
+					$.each(html, function(ip, ep) {
+						var opt = $("<option />", {
+							value : ep.billerBussinessId,
+							text : ep.billerName
+						});
+						opt.appendTo(se);
+					});
+
+				}
+			});
+		}
+	
+	});
+	$("#getAllSystem").on('click', function() {
+		if($("#getAllSystem").prop('checked', true) ){
+			$("#nosystem").html("");
+			var tbl = $("#systemDetails input").serialize();
+			$.ajax({
+				url  : "getAllBiller",
+				type : "post",
+				data : tbl,
+				success : function(htm) {
+					htm = JSON.stringify(htm);
+					var html = JSON.parse(htm);//$.parseJSON(htm);			
+					var se = $("#systemInst");					
+					se.empty();
+					
+					var opt = $("<option />", {
+						value : '',
+						text : ' --- Select Biller --- '
+					});
+					opt.appendTo(se);
+					
+					$.each(html, function(ip, ep) {
+						var opt = $("<option />", {
+							value : ep.billerBussinessId,
+							text  : ep.billerName
+						});
+						opt.appendTo(se);
+					});
+
+				}
+			});
+		}
+		
+	});
+
+	function cmsStatusFunction(val) {
+		if (val == 'TBC') {
+			$("#TBCStatusor").show();
+			$("#TBCStatusMob").show();
+			$('#TBCStatusor').prop("disabled", false);
+			$('#TBCStatusMob').prop("disabled", false);
+			/* 			document.getElementById('TBCStatusMobile').style.display = 'block'; */
+			$("#statusMobNo").prop("required", true);
+
+		}
+		if (val == 'SBC') {
+			$("#strComplaintId").prop("disabled", false);
+			$("#TBCStatusor").hide();
+			$("#TBCStatusMob").hide();
+			$('#TBCStatusor').prop("disabled", true);
+			$('#TBCStatusMob').prop("disabled", true);
+			//document.getElementById('TBCStatus').style.display = 'none';
+			/* document.getElementById('TBCStatusMobile').style.display = 'none'; */
+			$("#statusMobNo").prop("required", false);
+		}
+	}
+	function cmsFunction(val) {
+
+		if (val == 'TBC') {
+			document.getElementById('TBC').style.display = 'block';
+			document.getElementById('SBC').style.display = 'none';
+		}
+		if (val == 'SBC') {
+			document.getElementById('SBC').style.display = 'block';
+			document.getElementById('TBC').style.display = 'none';
+		}
+	}
+
+	function ckeckCompDesc() {
+		
+		var systemInst = $.trim($("#systemInst").val());
+		var billerInst = $.trim($("#billerInst").val());
+		var agentInst = $.trim($("#agentInst").val());
+		var check = 0
+		if (agentInst != ""){
+			check = 1;
+		}
+		if(billerInst != ""){
+			if(check !=1){
+				check =1;
+			}
+		}
+		if(systemInst != ""){
+			if(check !=1){
+				check =1;
+			}
+		}
+		
+		var compDesc = $.trim($("#compDesc").val());
+		if (compDesc != "") {
+			$("#compDescMsg").html("");
+			if(check ==1){
+				return true
+			}
+		} else {
+			$("#compDescMsg").html("Please provide valid details");
+			return false;
+		}
+	}
+</script>

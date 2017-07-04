@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+	<xs:element name="PaymentReceipt">
+		<xs:complexType>
+			<xs:sequence>
+				<!-- Changes for adding Agent Details start -->
+				<xs:element type="bbps:agentChannelDetails" name="AgentChannelDetails"
+					minOccurs="0" maxOccurs="1" />
+				<!-- Changes for adding Agent Details end -->
+				<xs:element type="xs:string" name="customerName"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="xs:string" name="transactionRefId"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="xs:date" name="transactionDateTime"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="xs:date" name="billDate" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="billerId" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="billNumber" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="billPeriod" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="billerName" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="amount" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="ccf" minOccurs="0"
+					maxOccurs="1" />
+				<xs:element type="xs:string" name="paymentChannel"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="xs:string" name="paymentMode"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="xs:string" name="customerMobile"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:errorMessage" name="errorMessages"
+					minOccurs="0" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+	

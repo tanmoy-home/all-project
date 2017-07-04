@@ -1,0 +1,199 @@
+<!DOCTYPE html[
+<!ENTITY nbsp "&#160;">  
+<!ENTITY copy "&#169;"> ]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+
+<title>Welcome to BBPOU</title>
+
+<!-- Bootstrap Core CSS -->
+<link href="/css/bbps-bootstrap.css" rel="stylesheet"></link>
+
+<!-- MetisMenu CSS -->
+<link href="/css/metisMenu.min.css" rel="stylesheet"></link>
+<!-- Custom CSS -->
+<!-- <link href="@{*{css}}" rel="stylesheet"></link>
+				String css = "/resource/css/"+tenantId+"/BBPOUCSS.css"; -->
+
+<link href="/resource/css/OU22/BBPOUCSS.css" rel="stylesheet"></link>
+<link href="/css/font-awesome.min.css" rel="stylesheet"></link>
+<!-- Custom Fonts -->
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via  -->
+<!--[if lt IE 9]>
+		<script src="/js/html5shiv.js"></script>
+		<script src="/js/respond.min.js"></script>
+		<![endif]-->
+
+<!-- jQuery -->
+<script src="/js/jquery-1.12.3.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="/js/metisMenu.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/bbpou.js"></script>
+
+<!-- Page Specific JS -->
+<script src="/js/billpay.js"></script>
+<script>
+document.body.onload=loadDetails;
+</script>
+
+
+</head>
+
+<body>
+	<div id="wrapper">
+        <!-- HEADER -->
+		<div id="agentheader"></div>
+		<!-- /HEADER -->
+
+		<!-- SIDEBAR -->
+		<!-- left menu -->
+		<div class="left-side">
+			<a class="sidebar_switch on_switch" href="javascript:void(0)">Sidebar
+				switch</a>
+			<div class="navbar-default sidebar" role="navigation">
+				<div class="sidebar-nav navbar-collapse">
+					<ul class="nav" id="side-menu">
+					    <li><a href="javascript:void(0);" onclick="loadDetails()">Agent Dashboard</a>
+						<li><a href="javascript:void(0);">Bill Fetch/Payment</a></li>
+						<!-- 						<li><a href="bill-payment-screen.html">Pay Bill</a></li>
+ -->
+                        
+						<li><a href="javascript:void(0);">Transaction History</a></li>
+						<li><a href="javascript:void(0);">Commission Paid/Approved</a></li>
+						<li><a href="javascript:void(0);">Collection</a></li>
+                       	
+							<!-- <ul class="nav nav-second-level">
+								<li><a onclick="billFetchCounter()">Account Balance</a></li>
+								<li><a onclick="billFetchCounter()">Today's Collection</a></li>
+                                <li><a onclick="billFetchCounter()">Total Bill Fetch</a></li>
+                                <li><a onclick="billFetchCounter()">Total Bill Payment</a></li>
+                                </ul> --></li>
+							<!-- </ul> /.nav-second-level</li> -->
+					</ul>
+				</div>
+				<!-- /.sidebar-collapse -->
+			</div>
+			<!-- /.navbar-static-side -->
+		</div></div>
+		<!-- / left menu -->
+		<!-- /SIDEBAR -->
+
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-sm-12">
+							<div class="box" id="dashboard" style="display: none">
+								<div class="box-body">
+									<div class="row">
+										<div class="col-sm-12">
+										    <h1 class="page-header">Agent Dashboard</h1>
+										</div>
+									</div>
+								</div>
+								<!-- /box-body -->
+							</div>
+							<div class="box" id="dashboarddet" style="display: none">
+								<div class="box-body">
+									<div class="row">
+										<div class="col-sm-12">
+											<div id="details"></div>
+										</div>
+									</div>
+								</div>
+								<!-- /box-body -->
+							</div>
+							<div class="row" id="txnList" style="display: none">
+							<div class="col-md-8">
+                            <section class="panel">
+                              <header class="panel-heading">
+                                  Transaction Details
+                            </header>
+                            <div class="panel-body table-responsive">
+                                <table class="table table-hover">
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Transaction ID</th>
+                                      <th>Biller</th>
+                                      <!-- <th>Client</th> -->
+                                      <th>Amount</th>
+                                      <!-- <th>Price</th> -->
+                                      <th>Status</th>
+                                      <th>Date</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td></td>
+                                  <td>XXXXXXXXX</td>
+                                  <td>Vodafone</td>
+                                  <td>389</td>
+                                  <td><span class="label label-success">Success</span></td>
+                                  <td>10/10/2014</td>
+                              </tr>
+                              </tbody>
+                              </table>
+                              </div>
+                              </section>
+                              </div>
+							  <div class="col-lg-4" id="links">
+
+                                        <!--chat start-->
+                                        <section class="panel">
+                                            <header class="panel-heading">
+                                                Links
+                                            </header>
+                                                <div class="panel-body" id="noti-box">
+
+                                                    <div class="alert alert-block alert-danger">
+                                                        <strong><a href="javascript:void(0);">Recharge</a></strong> Update your balance.
+                                                    </div>
+                                                    <div class="alert alert-warning">
+                                                        <strong><a href="javascript:void(0);">Show All Transaction</a></strong> All transaction list date wise.
+                                                    </div>
+                                                    <div class="alert alert-success">
+                                                        <strong><a href="javascript:void(0);">Account Details</a></strong> Show account details.
+                                                    </div>
+                                                    </div></section></div></div>
+							<div class="clearfix"></div>
+                        <div class="clearfix"></div>
+					</div>
+					<!-- /.col-sm-12 -->
+				</div>
+				<!-- /.row -->
+
+				<!-- extra bottom space -->
+				<div class="btm-pad-lg">&nbsp;</div>
+
+			</div>
+		</div>
+		<!-- /#page-wrapper -->
+
+
+		<!-- FOOTER -->
+		<footer class="bbpou-footer"> Copyright &copy; 2016, R S
+			Software. All rights reserved. </footer>
+		<!-- /FOOTER -->
+		<input type='hidden' id='tenantId' name='tenantId'
+			th:value='${session.tenantId}' />
+</body>
+
+
+</html>

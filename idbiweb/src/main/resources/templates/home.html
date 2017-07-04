@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+   <title th:text="@{BBPS Portal}"></title>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>        
+	   <link th:if="${session.tenatntId}=='rbl'" rel="ICON"
+		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAOCAMAAADDoWbgAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAACHFBMVEUAOJkaM4QXMIAAAAAcMoIcNIUSLHsXMIAEHGMZM4IZMoIXMX/3GyAbNYUZMoLoHygaMYAaM4P/FQAYMYEaM4MAOJ0cNYUZMoIXMH8ZMoIZMoISKn0WL4AUK34ZMoIZMoKgJEcwL3YUMoMcMH8aM4MZMoIcMoEcMoMbMoAdNYUZMoIMJnUYMYEaMoEHM4n/EgD3Gh47LXASMoQiL3wZMoIYMYAXMoOXJEnyGyL7Gh02LnMaMoEYMoEZMoIXMIIYMYAVMoOlI0P8Gx39Ghw3LnMZMoIYMYEZMoIWMH5yKFn4Gx/rHCX4Gh4tL3cYMoIZMoIZMoIXMX8YMYDQHzDrHCXsGySeJUgZMoIYMYIZMoLsHCTuHCPzHCI5LnMYMYEZMoIZMoIaM4LsHCThHSmBKFUiMH0YMYEZMoIZMoIYMYHqHCWsIkAANpQqMXsZMoIYMYEXMIDpHCX6Gx6hJEUNM4cdMYAZMYEZMoIZMoIZMoIXMH8VLn7pHCWiJEUPM4YZMoIZMoIZMoIZMoIaM4MULX3qHCWzIj0NM4cZMoIZMoIZMoIZMoEZMoITK33sHCTwGyIAOqsdMX8ZMYEYMoEXMIAZMoIOJngULH4ZMoIaMoIXMoMaMYEVMoPoHSYVMoQaMoLrHCUZMoLxHCIZMoIZMoLtHCQZMoLuHCQZMoL3GyAZMoIZMoIZMoL5Gx4bMoEZMoL2GyAbMoHsHCT///+4+3ZUAAAAmHRSTlMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD3oAQCAwEA+aICAAECAAD5nhY+KjsIAgD83OvSfMZAAgAA+vj90oD1SAIA9fznZyyr/NUQAfbxNwOVWAP2rgMENPiEA/qqBAY094QF++o2A5ZYBv3+++N5Wqj91RAE/fj+//71SQIC/Nzc//fHQQID954VU1w9CQIAAeSPgmoAAAABYktHRLPabf9+AAAAB3RJTUUH4AIYAi0G/zC2hgAAAM9JREFUCNcBxAA7/wAemB8AICEiIwEkAgMDACWZJgQnKAUpKisGLAMALZouLzAxMjMHNAMINQA2mzc4OTqcOzwJPT4/AEBBQp1DRJ6fRUYKR0gASUqgS0xNTk+hUFELUgBTolRVDFYNV6OkWA5ZAFqlWw9cXRBeX6ZgEWEAYqdjEmRlE2ZnqGgUaQBqqWtsFW0WbqqrbxdwAHFyc3R1dnd4rHl6GHsAfK19fq5/gK+BghmDhACFsIaHsYiJiosajBuNAI6yj5CRkpOUHJWWHZcmxD5FINreWAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxNi0wMi0yNFQwMjo0NTowNi0wNTowMMjK9GYAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTYtMDItMjRUMDI6NDU6MDYtMDU6MDC5l0zaAAAAAElFTkSuQmCC"
+		type="image/png" /> 
+	<link th:if="${session.tenatntId}=='idbi'" rel="ICON"
+		href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAMAAAC6V+0/AAAAqFBMVEUAAAD1gh/2izH1hCP2izD1gyH1giD2hyn1giD1gyL1gyH1hCP1gyH1hCP1hCP2hyj1giH1gyH1gyL1gyL1hCL1hCP1gyL1hij1gyH1hCP1hCT1hST2ii/1hib1hib1hif3lkT2ii32iS31gyL2kjz1hCL1hCP1hyj2jjX1iCv1hCT1hCT1gyL1gyL1gyL1hCP1hCP1hCP1hCT3nE/1hyr1hyn1giD1hCIYamERAAAANnRSTlMA+gKOA6r8FPel0+rlYlw68+LDvJeReQjbck5KLCkkIRIPDrKjgWod6tjPzs2wnZxraFYzGRnRoQtZAAAA+klEQVQY00XNB66DMBAE0MEmtmmhQ3oIab/3P7n/zbIIRawl2/u02oGUD2uBtgXsAQoYbR8fsV2EexShlVZKYZcz8xvy+2Aoqgb7X5Bxu4nyfZcZvskGOSU9zqH6XuGLjjMhzOm5FXYWsFckMrAGUJA/WLIBNBNcyCOwzRggIDWGu8I7oz+saK5LuhEd5xsyRcLSZvQGnMmT25AryTlL1AMN1x+SlLKpJ/R41tyid3VAM2EVRL58i88JDeuwApDGekJSxzvAhy4X0tUjhkUjBKWqV+PGSee9aCgIol0+3RgAJW/PF19sUB+/p4h5zOi0geBD0aVJknYY7Q6l/B1rnwoovQAAAABJRU5ErkJggg=="
+		type="image/png" />
+	<link rel="stylesheet" th:href="@{|/css/portal-home.${session.tenatntId}.min.css|}" />
+</head>
+<body id="portal-home">
+<iframe id="header" src="/header" seamless="seamless" scrolling="no"></iframe>
+<iframe id="menu" src="/menu" seamless="seamless"></iframe>
+<div id="menu-btn"><div id="menu-btn-sub" class="arrow-left"></div></div>
+<iframe id="content" name="content" src="/welcome"></iframe>
+</body>
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#menu-btn').click(function(){
+		if($('#menu-btn-sub').hasClass('arrow-left')){
+			$('#menu-btn-sub').removeClass('arrow-left').addClass('arrow-right')
+			$('#menu').animate({
+				left:"-=220"
+			},1000);
+			$('#menu-btn').animate({
+				left:"-=220"
+			},1000);
+			$('#content').animate({
+				left:"-=220",
+				width:"+=220"
+			},1000);
+		}else {
+			$('#menu-btn-sub').removeClass('arrow-right').addClass('arrow-left');
+			$('#menu').animate({
+				left:"+=220"
+			},1000);
+			$('#menu-btn').animate({
+				left:"+=220"
+			},1000);
+			$('#content').animate({
+				left:"+=220",
+				width:"-=220"
+			},1000);
+		}
+	});
+});
+</script>
+</html>

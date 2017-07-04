@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+	<!-- Configuration for Bill Payment Report -->
+	<bean id="dbReaderForBillPaymentReport"
+        class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+ 
+        <property name="dataSource" ref="dataSource" />
+ 
+        <property name="sql"
+            value="select t.TXN_REF_ID,t.TXN_TYPE,t.AGENT_ID,t.BILL_DATE,t.BILL_AMOUNT, 
+            r.TXN_DATE,r.CUSTOMER_OU_ID,r.BILLER_OU_ID,r.BILLER_CATEGORY,r.SPLIT_PAYMENT_MODE,
+            r.CUSTOMER_MOBILE_NUMBER,r.BILLER_FEE,r.BILLER_FEE_TAX,r.REVERSAL,r.DECLINE,r.SPLIT_PAY 
+            from #{jobParameters['schema_name']}.BILLEROU_TRANSACTION_DATA t LEFT JOIN #{jobParameters['schema_name']}.RAW_DATA r 
+            ON t.TXN_REF_ID=r.TXN_REFERENCE_ID AND t.TXN_TYPE=r.TXN_TYPE" />
+ 
+        <property name="rowMapper">
+            <bean class="com.rssoftware.ou.batch.common.BillPaymentReportRowMapper" />
+        </property>
+ 
+    </bean>   
+       
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+    <!-- <bean id="itemProcessor" class="com.rssoftware.ou.batch.processor.BillPaymentReportProcessor" scope="step"/> -->
+    
+    <bean id = "customBillPaymentReportWriter" class="com.rssoftware.ou.batch.writer.BillPaymentReportWriter" scope="step">
+    	<property name="dictionary" value="#{jobExecutionContext['dictionary']}" />
+    	<property name="outputFile" value="#{jobParameters['output_file']}" />
+    </bean>
+	
+	<batch:job id="billPaymentReportJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="reportFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="dbReaderForBillPaymentReport" writer="customBillPaymentReportWriter" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+    
+</beans>

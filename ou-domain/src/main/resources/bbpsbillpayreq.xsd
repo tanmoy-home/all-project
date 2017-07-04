@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+  <xs:element name="bbpsbillpayreq">
+    <xs:complexType>
+      <xs:sequence>	
+		    <xs:element name="passkey" type="bbps:ST100" />
+        <xs:element name="amount" type="bbps:STA"/>
+        <xs:element name="bbpsrefid" type="bbps:ST35" />      
+        <xs:element name="imeinumber" type="bbps:ST35" />
+        <xs:element name="agentid" type="bbps:ST35" />
+        <xs:element name="customermobile" type="bbps:ST12" />
+        <xs:element name="billerid" type="bbps:ST35" />
+      </xs:sequence >
+    </xs:complexType >
+  </xs:element >
+  
+  <xs:element name="bbpsrefundreq">
+    <xs:complexType>
+      <xs:sequence>	
+		<xs:element name="passkey" type="bbps:STR50" />
+        <xs:element name="transactionid" type="bbps:STR50"/>
+        <xs:element name="bbpsrefid" type="bbps:STR10" />  
+        <xs:element name="amount" type="bbps:STA10" />      
+      </xs:sequence >
+    </xs:complexType >
+  </xs:element >
+  
+  <xs:simpleType name="ST100">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1000"/>
+      <xs:pattern value="[a-zA-Z0-9 /!@#$%^*()_+]{1,1000}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ST35">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="35"/>
+      <xs:pattern value="[a-zA-Z0-9]{1,35}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ST12">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{1,12}" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ST30">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30"/>
+      <xs:pattern value="[a-zA-Z0-9]{1,30}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="STA">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2" />
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="200000" />
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="ST200">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="5" />
+      <xs:maxLength value='200'/>
+      <xs:pattern value="[a-zA-Z0-9]{1,200}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="STR50">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="50"/>
+      <xs:pattern value="[a-zA-Z0-9 /!@#$%^*()_+]{1,50}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="STR10">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="10"/>
+      <xs:pattern value="[a-zA-Z0-9]{1,10}"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="STA10">
+    <xs:restriction base="xs:decimal">
+      <xs:fractionDigits value="2" />
+      <xs:minInclusive value="1" />
+      <xs:maxInclusive value="200000" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

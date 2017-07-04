@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Menu List</title>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="-1"/>
+<link rel="stylesheet" th:href="@{|/css/portal-common.${session.tenatntId}.min.css|}" />
+<link rel="stylesheet" th:href="@{|/css/jquery.dataTables.${session.tenatntId}.min.css|}" />
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/portal-common.min.js}"></script>
+</head>
+<body>
+	<h3>Menu List</h3>
+	<hr />
+	<div>
+		<table class="display cell-border hover order-column dataTable">
+			<thead>
+				<tr>
+					<th>Menu Name</th>
+					<th>Menu Url</th>
+					<th>Menu Access Point</th>
+					<th>Parent Menu Name</th>
+					<th>Status</th>
+					<th width="90px">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="formenuDetail : ${menuDetailList}">
+					<td th:text="${formenuDetail.menuName}"></td>
+					<td th:text="${formenuDetail.menuUrl!='#'?formenuDetail.menuUrl:'NA'}"></td>
+					<td th:text="${formenuDetail.menuAccessPoint!=null?formenuDetail.menuAccessPoint.desc:'NA'}"></td>
+					<td th:text="${formenuDetail.parentMenu!=null?formenuDetail.parentMenu.menuName:'NA'}"></td>
+					<td th:id="${formenuDetail.menuId}" th:text="${formenuDetail.menuStatus.value()}"></td>
+					<td>
+						<a class="pop-up" th:href="@{|/menu/viewDetails/${formenuDetail.menuId}|}">View</a> 
+						| <a th:href="@{|/menu/update/${formenuDetail.menuId}|}">Update</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+</html>

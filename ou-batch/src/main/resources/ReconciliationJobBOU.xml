@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by 
+		rowMapper -->
+	<bean id="reconItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="sql"
+			value="select r.REF_ID AS RAW_REF_ID,
+r.TXN_TYPE AS RAW_TXN_TYPE,
+r.MSG_ID AS RAW_MSG_ID,
+r.MTI,
+r.TXN_REFERENCE_ID,
+r.TXN_DATE,
+r.CUSTOMER_OU_ID,
+r.BILLER_OU_ID,
+r.AGENT_ID,
+r.RESPONSE_CODE,
+r.TXN_CURRENCY_CODE,
+r.TXN_AMOUNT,
+r.CUSTOMER_OU_INTERCHANGE_FEE,
+r.CUSTOMER_OU_SWITCHING_FEE,
+r.BILLER_OU_INTERCHANGE_FEE,
+r.BILLER_OU_SWITCHING_FEE,
+r.CUSTOMER_CONVENIENCE_FEE,
+r.PAYMENT_CHANNEL,
+r.PAYMENT_MODE,
+r.CUSTOMER_OU_COUNT_MONTH,
+r.BILLER_OU_COUNT_MONTH,
+r.BILLER_ID,
+r.BILLER_CATEGORY,
+r.SPLIT_PAY,
+r.SPLIT_PAYMENT_MODE,
+r.SPLIT_PAY_TXN_AMOUNT,
+r.CUSTOMER_MOBILE_NUMBER,
+r.REVERSAL,
+r.DECLINE,
+r.CAS_PROCESSED,
+r.SETTLEMENT_CYCLE_ID,
+r.RECON_STATUS AS RAW_RECON_STATUS,
+r.BILLER_FEE,
+r.OU_TYPE,
+t.REF_ID,
+t.TXN_TYPE,
+t.MSG_ID,
+t.TXN_REF_ID,
+t.CU_REQUEST_JSON,
+t.CU_RESPONSE_JSON,
+t.BLR_REQUEST_JSON,
+t.BLR_RESPONSE_JSON,
+t.CU_STATUS,
+t.BLR_STATUS,
+t.CU_REV_STATUS,
+t.BLR_REV_STATUS,
+t.RECON_STATUS,
+t.RECON_CYCLE_NO 
+from BILLEROU_TRANSACTION_DATA t FULL OUTER JOIN Raw_Data r 
+ON t.ref_Id=r.ref_Id AND t.txn_Type=r.txn_Type
+where (t.recon_status='PENDING' OR t.recon_status = 'UNREAD' OR t.recon_status is null OR r.recon_status='UNREAD') and r.MTI='PAYMENT' and r.OU_TYPE='BOU'" />
+
+		<property name="rowMapper">
+			<bean class="com.rssoftware.ou.batch.common.ReconBOURowMapper" />
+		</property>
+
+	</bean>
+	<bean id="reconDetailsDao" class="com.rssoftware.ou.tenant.dao.impl.ReconDetailsDaoImpl" />
+	<bean id="transactionDataDao" class="com.rssoftware.ou.tenant.dao.impl.BillerOUtransactionDataDaoImpl" />
+	<bean id="rawDataDao" class="com.rssoftware.ou.tenant.dao.impl.RawDataDaoImpl" />
+	<bean id="billerDao" class="com.rssoftware.ou.tenant.dao.impl.BillerDaoImpl" />
+
+
+
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.ReconBOU</value>
+		</property>
+	</bean>
+
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
+		records -->
+	<bean id="reconItemProcessor" class="com.rssoftware.ou.batch.processor.ReconBOUItemProcessor"
+		scope="step" />
+	<bean id="reconItemWriter" class="com.rssoftware.ou.batch.writer.CustomBOUReconItemWriter"
+		scope="step">
+		<property name="settlementId" value="#{jobParameters['settlement_id']}"></property>
+		<property name="reconMaxTry" value="#{jobParameters['recon_max_try']}"></property>
+	<!-- 
+		<property name="matchedTxns" value="#{jobParameters['matchedTxns']}"></property>
+		<property name="notInOuTxns" value="#{jobParameters['notInOuTxns']}"></property>
+		<property name="notInCuTxns" value="#{jobParameters['notInCuTxns']}"></property>
+		<property name="mismatchedTxns" value="#{jobParameters['mismatchedTxns']}"></property>
+		<property name="pendingTxns" value="#{jobParameters['pendingTxns']}"></property>
+		<property name="broughtForwardTxns" value="#{jobParameters['broughtForwardTxns']}"></property> -->
+	</bean>
+
+	<batch:job id="reconciliationJobBOU" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="readWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="reconItemReader" writer="reconItemWriter"
+					processor="reconItemProcessor" commit-interval="20" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="ProfileUpdate">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						  <xs:element name="userName" type="xs:string" minOccurs="1" maxOccurs="1" />
+					      <xs:element name="firstName" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="lastName" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="address" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="state" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="country" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="pincode" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="phone" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="mobile" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="email" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="pan" type="xs:string" minOccurs="0" maxOccurs="1" />
+					      <xs:element name="aadhar" type="xs:string" minOccurs="0" maxOccurs="1" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

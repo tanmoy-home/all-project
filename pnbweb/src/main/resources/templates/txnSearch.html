@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/newstyle.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<title>Complaint Details</title>
+<head> 
+  <script type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
+  <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+  <script> 
+   $(function(){
+	   $("#header").load("/../header");
+    }); 
+  </script> 
+</head>
+<body>
+<div id="page-content-wrapper">
+<div id="header"></div>
+
+
+
+<form th:action="@{/complaint/complaintLists}" method="post"	th:object="${complaint}">
+<table align="center">
+<tr><td style="padding:10px;"><h4>Search by Transaction</h4></td></tr>
+<tr>
+<td style="padding: 5px;">
+
+
+	<span style="color:red;" th:if="${message}!=null" th:text="${message}"/>
+
+	<br></br>
+	<table style="border-collapse: collapse;    border: 1px solid black;">
+	<tr>
+	<td style="padding: 15px;">Transaction Id: <span style="color:red;">*</span></td>
+	<td style="padding: 15px;"> 
+	<input type="text" id="transactionId" name="transactionId" th:field="*{transactionId}" pattern="([a-zA-Z0-9]){12,12}" maxlength="15" size="30" required="required" />
+	<br></br><span style="font-size: 8pt">(12 Alpha. ex - AD0112RTU110)</span>
+	</td>
+	<input type="hidden" th:field="*{mobNo}"/>
+	</tr>
+	<tr>
+	<td colspan="2" align="center">
+	<!-- <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> -->
+	<input type="submit" class="button" value="Search" />
+	</td>
+	</tr>
+	</table>
+</td>
+</tr>
+</table>
+</form>
+	
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+
+	<xs:include schemaLocation="BBPS-RS-Common.xsd" />
+	<xs:element name="FetchResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element type="xs:string" name="refId" minOccurs="1"
+					maxOccurs="1" />
+				<xs:element type="bbps:reasonType" name="reason"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:billerResponseType" name="billerResponse"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element type="bbps:additionalInfoType" name="additionalInfo"
+					minOccurs="0" maxOccurs="1" />
+				<xs:element name="errorMessages" type="bbps:errorMessage"
+					minOccurs="0" maxOccurs="unbounded">
+				</xs:element>						
+				<xs:element type="bbps:agentChannelDetails" name="AgentChannelDetails" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

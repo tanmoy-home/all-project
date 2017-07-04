@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/newstyle.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+<title>Complaint List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<head> 
+	  <script type="text/javascript" th:src="@{/js/jquery-1.10.2.js}"></script>
+	  <script type="text/javascript" th:src="@{/js/jquery-ui.js}"></script>
+	<script type="text/javascript" th:src="@{/js/complaint.js}"></script>
+	  <script> 
+	   $(function(){
+	    	 $("#header").load("header"); 
+	    	 $("#complaintDate").datepicker();
+	    }); 
+	    </script> 
+	    
+	</head>
+<body>
+<div id="page-content-wrapper">
+
+<form th:action="@{ou04/complaint/complaintDetails}" enctype="multipart/form-data" method="post" th:object="${complaint}">
+
+<div id="header"></div>
+
+
+
+<div class="container">
+<div class="datagrid">
+
+
+<table cellpadding="4" width="100%" bgcolor="99FFFF" align="center" cellspacing="4">
+
+<tr>
+	<th>&nbsp;</th>
+	<th>Complaint Type</th>
+	<th>Complaint Id</th>
+	<th>Complaint Date(DD/MM/YYYY)</th>
+	<th><strong>Status</strong></th>
+</tr>
+
+<tr th:each="complaint  : ${complaints}">
+	<th><input type="radio" /></th>
+	<td th:text="${complaint.complaintTypeCd}"></td>
+	<td th:text="${complaint.complaintId}"></td>
+	<td th:text="${complaint.complaintDate}"></td>
+	<td th:text="${complaint.status}"></td>
+</tr>
+
+
+
+</table>
+
+
+
+</div>
+</div>
+<div class="whiteSpace">&nbsp;</div>
+<table width="100%" align="center">
+<tr>
+	<td align="center"><input type="submit" class="button" value="Register Complaint" />
+	</td>
+</tr>
+</table>
+</form>
+
+</div>
+
+
+
+</body>
+
+
+
+</html>

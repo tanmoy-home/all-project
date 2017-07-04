@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+
+
+
+<xs:complexType name="TranIdentifier">
+       <xs:annotation>
+              <xs:documentation><![CDATA[ Transaction ID. ]]></xs:documentation>
+       </xs:annotation>
+<xs:sequence>
+
+<xs:element name="TrnDt" type="xs:dateTime" minOccurs="1">
+        <xs:annotation>
+                <xs:documentation><![CDATA[ date of the transaction. FI Supports only yyyy-MM-dd'T'hh:mm:ss.SSS  format.]]></xs:documentation>
+        </xs:annotation>
+</xs:element>
+
+<xs:element name="TrnId"  minOccurs="1"> 
+	<xs:annotation>
+                <xs:documentation><![CDATA[ Transaction ID. ]]></xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+	    		<xs:maxLength value="9"/>
+	  	</xs:restriction>
+	</xs:simpleType>
+</xs:element>
+
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

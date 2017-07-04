@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	attributeFormDefault="unqualified" elementFormDefault="qualified">
+
+	<element name="custAccountDetails">
+		<complexType>
+			<sequence>
+				<element name="accountDetails" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<sequence>
+							<element type="string" name="acctAdharEorD" />
+							<element type="string" name="acctIFSC" />
+							<element type="string" name="acctMMID" />
+							<element type="string" name="acctName" />
+							<element type="string" name="acctNo" />
+							<element type="string" name="acctType" />
+							<element type="string" name="custId" />
+							<element type="string" name="schmCode" />
+						</sequence>
+					</complexType>
+				</element>
+				<element type="string" name="mobNo" />
+				<element type="string" name="mobBanking" />
+				<element type="string" name="msg" />
+				<element type="string" name="stan" />
+				<element type="string" name="sORf" />
+				<element type="string" name="debitNo" />
+				<element type="string" name="expDate" />
+				<element type="string" name="isValid" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>

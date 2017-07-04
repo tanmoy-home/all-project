@@ -1,0 +1,12 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+	<xs:include schemaLocation="FICommonHeader.xsd"/>
+	<xs:include schemaLocation="FIObjectHash.xsd"/>
+	<xs:complexType name="NotificationHeaderType">
+		<xs:sequence>
+			<xs:element name="MessageKey" type="MessageKeyType"/>
+			<xs:element name="NotifyForMessageKey" type="MessageKeyType"/>
+			<xs:element name="RequestMessageInfo" type="RequestMessageInfoType"/>
+			<xs:element name="CustomInfo" type="FIObjectHash"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

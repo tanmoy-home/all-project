@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+
+
+	<!-- ItemReader which reads from database and returns the row mapped by 
+		rowMapper -->
+	<bean id="segmentReportItemReader"
+		class="org.springframework.batch.item.database.JdbcCursorItemReader"
+		scope="step">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="sql"
+	value="
+with query1 as (
+  select blr_id,count(*) txnCount, sum(bill_amount) txnTot from TRANSACTION_DATA
+  where txn_type='PAYMENT' and crtn_ts between sysdate-7 and sysdate group by blr_id
+)
+select bd.blr_category_name, query1.txnCount, query1.txnTot, bd.blr_name 
+from biller_details bd,query1 
+where query1.blr_id=bd.blr_id order by bd.BLR_CATEGORY_NAME asc" />
+
+		<property name="rowMapper">
+			<bean class="com.rssoftware.ou.batch.common.SegmentReportRowMapper" />
+		</property>
+
+	</bean>
+ 
+	<bean id="segmentReportDao"
+		class="com.rssoftware.ou.tenant.dao.impl.SegmentReportDaoImpl" />
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.SegmentReport</value>
+		</property>
+	</bean>
+
+
+	<!-- Optional ItemProcessor to perform business logic/filtering on the input 
+		records -->
+	<bean id="segmentReportItemProcessor" class="com.rssoftware.ou.batch.processor.SegmentReportItemProcessor"
+		scope="step" >
+		<property name="ouName" value="#{jobParameters['OU_Name']}"></property>
+	</bean>
+	<bean id="fileItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter"
+		scope="step">
+
+		<!-- write to this csv file -->
+		<property name="resource" value="#{jobParameters['output_file']}" />
+
+		<property name="lineAggregator">
+			<bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+				<property name="delimiter" value="," />
+				<property name="fieldExtractor">
+					<bean
+						class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+						<property name="names"
+							value="bbpouName,blrCategory,blrName,onUsCount,offUsCount,onUsTot,offUsTot" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dbItemWriter" class="com.rssoftware.ou.batch.writer.SegmentReportDBItemWriter"
+		scope="step"/>
+		
+	<bean id="segmentReportItemWriter"
+		class="org.springframework.batch.item.support.CompositeItemWriter">
+		<property name="delegates">
+			<list>
+				<ref bean="dbItemWriter" />
+				<ref bean="fileItemWriter" />
+			</list>
+		</property>
+	</bean>
+
+	<batch:job id="segmentReportJob" job-repository="jobRepository"
+		parent="simpleJob">
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="segmentReportItemReader" writer="segmentReportItemWriter"
+					processor="segmentReportItemProcessor" commit-interval="10" />
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+
+</beans>

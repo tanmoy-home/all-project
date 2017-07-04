@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="AgentScheme">
+
+	
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="bbps:response">
+					<xs:sequence>
+						<xs:element type="xs:string" name="schemeUniqueId" />
+						<xs:element type="xs:string" name="schemeId" />
+						<xs:element type="xs:string" name="schemeName" />
+						<xs:element type="xs:string" name="schemeDesc" />
+						<xs:element type="xs:string" name="agentInstIds"
+							minOccurs="0" maxOccurs="unbounded" />
+						<xs:element type="xs:string" name="schemeEffctvFrom" />
+						<xs:element type="xs:string" name="schemeEffctvTo" />
+						<xs:element type="bbps:agentCommission" name="commissionDetails"
+							minOccurs="1" maxOccurs="unbounded" />
+							
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="agentCommission">
+		<xs:sequence>
+			<xs:element type="xs:decimal" name="agentPercentFee" />
+			<xs:element type="xs:decimal" name="agentFlatFee" />
+			<xs:element type="xs:decimal" name="aiPercentFee" />
+			<xs:element type="xs:long" name="tranAmtRangeMin" nillable="true"/>
+			<xs:element type="xs:long" name="tranAmtRangeMax" nillable="true"/>
+			<xs:element type="xs:long" name="tranCountRangeMin" nillable="true"/>
+			<xs:element type="xs:long" name="tranCountRangeMax" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.finacle.com/fixml" targetNamespace="http://www.finacle.com/fixml" elementFormDefault="qualified">
+        <xs:include schemaLocation="FIObjectHash.xsd"/>
+	<xs:include schemaLocation="FICommonHeader.xsd"/>
+	<xs:include schemaLocation="XferTrnAddRs.xsd"/>
+	<xs:element name="XferTrnAddNotification">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="XferTrnAddNotificationDetail" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="UBUSTransaction" type="TransactionType"/>
+							<xs:element name="HostTransaction" type="TransactionType"/>
+							<xs:element name="HostParentTransaction" type="TransactionType" minOccurs="0"/>
+							<xs:element name="ResponseMessageInfo" type="ResponseMessageInfoType"/>
+							<xs:element name="CustomInfo" type="FIObjectHash" minOccurs="0"/>
+							<xs:choice>
+								<xs:element name="XferTrnAddRs" type="XferTrnAddRs"/>
+								<xs:element name="Error" type="ErrorType" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:choice>			
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>	

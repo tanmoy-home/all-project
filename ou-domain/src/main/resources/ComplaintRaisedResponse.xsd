@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="ComplaintRaisedResponse" >
+		<xs:complexType >
+	<xs:sequence>
+		  <xs:element type="xs:string" name="complaintId" minOccurs="0"/>
+          <xs:element type="xs:string" name="openComplaint" minOccurs="0"/>
+          <xs:element type="xs:string" name="complaintStatus" minOccurs="0"/>
+          <xs:element type="xs:string" name="assigned" minOccurs="0"/>
+          <xs:element type="xs:string" name="responseCode" minOccurs="0"/>
+          <xs:element type="xs:string" name="responseReason" minOccurs="0"/>
+           <xs:element type="bbps:errorMessage" name="errors" minOccurs="0" maxOccurs="unbounded"/>
+           </xs:sequence>
+	</xs:complexType>		
+	</xs:element>
+	
+		
+</xs:schema>

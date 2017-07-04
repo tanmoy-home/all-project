@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Payment Gateway Intermediate Page</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+       //setTimeout($("#pg_intermediate_page").submit(),1000);
+       //$("#pg_intermediate_page").submit();
+    });   
+</script>
+</head>
+<body>
+	<p th:text="${payment_page_heading} + '!'" />
+
+	<form id="pg_intermediate_page" method="post" th:action="${submit_url}">		
+		<input type="hidden" name="BankID" id="BankID" th:value="${reqMsgDTO.BankID}"/>
+		<input type="hidden" name="MD" id="MD" th:value="${reqMsgDTO.MD}"/>
+		<input type="hidden" name="PID" id="PID" th:value="${reqMsgDTO.PID}"/>
+		<input type="hidden" name="ITC" id="ITC" th:value="${reqMsgDTO.ITC}"/>
+		<input type="hidden" name="PRN" id="PRN" th:value="${reqMsgDTO.PRN}"/>
+		<input type="hidden" name="AMT" id="AMT" th:value="${reqMsgDTO.AMT}"/>
+		<input type="hidden" name="CRN" id="CRN" th:value="${reqMsgDTO.CRN}"/>
+		<input type="hidden" name="RU" id="RU" th:value="${reqMsgDTO.RU}"/>
+		<input type="hidden" name="CG" id="CG" th:value="${reqMsgDTO.CG}"/>
+		<input type="hidden" name="USER_LANG_ID" id="USER_LANG_ID" th:value="${reqMsgDTO.userLangID}"/>
+		<input type="hidden" name="UserType" id="UserType" th:value="${reqMsgDTO.UserType}"/>
+		<input type="hidden" name="AppType" id="AppType" th:value="${reqMsgDTO.AppType}"/>
+		<input type="hidden" name="CS" id="CS" th:value="${reqMsgDTO.CS}"/>
+		<input type="hidden" name="STATFLG" id="STATFLG" th:value="${reqMsgDTO.STATFLG}"/>
+		<input type="hidden" name="merchantname" id="merchantname" th:value="${reqMsgDTO.merchantName}"/>		
+		<input type="submit" value="Pay Now!">
+	</form>
+
+</body>
+</html>

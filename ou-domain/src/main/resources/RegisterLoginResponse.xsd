@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:bbps="http://bbps.rssoftware.co.in/schema" targetNamespace="http://bbps.rssoftware.co.in/schema"
+	elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="BBPS-RS-Common.xsd"></xs:include>
+	<xs:element name="RegisterLoginResponse">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element type="xs:string" name="agentId"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:boolean" name="passwordReset" minOccurs="0" maxOccurs="1" />
+			<xs:element type="xs:string" name="agentFisrtName"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentLastName"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentEmailid"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentPhoneNumber"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentShopName"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentRegisteredAdrline"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentRegisteredCity"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentRegisteredCountry"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentRegisteredPinCode"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentRegisteredState"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="agentGeoCode"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="latitude"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="longitude"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="billerPaymentchannel"  minOccurs="0" maxOccurs="1"/>
+			<xs:element type="xs:string" name="terminalId"  minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

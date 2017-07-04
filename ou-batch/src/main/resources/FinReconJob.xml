@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:batch="http://www.springframework.org/schema/batch" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch
+		http://www.springframework.org/schema/batch/spring-batch-2.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<import resource="dbConfig.xml" />
+	
+
+<!-- ItemReader which reads from database and returns the row mapped by rowMapper -->
+    <bean id="finReconItemReader"
+        class="org.springframework.batch.item.database.JdbcCursorItemReader" scope="step">
+ 
+        <property name="dataSource" ref="dataSource" />
+ 
+        <property name="sql"
+ 
+            value="#{jobParameters['sql']}" />
+ 
+        <property name="rowMapper">
+            <bean class="com.rssoftware.ou.batch.common.FinReconRowMapper" />
+        </property>
+ 
+    </bean>
+    <bean id="finTransactionDataDao" class="com.rssoftware.ou.tenant.dao.impl.FinTransactionDataDaoImpl"/>
+    
+    	 
+    <bean id="tenantParamDao" class="com.rssoftware.ou.tenant.dao.impl.TenantParamDaoImpl"/>
+
+	<bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<property name="classesToBeBound">
+			<value>com.rssoftware.ou.batch.to.FinRecon</value>
+		</property>
+	</bean>
+   
+       
+    <!-- Optional ItemProcessor to perform business logic/filtering on the input records -->
+    <bean id="finReconItemProcessor" class="com.rssoftware.ou.batch.processor.FinReconItemProcessor" scope="step"/>
+    
+    <bean id="finReconItemWriter" class="org.springframework.batch.item.file.FlatFileItemWriter" scope="step">
+    
+	<!-- write to this csv file -->
+    <property name="resource" value="#{jobParameters['output_file']}" />
+
+	<property name="lineAggregator">
+	  <bean
+		class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
+		<property name="delimiter" value="," />
+		<property name="fieldExtractor">
+		  <bean
+			class="org.springframework.batch.item.file.transform.BeanWrapperFieldExtractor">
+			<property name="names" value="txnRefId, authCode, txnTime, amount, status" />
+		   </bean>
+		</property>
+	   </bean>
+	</property>
+  </bean>
+    <batch:job id="finReconJob" job-repository="jobRepository" parent="simpleJob">
+		<batch:step id="flatFileReadWrite">
+			<batch:tasklet transaction-manager="transactionManager">
+				<batch:chunk reader="finReconItemReader" writer="finReconItemWriter"
+					processor="finReconItemProcessor" commit-interval="10" />					
+			</batch:tasklet>
+		</batch:step>
+	</batch:job>
+        
+</beans>
