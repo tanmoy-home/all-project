@@ -38,8 +38,8 @@ public class JwtTokenGenerator {
 
         JwtUserDto user = new JwtUserDto();
         user.setId(123L);
-        user.setUsername("Pascal");
-        user.setRole("admin");
+        user.setUsername("Rascal");
+        user.setRole("badmin");
 
         System.out.println("**************************************\n\n" + generateToken(user, "my-very-secret-key") + "\n\n**************************************");
     }

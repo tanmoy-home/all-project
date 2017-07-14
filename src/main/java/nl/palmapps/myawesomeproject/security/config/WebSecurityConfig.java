@@ -39,15 +39,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public AuthenticationManager authenticationManager() throws Exception {
-
-        return new ProviderManager(Arrays.asList(authenticationProvider));
+    	System.out.println("********************  AuthenticationManager ***********************");
+    	return new ProviderManager(Arrays.asList(authenticationProvider));
     }
 
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-        JwtAuthenticationTokenFilter authenticationTokenFilter = new JwtAuthenticationTokenFilter();
+    	JwtAuthenticationTokenFilter authenticationTokenFilter = new JwtAuthenticationTokenFilter();
         authenticationTokenFilter.setAuthenticationManager(authenticationManager());
         authenticationTokenFilter.setAuthenticationSuccessHandler(new JwtAuthenticationSuccessHandler());
+        System.out.println("********************  JwtAuthenticationTokenFilter ***********************");
         return authenticationTokenFilter;
     }
 
@@ -70,5 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // disable page caching
         httpSecurity.headers().cacheControl();
+        System.out.println("********************  configure ***********************");
     }
 }
